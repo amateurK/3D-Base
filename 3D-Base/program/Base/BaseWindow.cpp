@@ -197,6 +197,8 @@ namespace AK_Base {
 		// Set primitive topology
 		m_ImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+		// フレームレートの設定
+		SetFrameRate(60);
 
 		return S_OK;
 	}
@@ -227,12 +229,36 @@ namespace AK_Base {
 
 		// 0.0fは仮置き
 		// 経過時間を計測できるようにしたら設定する
-		m_RootActor->Move(0.0f,0.0f);
-		m_RootActor->CheckStatus();
-		m_RootActor->Render(0.0f, 0.0f);
+
+		m_StepTimer.Tick([&]()
+			{
+				auto time = static_cast<double>(m_StepTimer.GetTotalSeconds());
+				auto elapsedTime = static_cast<float>(m_StepTimer.GetElapsedSeconds());
+				m_RootActor->Move(time, elapsedTime);
+				m_RootActor->CheckStatus();
+				m_RootActor->Render(time, elapsedTime);
+			});
 
 		m_SwapChain->Present((UINT)m_Vsync, 0);
 
+	}
+
+	//---------------------------------------------------------------------------------------------
+	void BaseWindow::SetFrameRate(int16_t num)
+	{
+		switch (num)
+		{
+		case -1:	// 垂直同期
+			m_StepTimer.SetFixedTimeStep(false);
+			m_Vsync = 1;
+		case 0:		// 無制限
+			m_StepTimer.SetFixedTimeStep(false);
+			m_Vsync = 0;
+		default:	// 固定
+			m_StepTimer.SetFixedTimeStep(true);
+			m_StepTimer.SetTargetElapsedSeconds(1.0 / static_cast<double>(num));
+			m_Vsync = 0;
+		}
 	}
 
 	//--------------------------------------------------------------------------------------

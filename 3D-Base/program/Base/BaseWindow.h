@@ -10,6 +10,7 @@
 // 2D-Baseから移植したので元の作成日は不明
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include"Singleton.h"
+#include "StepTimer.h"
 
 namespace AK_Base {
 
@@ -53,6 +54,9 @@ namespace AK_Base {
 		/// @details 0でOFF
 		UINT m_Vsync;
 
+		/// @brief 時間経過を管理するステップタイマー
+		DX::StepTimer m_StepTimer;
+
 	public:
 		/// @brief コンストラクタ
 		BaseWindow();
@@ -78,6 +82,10 @@ namespace AK_Base {
 
 		/// @brief ゲームループ
 		void GameLoop();
+
+		/// @brief フレームレートの変更
+		/// @param num フレームレート（0で無制限、-1で垂直同期）
+		void SetFrameRate(int16_t num);
 
 
 		/// @brief ウィンドウサイズをセット
