@@ -198,7 +198,7 @@ namespace AK_Base {
 		m_ImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// ƒtƒŒ[ƒ€ƒŒ[ƒg‚Ìİ’è
-		SetFrameRate(60);
+		SetFrameRate(0);
 
 		return S_OK;
 	}
@@ -224,11 +224,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void BaseWindow::GameLoop()
 	{
-		// ”wŒi“h‚è‚Â‚Ô‚µ
-		m_ImmediateContext->ClearRenderTargetView(m_RenderTargetView, DirectX::Colors::LightSeaGreen);
 
-		// 0.0f‚Í‰¼’u‚«
-		// Œo‰ßŠÔ‚ğŒv‘ª‚Å‚«‚é‚æ‚¤‚É‚µ‚½‚çİ’è‚·‚é
 
 		m_StepTimer.Tick([&]()
 			{
@@ -236,6 +232,10 @@ namespace AK_Base {
 				auto elapsedTime = static_cast<float>(m_StepTimer.GetElapsedSeconds());
 				m_RootActor->Move(time, elapsedTime);
 				m_RootActor->CheckStatus();
+
+
+				// ”wŒi“h‚è‚Â‚Ô‚µ
+				m_ImmediateContext->ClearRenderTargetView(m_RenderTargetView, DirectX::Colors::LightSeaGreen);
 				m_RootActor->Render(time, elapsedTime);
 			});
 
@@ -251,13 +251,16 @@ namespace AK_Base {
 		case -1:	// ‚’¼“¯Šú
 			m_StepTimer.SetFixedTimeStep(false);
 			m_Vsync = 1;
+			break;
 		case 0:		// –³§ŒÀ
 			m_StepTimer.SetFixedTimeStep(false);
 			m_Vsync = 0;
+			break;
 		default:	// ŒÅ’è
 			m_StepTimer.SetFixedTimeStep(true);
 			m_StepTimer.SetTargetElapsedSeconds(1.0 / static_cast<double>(num));
 			m_Vsync = 0;
+			break;
 		}
 	}
 

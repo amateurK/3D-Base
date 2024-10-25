@@ -30,7 +30,7 @@ namespace Piece {
 	//--------------------------------------------------------------------------------------
 	void Piece::Move(const double& totalTime, const float& elapsedTime)
 	{
-		m_Rotation += 0.01f;
+		m_Rotation += elapsedTime;
 
 		AK_Base::ModelActor::Move(totalTime, elapsedTime);
 	}
