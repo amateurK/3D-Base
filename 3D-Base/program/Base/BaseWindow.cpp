@@ -166,8 +166,6 @@ namespace AK_Base {
 		if (FAILED(hr))
 			return hr;
 
-		m_ImmediateContext->OMSetRenderTargets(1, &m_RenderTargetView, nullptr);
-
 		// Create a rasterizer state object that tells the rasterizer stage how to behave
 		D3D11_RASTERIZER_DESC rasterizerState = {};
 		rasterizerState.FillMode = D3D11_FILL_SOLID;
@@ -183,6 +181,35 @@ namespace AK_Base {
 		m_D3DDevice->CreateRasterizerState(&rasterizerState, &m_RasterStates);
 		// Set the rasterizer state
 		m_ImmediateContext->RSSetState(m_RasterStates);
+
+		// Create depth stencil texture
+		D3D11_TEXTURE2D_DESC descDepth = {};
+		descDepth.Width = width;
+		descDepth.Height = height;
+		descDepth.MipLevels = 1;
+		descDepth.ArraySize = 1;
+		descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		descDepth.SampleDesc.Count = 1;
+		descDepth.SampleDesc.Quality = 0;
+		descDepth.Usage = D3D11_USAGE_DEFAULT;
+		descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+		descDepth.CPUAccessFlags = 0;
+		descDepth.MiscFlags = 0;
+		hr = m_D3DDevice->CreateTexture2D(&descDepth, nullptr, &m_DepthStencil);
+		if (FAILED(hr))
+			return hr;
+
+		// Create the depth stencil view
+		D3D11_DEPTH_STENCIL_VIEW_DESC descDSV = {};
+		descDSV.Format = descDepth.Format;
+		descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		descDSV.Texture2D.MipSlice = 0;
+		hr = m_D3DDevice->CreateDepthStencilView(m_DepthStencil, &descDSV, &m_DepthStencilView);
+		if (FAILED(hr))
+			return hr;
+
+
+		m_ImmediateContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
 
 		// Setup the viewport
 		D3D11_VIEWPORT vp = {};
@@ -208,6 +235,8 @@ namespace AK_Base {
 	{
 		if (m_ImmediateContext) m_ImmediateContext->ClearState();
 
+		if (m_DepthStencilView)m_DepthStencilView->Release();
+		if (m_DepthStencil)m_DepthStencil->Release();
 		if (m_RasterStates) m_RasterStates->Release();
 		if (m_RenderTargetView) m_RenderTargetView->Release();
 		if (m_SwapChain) m_SwapChain->Release();
@@ -235,7 +264,9 @@ namespace AK_Base {
 
 
 				// ”wŒi“h‚è‚Â‚Ô‚µ
-				m_ImmediateContext->ClearRenderTargetView(m_RenderTargetView, DirectX::Colors::LightSeaGreen);
+				//m_ImmediateContext->ClearRenderTargetView(m_RenderTargetView, DirectX::Colors::LightSeaGreen);
+				m_ImmediateContext->ClearRenderTargetView(m_RenderTargetView, DirectX::Colors::Black);
+				m_ImmediateContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 				m_RootActor->Render(time, elapsedTime);
 			});
 

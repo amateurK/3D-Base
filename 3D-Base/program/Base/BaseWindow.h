@@ -35,6 +35,8 @@ namespace AK_Base {
 		IDXGISwapChain* m_SwapChain = nullptr;
 		ID3D11RenderTargetView* m_RenderTargetView = nullptr;
 		ID3D11RasterizerState* m_RasterStates = nullptr;
+		ID3D11Texture2D* m_DepthStencil = nullptr;
+		ID3D11DepthStencilView* m_DepthStencilView = nullptr;
 
 
 		// ƒƒ‚ƒŠƒŠ[ƒNŠÄ‹—p

@@ -120,6 +120,7 @@ namespace Mesh {
 			D3D11_SUBRESOURCE_DATA InitData = {};
 			InitData.pSysMem = vertices;
 			hr = device->CreateBuffer(&bd, &InitData, m_Material[i].VertexBuffer.ReleaseAndGetAddressOf());
+			delete[] vertices;
 			if (FAILED(hr))
 				return hr;
 
@@ -141,6 +142,7 @@ namespace Mesh {
 			bd.CPUAccessFlags = 0;
 			InitData.pSysMem = indices;
 			hr = device->CreateBuffer(&bd, &InitData, m_Material[i].IndexBuffer.ReleaseAndGetAddressOf());
+			delete[] indices;
 			if (FAILED(hr))
 				return hr;
 		}
