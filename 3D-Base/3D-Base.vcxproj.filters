@@ -35,6 +35,9 @@
     <Filter Include="Base\Reader">
       <UniqueIdentifier>{eb1ff0a2-e616-474b-b1ed-f33d8688bfcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Tools">
+      <UniqueIdentifier>{6da6592d-044b-4dfe-ae65-3dc7643a050c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\pch.cpp" />
@@ -167,11 +170,15 @@
     <ClInclude Include="program\Base\Model\Mesh\FbxMesh.h">
       <Filter>Base\Model\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="program\Base\Tools\WStringToString.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="program\Base\Shader\BasicShader.hlsli">
       <Filter>Base\Shader</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="program\Base\Shader\LambertVertexShader.hlsl">

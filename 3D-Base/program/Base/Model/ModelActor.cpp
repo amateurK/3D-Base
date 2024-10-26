@@ -19,8 +19,9 @@ namespace AK_Base {
 	)
 		: Actor(name)
 		, m_WorldMatrix(DirectX::XMMatrixIdentity())
-		, m_Position(0.0f,0.0f,0.0f)
+		, m_Position(0.0f, 0.0f, 0.0f)
 		, m_Rotation(0.0f)
+		, m_Scale(1.0f, 1.0f, 1.0f)
 		, m_IsVisible(true)
 	{
 		m_ModelRender = std::make_unique<ModelRender>(shader);
@@ -56,6 +57,7 @@ namespace AK_Base {
 	{
 		m_WorldMatrix = DirectX::XMMatrixIdentity();
 		m_WorldMatrix *= DirectX::XMMatrixRotationY(m_Rotation);
+		m_WorldMatrix *= DirectX::XMMatrixScaling(m_Scale.x, m_Scale.y, m_Scale.z);
 		m_WorldMatrix *= DirectX::XMMatrixTranslation(m_Position.x, m_Position.y, m_Position.z);
 	}
 }

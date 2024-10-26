@@ -18,7 +18,10 @@ namespace Piece {
 		: AK_Base::ModelActor(shader, name, fileName)
 		, m_Value(0)
 	{
-
+		auto scale = 0.03f;
+		m_Scale.x = scale;
+		m_Scale.y = scale;
+		m_Scale.z = scale;
 	}
 
 	//--------------------------------------------------------------------------------------

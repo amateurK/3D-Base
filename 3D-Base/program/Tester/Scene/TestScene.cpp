@@ -23,7 +23,7 @@ namespace Scene {
 		myGame->GetRootActor()->AddChild(piece1);
 		piece1->SetPosition(-3.0f, 0.0f, 3.0f);
 
-		auto piece2 = new Piece::Piece(myGame->GetTestShader(), L"no.2", L"resource/testData/Sphere.fbx");
+		auto piece2 = new Piece::Piece(myGame->GetTestShader(), L"no.2", L"resource/testData/CandyRockStar.fbx");
 		myGame->GetRootActor()->AddChild(piece2);
 		piece2->SetPosition(3.0f, 0.0f, 3.0f);
 
