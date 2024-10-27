@@ -19,13 +19,15 @@ namespace Scene {
 		//auto testobj = new AK_Base::ModelActor(Game->GetBasicShader());
 		//Game->GetRootActor()->AddChild(testobj);
 
-		auto piece1 = new Piece::Piece(myGame->GetTestShader(), L"no.1", L"resource/testData/Sphere.fbx");
+		auto piece1 = new Piece::Piece(myGame->GetTestShader(), L"no.1", L"resource/testData/Alicia_solid_Unity.FBX");
 		myGame->GetRootActor()->AddChild(piece1);
 		piece1->SetPosition(-3.0f, 0.0f, 3.0f);
+		piece1->Scaling(0.03f);
 
 		auto piece2 = new Piece::Piece(myGame->GetTestShader(), L"no.2", L"resource/testData/CandyRockStar.fbx");
 		myGame->GetRootActor()->AddChild(piece2);
 		piece2->SetPosition(3.0f, 0.0f, 3.0f);
+		piece2->Scaling(0.03f);
 
 
 		// ƒJƒƒ‰‚Ì€”õ
@@ -33,8 +35,8 @@ namespace Scene {
 
 		//const XMVECTOR eye = { 0.0f, 1.0f, -5.0f, 0.0f };
 		//const XMVECTOR at = { 0.0f, 1.0f, 0.0f, 0.0f };
-		const XMVECTOR eye = { 2.0f, 2.0f, -3.0f, 0.0f };
-		const XMVECTOR at = { 0.0f, 0.0f, 3.0f, 0.0f };
+		const XMVECTOR eye = { 0.0f, 2.0f, -1.0f, 0.0f };
+		const XMVECTOR at = { 0.0f, 2.0f, 3.0f, 0.0f };
 		const XMVECTOR up = { 0.0f, 1.0f, 0.0f, 0.0f };
 		m_Camera->SetCamera(eye, at, up);
 
