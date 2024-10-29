@@ -168,8 +168,10 @@ namespace AK_Base {
 
 		// Create a rasterizer state object that tells the rasterizer stage how to behave
 		D3D11_RASTERIZER_DESC rasterizerState = {};
+		//rasterizerState.FillMode = D3D11_FILL_SOLID;
+		//rasterizerState.CullMode = D3D11_CULL_BACK;
 		rasterizerState.FillMode = D3D11_FILL_WIREFRAME;
-		rasterizerState.CullMode = D3D11_CULL_BACK;
+		rasterizerState.CullMode = D3D11_CULL_NONE;
 		rasterizerState.FrontCounterClockwise = false;
 		rasterizerState.DepthBias = false;
 		rasterizerState.DepthBiasClamp = 0;
@@ -225,7 +227,7 @@ namespace AK_Base {
 		m_ImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// フレームレートの設定
-		SetFrameRate(0);
+		SetFrameRate(60);
 
 		return S_OK;
 	}
