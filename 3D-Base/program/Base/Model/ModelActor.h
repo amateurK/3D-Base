@@ -25,6 +25,8 @@ namespace AK_Base {
 		DirectX::XMFLOAT3A m_Position;
 		/// @brief 回転角度
 		float m_Rotation;
+		/// @brief スケール
+		DirectX::XMFLOAT3A m_Scale;
 
 		/// @brief 表示するか
 		/// @details true = 表示

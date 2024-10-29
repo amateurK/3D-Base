@@ -45,7 +45,8 @@ namespace Mesh {
 		uint32_t NumFace;
 
 		/// @brief デストラクタ
-		~MaterialData() {
+		~MaterialData() 
+		{
 			IndexBuffer.Reset();
 			VertexBuffer.Reset();
 		}

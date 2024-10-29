@@ -56,6 +56,21 @@ namespace Piece {
 			m_Position = DirectX::XMFLOAT3A(x, y, z);
 		}
 
+		/// @brief サイズの変更
+		/// @param x x軸方向
+		/// @param y y軸方向
+		/// @param z z軸方向
+		inline void Scaling(float x, float y, float z)
+		{
+			m_Scale = DirectX::XMFLOAT3A(x, y, z);
+		}
+		/// @brief サイズの変更
+		/// @param 倍率
+		inline void Scaling(float scale)
+		{
+			m_Scale = DirectX::XMFLOAT3A(scale, scale, scale);
+		}
+
 		// 移動可能な場所を返す
 
 		void* operator new(size_t size) {

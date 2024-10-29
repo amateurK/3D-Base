@@ -2,18 +2,46 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
 // FBXファイルから読み込むメッシュデータ
+// Assimp_native_4.1_v142を使用
+// ツール -> NuGetパッケージマネージャ -> ソリューションのNuGetパッケージの管理
+//   からパッケージソースがnuget.orgの状態で検索をかけると出てくる
+// Assimpにも種類がいろいろある？どれがいいのかは不明
+// 追加のインクルードディレクトリに以下を追加すると便利
+// 　$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include
+// プロパティ -> ビルドイベント -> ビルド後のイベントにこれを入力するとdllを自動でexeの横に置いてくれる
+//   xcopy /Y "$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\lib\x64-Debug\*.dll" "$(OutDir)"
+// 
 // 
 // 製作者	: amateurK
 // 作成日	: 2024/08/05
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "Mesh.h"
 
+// 対応するlibファイルを読み込み
+#if defined( DEBUG ) || defined( _DEBUG )
+// Debug用
+#pragma comment(lib, "../packages/Assimp_native_4.1_v142.4.1.0/build/native/lib/x64-Debug/assimp-vc142-mtd.lib")
+#else
+// Debug用
+#pragma comment(lib, "../packages/Assimp_native_4.1_v142.4.1.0/build/native/lib/x64-Release/assimp-vc142-mt.lib")
+#endif
+
+
+
 namespace Mesh {
+
+	/// @brief インポート時のパラメータ
+	struct ImportSettings
+	{
+		/// @brief U座標を反転させるか
+		bool InverseU = false;
+		/// @brief V座標を反転させるか
+		bool InverseV = false;
+	};
 
 	/// @brief シンプルな立方体のメッシュデータ
 	__declspec(align(16))
-		class FbxMesh
-		: public Mesh
+		class FbxMesh : public Mesh
 	{
 	private:
 
@@ -36,6 +64,17 @@ namespace Mesh {
 		virtual HRESULT CreateMesh(ID3D11Device* const device,
 			ID3D11DeviceContext* const context,
 			const std::wstring fileName = L"") override;
+		/// @brief メッシュを作成
+		/// @param device デバイスへのポインタ
+		/// @param context デバイスコンテキストへのポインタ
+		/// @param fileName FBXファイル名
+		/// @param settings インポート時のパラメータ
+		/// @return 正常に作成できたか
+		HRESULT CreateMesh(ID3D11Device* const device,
+			ID3D11DeviceContext* const context,
+			const std::wstring fileName = L"",
+			ImportSettings* settings = nullptr
+			);
 
 		/// @brief マテリアルを指定して描画
 		/// @param context デバイスコンテキストへのポインタ

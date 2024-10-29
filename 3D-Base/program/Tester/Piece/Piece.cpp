@@ -18,7 +18,6 @@ namespace Piece {
 		: AK_Base::ModelActor(shader, name, fileName)
 		, m_Value(0)
 	{
-
 	}
 
 	//--------------------------------------------------------------------------------------

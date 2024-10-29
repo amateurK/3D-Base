@@ -19,4 +19,8 @@ void main(
 )
 {
 	outColor = inColor;
+	
+	// テクスチャテスト用
+	outColor = float4(inTexcoord.xy, 1, 1);
+
 }
