@@ -13,11 +13,18 @@ namespace Camera {
 	__declspec(align(16))
 		class Camera
 	{
-	private:
+	protected:
 		/// @brief ビュー行列
 		DirectX::XMMATRIX m_View;
 		/// @brief 射影行列
 		DirectX::XMMATRIX m_Projection;
+
+		/// @brief カメラの位置
+		DirectX::XMVECTOR m_VectorEye;
+		/// @brief カメラの注視点
+		DirectX::XMVECTOR m_VectorAt;
+		/// @brief カメラの上方向ベクトル
+		DirectX::XMVECTOR m_VectorUp;
 
 	public:
 		/// @brief コンストラクタ
@@ -26,12 +33,14 @@ namespace Camera {
 		~Camera() = default;
 
 		/// @brief ビュー行列(カメラ)をセット
+		/// @details nullptrを入れるとその部分は無視する
 		/// @param eye カメラの位置
 		/// @param at カメラの注視点
 		/// @param up カメラの上方向ベクトル
-		void SetCamera(const DirectX::XMVECTOR& eye,
-			const DirectX::XMVECTOR& at = { 0.0f, 0.0f, 0.0f, 0.0f },
-			const DirectX::XMVECTOR& up = { 0.0f, 1.0f, 0.0f, 0.0f });
+		void SetCamera(const DirectX::XMVECTOR* eye = nullptr,
+			const DirectX::XMVECTOR* at = nullptr,
+			const DirectX::XMVECTOR* up = nullptr);
+
 
 		/// @brief 射影行列をセット
 		/// @param angleY Y方向の視野（角度）
@@ -47,9 +56,11 @@ namespace Camera {
 		/// @param matrix ビュー行列をかける行列
 		void MoveCamera(const DirectX::XMMATRIX& matrix);
 
+		/// @brief View行列を更新
+		inline void UpdateViewMatrix();
 
-		DirectX::XMMATRIX GetView() const { return m_View; }
-		DirectX::XMMATRIX GetProjection() const { return m_Projection; }
+		inline DirectX::XMMATRIX GetView() const { return m_View; }
+		inline DirectX::XMMATRIX GetProjection() const { return m_Projection; }
 
 
 		void* operator new(size_t size) {

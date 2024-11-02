@@ -14,7 +14,7 @@
 class MyGame :public AK_Base::BaseWindow
 {
 private:
-	// シェーダー管理クラスを作ったほうが良いかも
+	// TODO : シェーダー管理クラスを作ったほうが良いかも
 	std::unique_ptr<Shader::Shader> m_TestShader;
 
 public:
