@@ -21,7 +21,7 @@ namespace Scene {
 		//auto testobj = new AK_Base::ModelActor(Game->GetBasicShader());
 		//Game->GetRootActor()->AddChild(testobj);
 
-		auto piece1 = new Piece::Piece(myGame->GetTestShader(), L"no.1", L"resource/testData/Alicia_solid_Unity.FBX");
+		auto piece1 = new Piece::Piece(myGame->GetTestShader(), L"no.1", L"resource/testData/Alicia_FBX/Alicia_solid_Unity.FBX");
 		this->AddChild(piece1);
 		piece1->SetPosition(-3.0f, 0.0f, 3.0f);
 		piece1->Scaling(0.05f);

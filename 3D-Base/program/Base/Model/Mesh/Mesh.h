@@ -7,6 +7,7 @@
 // 製作者	: amateurK
 // 作成日	: 2024/08/01
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+#include "../PictureResource.h" 
 
 namespace Mesh {
 
@@ -43,6 +44,8 @@ namespace Mesh {
 		uint32_t NumVertex;
 		/// @brief このマテリアルを使用しているポリゴン数
 		uint32_t NumFace;
+		/// @brief 使用されているテクスチャ
+		AK_Base::PictureResource Texture;
 
 		/// @brief デストラクタ
 		~MaterialData() 

@@ -98,6 +98,9 @@
     <ClCompile Include="program\Base\Camera\DebugCamera.cpp">
       <Filter>Base\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Model\PictureResource.cpp">
+      <Filter>Base\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\pch.h" />
@@ -178,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="program\Base\Camera\DebugCamera.h">
       <Filter>Base\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Tools\FilePath.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\PictureResource.h">
+      <Filter>Base\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

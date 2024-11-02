@@ -63,6 +63,7 @@ namespace AK_Base {
 			{
 				auto shader = (Shader::LambertShader*)(m_Shader);
 				shader->SetWorldMatrix(worldMatrix);
+				//shader->SetWorldMatrix(worldMatrix * DirectX::XMMatrixTranslation(0.0f, 0.0f, id * 1.0f));
 
 				shader->SetChangesFrame(lightDirection);
 				shader->SetMaterial(materialAmbient, materialDiffuse);

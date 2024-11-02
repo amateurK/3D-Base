@@ -2,6 +2,7 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
 // FBXファイルから読み込むメッシュデータ
+// 
 // Assimp_native_4.1_v142を使用
 // ツール -> NuGetパッケージマネージャ -> ソリューションのNuGetパッケージの管理
 //   からパッケージソースがnuget.orgの状態で検索をかけると出てくる
@@ -17,16 +18,6 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "Mesh.h"
 
-// 対応するlibファイルを読み込み
-#if defined( DEBUG ) || defined( _DEBUG )
-// Debug用
-#pragma comment(lib, "../packages/Assimp_native_4.1_v142.4.1.0/build/native/lib/x64-Debug/assimp-vc142-mtd.lib")
-#else
-// Debug用
-#pragma comment(lib, "../packages/Assimp_native_4.1_v142.4.1.0/build/native/lib/x64-Release/assimp-vc142-mt.lib")
-#endif
-
-
 
 namespace Mesh {
 
@@ -37,6 +28,11 @@ namespace Mesh {
 		bool InverseU = false;
 		/// @brief V座標を反転させるか
 		bool InverseV = false;
+
+		ImportSettings(bool invU = false, bool invV = false)
+			: InverseU(invU)
+			, InverseV(invV)
+		{}
 	};
 
 	/// @brief シンプルな立方体のメッシュデータ

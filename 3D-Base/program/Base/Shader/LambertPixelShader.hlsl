@@ -7,7 +7,7 @@
 // 作成日	: 2024/08/02
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-texture2D textureDiffuse : register(t0);
+Texture2D textureDiffuse : register(t0);
 SamplerState samplerPoint : register(s0);
 
 //--------------------------------------------------------------------------------------
@@ -18,9 +18,9 @@ void main(
 	out float4 outColor : SV_Target
 )
 {
-	outColor = inColor;
+	outColor = textureDiffuse.Sample(samplerPoint, inTexcoord);
 	
 	// テクスチャテスト用
-	outColor = float4(inTexcoord.xy, 1, 1);
+	//outColor = float4(inTexcoord.xy, 1, 1);
 
 }

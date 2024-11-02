@@ -168,10 +168,10 @@ namespace AK_Base {
 
 		// Create a rasterizer state object that tells the rasterizer stage how to behave
 		D3D11_RASTERIZER_DESC rasterizerState = {};
-		//rasterizerState.FillMode = D3D11_FILL_SOLID;
-		//rasterizerState.CullMode = D3D11_CULL_BACK;
-		rasterizerState.FillMode = D3D11_FILL_WIREFRAME;
-		rasterizerState.CullMode = D3D11_CULL_NONE;
+		rasterizerState.FillMode = D3D11_FILL_SOLID;
+		rasterizerState.CullMode = D3D11_CULL_BACK;
+		//rasterizerState.FillMode = D3D11_FILL_WIREFRAME;
+		//rasterizerState.CullMode = D3D11_CULL_NONE;
 		rasterizerState.FrontCounterClockwise = false;
 		rasterizerState.DepthBias = false;
 		rasterizerState.DepthBiasClamp = 0;

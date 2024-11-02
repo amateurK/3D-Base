@@ -91,7 +91,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>$(ProjectDir)program\pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(SolutionDir)packages\directxtex_desktop_win10.2024.10.29.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,7 +149,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>$(ProjectDir)program\pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(SolutionDir)packages\directxtex_desktop_win10.2024.10.29.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -210,6 +210,7 @@
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp" />
     <ClCompile Include="program\Base\Model\ModelActor.cpp" />
     <ClCompile Include="program\Base\Model\ModelRender.cpp" />
+    <ClCompile Include="program\Base\Model\PictureResource.cpp" />
     <ClCompile Include="program\Base\Shader\BasicShader.cpp" />
     <ClCompile Include="program\Base\Shader\LambertShader.cpp" />
     <ClCompile Include="program\Base\Shader\Shader.cpp" />
@@ -241,11 +242,13 @@
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h" />
     <ClInclude Include="program\Base\Model\ModelActor.h" />
     <ClInclude Include="program\Base\Model\ModelRender.h" />
+    <ClInclude Include="program\Base\Model\PictureResource.h" />
     <ClInclude Include="program\Base\Reader\ReadData.h" />
     <ClInclude Include="program\Base\Shader\BasicShader.h" />
     <ClInclude Include="program\Base\Shader\LambertShader.h" />
     <ClInclude Include="program\Base\Shader\Shader.h" />
     <ClInclude Include="program\Base\Singleton.h" />
+    <ClInclude Include="program\Base\Tools\FilePath.h" />
     <ClInclude Include="program\Base\Tools\WStringToString.h" />
     <ClInclude Include="program\Base\WinMain.h" />
     <ClInclude Include="program\pch.h" />
@@ -291,11 +294,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets" Condition="Exists('..\packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets')" />
+    <Import Project="..\packages\directxtex_desktop_win10.2024.10.29.1\build\native\directxtex_desktop_win10.targets" Condition="Exists('..\packages\directxtex_desktop_win10.2024.10.29.1\build\native\directxtex_desktop_win10.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets'))" />
+    <Error Condition="!Exists('..\packages\directxtex_desktop_win10.2024.10.29.1\build\native\directxtex_desktop_win10.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtex_desktop_win10.2024.10.29.1\build\native\directxtex_desktop_win10.targets'))" />
   </Target>
 </Project>
