@@ -20,10 +20,14 @@ namespace Camera {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Camera::SetCamera(const DirectX::XMVECTOR& eye, const DirectX::XMVECTOR& at, const DirectX::XMVECTOR& up)
+	void Camera::SetCamera(const DirectX::XMVECTOR* eye, const DirectX::XMVECTOR* at, const DirectX::XMVECTOR* up)
 	{
 		// eye Ç∆ at ÇÃ x,y,z ÇÃílÇ™ìØÇ∂ÇæÇ¡ÇΩèÍçáÉGÉâÅ[Ç…Ç»ÇÈÇÃÇ≈íçà”
-		m_View = XMMatrixLookAtLH(eye, at, up);
+		if(eye != nullptr)m_VectorEye = *eye;
+		if(at != nullptr)m_VectorAt = *at;
+		if(up != nullptr)m_VectorUp = *up;
+
+		UpdateViewMatrix();
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -36,5 +40,10 @@ namespace Camera {
 	void Camera::MoveCamera(const DirectX::XMMATRIX& matrix)
 	{
 		m_View = matrix * m_View;
+	}
+	//---------------------------------------------------------------------------------------------
+	void Camera::UpdateViewMatrix()
+	{
+		m_View = XMMatrixLookAtLH(m_VectorEye, m_VectorAt, m_VectorUp);
 	}
 }

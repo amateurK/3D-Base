@@ -8,9 +8,6 @@
     <Filter Include="Base">
       <UniqueIdentifier>{4ec5a09d-79c0-49fe-bd56-584afbec1b50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Math">
-      <UniqueIdentifier>{5dc54e4b-2c7f-4819-8bda-525d7af4d4d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tester">
       <UniqueIdentifier>{78d9f497-ee4c-4ae3-bfa5-dfdc674e816e}</UniqueIdentifier>
     </Filter>
@@ -37,6 +34,9 @@
     </Filter>
     <Filter Include="Base\Tools">
       <UniqueIdentifier>{6da6592d-044b-4dfe-ae65-3dc7643a050c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Math">
+      <UniqueIdentifier>{5dc54e4b-2c7f-4819-8bda-525d7af4d4d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="program\Base\Model\Mesh\FbxMesh.cpp">
       <Filter>Base\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Camera\DebugCamera.cpp">
+      <Filter>Base\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="program\Base\Tools\WStringToString.h">
       <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Camera\DebugCamera.h">
+      <Filter>Base\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
