@@ -202,7 +202,6 @@
     <ClCompile Include="program\Base\Actor.cpp" />
     <ClCompile Include="program\Base\BaseWindow.cpp" />
     <ClCompile Include="program\Base\Camera\Camera.cpp" />
-    <ClCompile Include="program\Base\Camera\DebugCamera.cpp" />
     <ClCompile Include="program\Base\Math\AK_Math.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\BasicMesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\FbxMesh.cpp" />
@@ -229,7 +228,6 @@
     <ClInclude Include="program\Base\Actor.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
     <ClInclude Include="program\Base\Camera\Camera.h" />
-    <ClInclude Include="program\Base\Camera\DebugCamera.h" />
     <ClInclude Include="program\Base\Math\AK_Math.h" />
     <ClInclude Include="program\Base\Math\Capsule.h" />
     <ClInclude Include="program\Base\Math\Line.h" />
