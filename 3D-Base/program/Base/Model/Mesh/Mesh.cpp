@@ -13,9 +13,8 @@ namespace Mesh {
 
 	//--------------------------------------------------------------------------------------
 	Mesh::Mesh()
-		: m_Mesh(nullptr)
 	{
-		m_Material.clear();
+		m_Mesh.clear();
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -27,20 +26,19 @@ namespace Mesh {
 	//--------------------------------------------------------------------------------------
 	void Mesh::DestroyMesh()
 	{
-		m_Mesh.reset();
-		m_Material.clear();
+		m_Mesh.clear();
 	}
 
 	//--------------------------------------------------------------------------------------
 	void Mesh::Render(ID3D11DeviceContext* const context,
-		std::function<void(int, const std::vector<MaterialData>)> customFunction,
+		std::function<void(int, const std::vector<MeshData>)> customFunction,
 		const UINT textureSlot)
 	{
 		// 各マテリアルごとに描画する
-		for (uint32_t materialID = 0; materialID < m_Mesh->NumMaterial; materialID++)
+		for (uint32_t materialID = 0; materialID < m_Mesh.size(); materialID++)
 		{
 			if (customFunction) {
-				customFunction(materialID, m_Material);
+				customFunction(materialID, m_Mesh);
 			}
 
 			DrawSubset(context, materialID, textureSlot);

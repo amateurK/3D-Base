@@ -14,6 +14,7 @@ namespace Mesh {
 	enum class MeshType {
 		BasicMesh,
 		FbxMesh,
+		VRMMesh,
 	};
 
 	/// @brief メッシュデータを管理するマネージャークラス

@@ -9,8 +9,7 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "MeshManager.h"
 #include "../../BaseWindow.h"
-#include "BasicMesh.h"
-#include "FbxMesh.h"
+#include "VRMMesh.h"
 
 namespace Mesh {
 
@@ -52,11 +51,8 @@ namespace Mesh {
 		Mesh* newMesh = nullptr;
 		switch (meshType) {
 		default:
-		case MeshType::BasicMesh:
-			newMesh = new BasicMesh();
-			break;
-		case MeshType::FbxMesh:
-			newMesh = new FbxMesh();
+		case MeshType::VRMMesh:
+			newMesh = new VRMMesh();
 			break;
 		}
 		hr = newMesh->CreateMesh(d3dDevice, d3dDeviceContext, fileName);

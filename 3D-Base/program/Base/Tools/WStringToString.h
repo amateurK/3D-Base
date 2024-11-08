@@ -20,5 +20,15 @@ namespace Tools {
 		return str;
 	}
 
-	// ChatGPT‚ª—DG
+
+	/// @brief stringŒ^‚ğwstringŒ^‚É•ÏŠ·‚·‚é
+	/// @param str •ÏŠ·‚µ‚½‚¢stringŒ^‚Ì•¶š—ñ
+	/// @return •ÏŠ·‚µ‚½wstringŒ^‚Ì•¶š—ñ
+	inline std::wstring StringToWString(const std::string& str)
+	{
+		int bufferSize = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, nullptr, 0);
+		std::wstring wstr(bufferSize, 0);
+		MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, &wstr[0], bufferSize);
+		return wstr;
+	}
 }
