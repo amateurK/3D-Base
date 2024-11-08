@@ -65,9 +65,6 @@
     <ClCompile Include="program\Base\Shader\BasicShader.cpp">
       <Filter>Base\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="program\Base\Model\Mesh\BasicMesh.cpp">
-      <Filter>Base\Model\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="program\Tester\Scene\Scene.cpp">
       <Filter>Tester\Scene</Filter>
     </ClCompile>
@@ -91,9 +88,6 @@
     </ClCompile>
     <ClCompile Include="program\Base\Shader\LambertShader.cpp">
       <Filter>Base\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Base\Model\Mesh\FbxMesh.cpp">
-      <Filter>Base\Model\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="program\Base\Camera\DebugCamera.cpp">
       <Filter>Base\Camera</Filter>
@@ -149,9 +143,6 @@
     <ClInclude Include="program\Base\Shader\BasicShader.h">
       <Filter>Base\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="program\Base\Model\Mesh\BasicMesh.h">
-      <Filter>Base\Model\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="program\Tester\Scene\Scene.h">
       <Filter>Tester\Scene</Filter>
     </ClInclude>
@@ -178,9 +169,6 @@
     </ClInclude>
     <ClInclude Include="program\Base\Reader\ReadData.h">
       <Filter>Base\Reader</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Model\Mesh\FbxMesh.h">
-      <Filter>Base\Model\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\Tools\WStringToString.h">
       <Filter>Base\Tools</Filter>

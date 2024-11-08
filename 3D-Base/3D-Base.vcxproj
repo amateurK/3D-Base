@@ -204,8 +204,6 @@
     <ClCompile Include="program\Base\Camera\Camera.cpp" />
     <ClCompile Include="program\Base\Camera\DebugCamera.cpp" />
     <ClCompile Include="program\Base\Math\AK_Math.cpp" />
-    <ClCompile Include="program\Base\Model\Mesh\BasicMesh.cpp" />
-    <ClCompile Include="program\Base\Model\Mesh\FbxMesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\VRMMesh.cpp" />
@@ -238,8 +236,6 @@
     <ClInclude Include="program\Base\Math\Line.h" />
     <ClInclude Include="program\Base\Math\Point.h" />
     <ClInclude Include="program\Base\Math\Segment.h" />
-    <ClInclude Include="program\Base\Model\Mesh\BasicMesh.h" />
-    <ClInclude Include="program\Base\Model\Mesh\FbxMesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h" />
     <ClInclude Include="program\Base\Model\Mesh\VRMMesh.h" />

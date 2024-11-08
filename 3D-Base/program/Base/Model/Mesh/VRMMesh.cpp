@@ -38,16 +38,6 @@ namespace Mesh {
 	//--------------------------------------------------------------------------------------
 	HRESULT VRMMesh::CreateMesh(ID3D11Device* const device,
 		ID3D11DeviceContext* const context,
-		const std::wstring fileName)
-	{
-		// ImportSettingを初期状態にする
-		// overrideしないでいい感じに実装できないかなぁ
-		return CreateMesh(device, context, fileName, nullptr);
-	}
-
-	//--------------------------------------------------------------------------------------
-	HRESULT VRMMesh::CreateMesh(ID3D11Device* const device,
-		ID3D11DeviceContext* const context,
 		const std::wstring fileName,
 		ImportSettings* settings)
 	{
@@ -66,11 +56,44 @@ namespace Mesh {
 			return S_FALSE;
 		}
 
-		// メッシュの作成
-		m_Mesh = std::make_unique<MeshData>();
-		// マテリアルを入れる準備
-		m_Mesh->NumMaterial = 0;
-		m_Material.clear();
+		// メッシュとテクスチャを入れる準備
+		m_Mesh.clear();
+		m_Texture.clear();
+
+		// マテリアルごとにテクスチャを読み込み
+		for (const auto& material : model.materials) {
+
+			// マテリアルのプロパティからテクスチャのインデックスを取り出す
+			// このインデックスはVRMファイル内のtextures配列のインデックスのこと
+			if (material.values.find("baseColorTexture") != material.values.end()) {
+				int textureIndex = material.values.at("baseColorTexture").TextureIndex();
+				
+				// テクスチャ配列からテクスチャ情報を抜き出す
+				if (textureIndex >= 0 && textureIndex < model.textures.size()) {
+					const auto& texture = model.textures[textureIndex];
+					// 画像データを参照するインデックス
+					int imageIndex = texture.source;
+
+					// 画像データを取り出す
+					if (imageIndex >= 0 && imageIndex < model.images.size()) {
+						const auto& image = model.images[imageIndex];
+
+						AK_Base::PictureResource resource;
+						// 画像データをロード
+						hr = resource.LoadPicture(image.image.data(),
+							Point<int>(image.width, image.height), image.component);
+						if (FAILED(hr)) 
+						{
+							throw std::exception("テクスチャの読み込みに失敗。");
+						}
+
+						// テクスチャを追加
+						m_Texture.push_back(std::move(resource));
+					}
+				}
+			}
+		}
+
 
 		// メッシュ情報を読み取り
 		for (const auto& mesh : model.meshes)
@@ -78,7 +101,7 @@ namespace Mesh {
 			for (const auto& primitive : mesh.primitives) {
 
 				// m_Materialにpushbackする用のデータ
-				MaterialData matData;
+				MeshData matData;
 
 				std::vector<SimpleVertex> vertices;
 				std::vector<WORD> indices;
@@ -88,12 +111,12 @@ namespace Mesh {
 				const tinygltf::BufferView& posBufferView = model.bufferViews[posAccessor.bufferView];
 				const tinygltf::Buffer& posBuffer = model.buffers[posBufferView.buffer];
 				const float* positions = reinterpret_cast<const float*>(&posBuffer.data[posBufferView.byteOffset + posAccessor.byteOffset]);
-
+				// 法線情報を取得
 				const tinygltf::Accessor& normAccessor = model.accessors[primitive.attributes.find("NORMAL")->second];
 				const tinygltf::BufferView& normBufferView = model.bufferViews[normAccessor.bufferView];
 				const tinygltf::Buffer& normBuffer = model.buffers[normBufferView.buffer];
 				const float* normals = reinterpret_cast<const float*>(&normBuffer.data[normBufferView.byteOffset + normAccessor.byteOffset]);
-
+				// UV座標の取得
 				const tinygltf::Accessor& texAccessor = model.accessors[primitive.attributes.find("TEXCOORD_0")->second];
 				const tinygltf::BufferView& texBufferView = model.bufferViews[texAccessor.bufferView];
 				const tinygltf::Buffer& texBuffer = model.buffers[texBufferView.buffer];
@@ -105,7 +128,7 @@ namespace Mesh {
 					vertex.Pos = DirectX::XMFLOAT3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
 					vertex.Normal = DirectX::XMFLOAT3(normals[i * 3], normals[i * 3 + 1], normals[i * 3 + 2]);
 					vertex.Texcoord = DirectX::XMFLOAT2(texcoords[i * 2], texcoords[i * 2 + 1]);
-					vertices.push_back(vertex);
+					vertices.push_back(std::move(vertex));
 				}
 				matData.NumVertex = static_cast<uint32_t>(vertices.size());
 
@@ -130,7 +153,7 @@ namespace Mesh {
 
 				// インデックスバッファ用配列に入れる
 				for (size_t i = 0; i < indexAccessor.count; ++i) {
-					indices.push_back(static_cast<WORD>(indexData[i]));
+					indices.push_back(std::move(static_cast<WORD>(indexData[i])));
 				}
 				matData.NumFace = static_cast<uint32_t>(indices.size()) / 3;
 
@@ -145,9 +168,17 @@ namespace Mesh {
 				if (FAILED(hr))
 					return hr;
 
+				// 使用するテクスチャのリソースビューを設定
+				auto matIndex = primitive.material;
+				if (matIndex >= 0 && matIndex < m_Texture.size()) {
+					matData.SRView = m_Texture[matIndex].GetD3DSRView();
+				}
+				else {
+					matData.SRView = nullptr;
+				}
+
 				// m_Materialに追加
-				m_Mesh->NumMaterial++;
-				m_Material.push_back(matData);
+				m_Mesh.push_back(std::move(matData));
 			}
 		}
 
@@ -155,22 +186,24 @@ namespace Mesh {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void VRMMesh::DrawSubset(ID3D11DeviceContext* const context, const int id, const UINT testureSlot)
+	void VRMMesh::DrawSubset(ID3D11DeviceContext* const context, const int id, const UINT textureSlot)
 	{
-		if (m_Material[id].NumFace == 0)
+		if (m_Mesh[id].NumFace == 0)
 			return;
 
 		// Set vertex buffer
 		UINT stride = sizeof(SimpleVertex);
 		UINT offset = 0;
-		context->IASetVertexBuffers(0, 1, m_Material[id].VertexBuffer.GetAddressOf(), &stride, &offset);
+		context->IASetVertexBuffers(0, 1, m_Mesh[id].VertexBuffer.GetAddressOf(), &stride, &offset);
 		// Set index buffer
-		context->IASetIndexBuffer(m_Material[id].IndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+		context->IASetIndexBuffer(m_Mesh[id].IndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
 
 		// 画像をセット
-		context->PSSetShaderResources(0, 1, m_Material[id].Texture.GetD3DSRView());
+		if (m_Mesh[id].SRView != nullptr) {
+			context->PSSetShaderResources(textureSlot, 1, m_Mesh[id].SRView);
+		}
 
 		// Render a Cube
-		context->DrawIndexed(m_Material[id].NumFace * 3, 0, 0);
+		context->DrawIndexed(m_Mesh[id].NumFace * 3, 0, 0);
 	}
 }

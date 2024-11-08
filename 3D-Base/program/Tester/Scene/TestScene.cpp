@@ -70,13 +70,10 @@ namespace Scene {
 			bool x = (GetAsyncKeyState('X') & 0x8000) == 0x8000;
 
 			// ƒJƒƒ‰‚ÌŽŽ‰^“]
-			//float x = 1.0f * elapsedTime;
-			//float y = 0.0f * elapsedTime;
-			//float z = 0.0f * elapsedTime;
-			//m_Camera->MoveWithAxis(x, y, z);
-			float front = (float)(w - s) * elapsedTime;
-			float right = (float)(d - a) * elapsedTime;
-			float up = (float)(z - x) * elapsedTime;
+			float speed = 2.0f;
+			float front = (float)(w - s) * elapsedTime * speed;
+			float right = (float)(d - a) * elapsedTime * speed;
+			float up = (float)(z - x) * elapsedTime * speed;
 			m_Camera->MoveWithViewpoint(front, right, up);
 		}
 

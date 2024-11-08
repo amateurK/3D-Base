@@ -59,7 +59,7 @@ namespace AK_Base {
 		XMFLOAT4 materialAmbient = { 1.0f, 1.0f, 1.0f, 1.0f };
 		XMFLOAT4 materialDiffuse = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-		m_Mesh->Render(d3dDeviceContext, [&](int id, const std::vector<Mesh::MaterialData> material)
+		m_Mesh->Render(d3dDeviceContext, [&](int id, const std::vector<Mesh::MeshData> material)
 			{
 				auto shader = (Shader::LambertShader*)(m_Shader);
 				shader->SetWorldMatrix(worldMatrix);

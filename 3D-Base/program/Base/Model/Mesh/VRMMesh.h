@@ -36,21 +36,13 @@ namespace Mesh {
 		/// @param device デバイスへのポインタ
 		/// @param context デバイスコンテキストへのポインタ
 		/// @param fileName VRMファイル名
+		/// @param settings インポート時のパラメータ
 		/// @return 正常に作成できたか
 		virtual HRESULT CreateMesh(ID3D11Device* const device,
 			ID3D11DeviceContext* const context,
-			const std::wstring fileName = L"") override;
-		/// @brief メッシュを作成
-		/// @param device デバイスへのポインタ
-		/// @param context デバイスコンテキストへのポインタ
-		/// @param fileName VRMファイル名
-		/// @param settings インポート時のパラメータ
-		/// @return 正常に作成できたか
-		HRESULT CreateMesh(ID3D11Device* const device,
-			ID3D11DeviceContext* const context,
 			const std::wstring fileName = L"",
 			ImportSettings* settings = nullptr
-		);
+		) override;
 
 		/// @brief マテリアルを指定して描画
 		/// @param context デバイスコンテキストへのポインタ

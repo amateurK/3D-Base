@@ -35,10 +35,26 @@ namespace AK_Base {
 		/// @brief デストラクタ
 		~PictureResource();
 
-		/// @brief 画像をロードする
+		/// @brief 画像をロードする（File）
 		/// @param filename 画像へのパス
 		/// @return ロードできたか
 		virtual HRESULT LoadPicture(const std::wstring& filename);
+
+		/// @brief 画像をロードする（Memory）
+		/// @param imageData 画像のバイトデータ
+		/// @param imageSize imageDataのサイズ
+		/// @param size 画像のサイズ
+		/// @return ロードできたか
+		virtual HRESULT LoadPicture(const uint8_t* imageData, size_t imageSize);
+
+		/// @brief 画像をロードする（バイナリデータ）
+		/// @param imageData 画像のバイトデータ
+		/// @param imageSize imageDataのサイズ
+		/// @param size 画像のサイズ
+		/// @param color 色数
+		/// @return ロードできたか
+		/// @details bmpファイルのような形式で来るので、自作ローダで処理している
+		virtual HRESULT LoadPicture(const uint8_t* imageData,  Point<int> size, int color = 4);
 
 		// ゲッター
 		ID3D11ShaderResourceView** GetD3DSRView() { return m_D3DShaderResourceView.GetAddressOf(); }
