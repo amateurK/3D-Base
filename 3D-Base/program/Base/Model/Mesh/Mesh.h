@@ -11,6 +11,20 @@
 
 namespace Mesh {
 
+	/// @brief インポート時のパラメータ
+	struct ImportSettings
+	{
+		/// @brief U座標を反転させるか
+		bool InverseU = false;
+		/// @brief V座標を反転させるか
+		bool InverseV = false;
+
+		ImportSettings(bool invU = false, bool invV = false)
+			: InverseU(invU)
+			, InverseV(invV)
+		{}
+	};
+
 	/// @brief メッシュデータ
 	struct MeshData
 	{

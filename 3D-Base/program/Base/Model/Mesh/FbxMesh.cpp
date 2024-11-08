@@ -113,8 +113,8 @@ namespace Mesh {
 					if (settings->InverseU)uv->x = 1 - uv->x;
 					if (settings->InverseV)uv->y = 1 - uv->y;
 				}
-
 				// TODO : テスト用、削除
+				//uv->x = 1 - uv->x;
 				uv->y = 1 - uv->y;
 				vertices[j].Pos = DirectX::XMFLOAT3(pos->x, pos->y, pos->z);
 				vertices[j].Normal = DirectX::XMFLOAT3(norm->x, norm->y, norm->z);
@@ -169,12 +169,24 @@ namespace Mesh {
 			material = scene->mMaterials[idx];
 			aiString path;
 
+			auto num0 = material->GetTextureCount(aiTextureType_AMBIENT);
+			auto num1 = material->GetTextureCount(aiTextureType_DIFFUSE);
+			auto num2 = material->GetTextureCount(aiTextureType_DISPLACEMENT);
+			auto num3 = material->GetTextureCount(aiTextureType_EMISSIVE);
+			auto num4 = material->GetTextureCount(aiTextureType_HEIGHT);
+			auto num5 = material->GetTextureCount(aiTextureType_LIGHTMAP);
+			auto num6 = material->GetTextureCount(aiTextureType_NONE);
+			auto num7 = material->GetTextureCount(aiTextureType_NORMALS);
+			auto num8 = material->GetTextureCount(aiTextureType_OPACITY);
+			auto num9 = material->GetTextureCount(aiTextureType_REFLECTION);
+			auto num10 = material->GetTextureCount(aiTextureType_UNKNOWN);
+
 			// パスの取得
-			if (material->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
+			if (material->Get(_AI_MATKEY_TEXTURE_BASE, aiTextureType_DIFFUSE, 0, path) == AI_SUCCESS)
 			{
 				auto file = std::string(path.C_Str());
 				auto texPath = Tools::GetDirectoryPath(fileName) + L"/" + Tools::StringToWString(file);
-				
+
 				// TODO : 削除
 				// psdの場合はtgaに変える（応急処置）
 

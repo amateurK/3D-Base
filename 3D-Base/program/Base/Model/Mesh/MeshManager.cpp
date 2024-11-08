@@ -11,6 +11,7 @@
 #include "../../BaseWindow.h"
 #include "BasicMesh.h"
 #include "FbxMesh.h"
+#include "VRMMesh.h"
 
 namespace Mesh {
 
@@ -57,6 +58,9 @@ namespace Mesh {
 			break;
 		case MeshType::FbxMesh:
 			newMesh = new FbxMesh();
+			break;
+		case MeshType::VRMMesh:
+			newMesh = new VRMMesh();
 			break;
 		}
 		hr = newMesh->CreateMesh(d3dDevice, d3dDeviceContext, fileName);

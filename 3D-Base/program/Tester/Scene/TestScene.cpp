@@ -21,15 +21,15 @@ namespace Scene {
 		//auto testobj = new AK_Base::ModelActor(Game->GetBasicShader());
 		//Game->GetRootActor()->AddChild(testobj);
 
-		auto piece1 = new Piece::Piece(myGame->GetTestShader(), L"no.1", L"resource/testData/Alicia_FBX/Alicia_solid_Unity.FBX");
-		this->AddChild(piece1);
-		piece1->SetPosition(-3.0f, 0.0f, 3.0f);
-		piece1->Scaling(0.05f);
+		//auto piece1 = new Piece::Piece(myGame->GetTestShader(), L"no.1", L"resource/testData/Alicia_FBX/Alicia_solid_Unity.FBX");
+		//this->AddChild(piece1);
+		//piece1->SetPosition(-3.0f, 0.0f, 3.0f);
+		//piece1->Scaling(0.05f);
 
-		auto piece2 = new Piece::Piece(myGame->GetTestShader(), L"no.2", L"resource/testData/CandyRockStar.fbx");
+		auto piece2 = new Piece::Piece(myGame->GetTestShader(), L"no.2", L"resource/testData/AvatarSample_A.vrm");
 		this->AddChild(piece2);
 		piece2->SetPosition(3.0f, 0.0f, 3.0f);
-		piece2->Scaling(0.05f);
+		piece2->Scaling(6.0f);
 
 
 		// ƒJƒƒ‰‚Ì€”õ

@@ -101,6 +101,12 @@
     <ClCompile Include="program\Base\Model\PictureResource.cpp">
       <Filter>Base\Model</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Model\Mesh\VRMMesh.cpp">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Reader\tiny_gltf.cc">
+      <Filter>Base\Reader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\pch.h" />
@@ -187,6 +193,21 @@
     </ClInclude>
     <ClInclude Include="program\Base\Model\PictureResource.h">
       <Filter>Base\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Mesh\VRMMesh.h">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Reader\json.hpp">
+      <Filter>Base\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Reader\stb_image.h">
+      <Filter>Base\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Reader\stb_image_write.h">
+      <Filter>Base\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Reader\tiny_gltf.h">
+      <Filter>Base\Reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

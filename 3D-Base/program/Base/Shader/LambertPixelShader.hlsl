@@ -21,6 +21,6 @@ void main(
 	outColor = textureDiffuse.Sample(samplerPoint, inTexcoord);
 	
 	// テクスチャテスト用
-	//outColor = float4(inTexcoord.xy, 1, 1);
+	outColor = float4(inTexcoord.xy, 1, 1);
 
 }

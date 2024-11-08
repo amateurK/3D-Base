@@ -74,8 +74,8 @@ namespace AK_Base {
 		if (FAILED(hr))return hr;
 
 		// サイズを取得
-		m_Width = meta.width;
-		m_Height = meta.height;
+		m_Width = static_cast<int>(meta.width);
+		m_Height = static_cast<int>(meta.height);
 
 		// 正常に読み込めたら画像を有効化
 		m_IsVaild = true;

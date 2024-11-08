@@ -21,20 +21,6 @@
 
 namespace Mesh {
 
-	/// @brief インポート時のパラメータ
-	struct ImportSettings
-	{
-		/// @brief U座標を反転させるか
-		bool InverseU = false;
-		/// @brief V座標を反転させるか
-		bool InverseV = false;
-
-		ImportSettings(bool invU = false, bool invV = false)
-			: InverseU(invU)
-			, InverseV(invV)
-		{}
-	};
-
 	/// @brief シンプルな立方体のメッシュデータ
 	__declspec(align(16))
 		class FbxMesh : public Mesh
