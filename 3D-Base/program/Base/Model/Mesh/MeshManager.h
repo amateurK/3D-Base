@@ -34,8 +34,8 @@ namespace Mesh {
 
 		static MeshManager* Instance;
 	public:
-		MeshManager(MeshManager&& moveFrom) = delete;
-		MeshManager& operator=(MeshManager&& moveFrom) = delete;
+		MeshManager(MeshManager&&) = delete;
+		MeshManager& operator=(MeshManager&&) = delete;
 
 		MeshManager(MeshManager const&) = delete;
 		MeshManager& operator=(MeshManager const&) = delete;
