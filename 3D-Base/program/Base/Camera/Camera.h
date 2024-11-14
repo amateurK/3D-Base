@@ -56,6 +56,18 @@ namespace Camera {
 		/// @param matrix ビュー行列をかける行列
 		void MoveCamera(const DirectX::XMMATRIX& matrix);
 
+		/// @brief 視点を基準にカメラを移動させる
+		/// @param front 前方方向への移動ベクトル
+		/// @param right 右方向への移動ベクトル
+		/// @param up 上方向への移動ベクトル
+		void MoveWithViewpoint(float front, float right, float up);
+
+		/// @brief 視点を基準にカメラを移動させる
+		/// @param x x座標への移動ベクトル
+		/// @param y y座標への移動ベクトル
+		/// @param z z座標への移動ベクトル
+		void MoveWithAxis(float x, float y, float z);
+
 		/// @brief View行列を更新
 		inline void UpdateViewMatrix();
 
