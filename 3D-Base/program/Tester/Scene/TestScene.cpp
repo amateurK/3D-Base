@@ -33,7 +33,7 @@ namespace Scene {
 
 
 		// ƒJƒƒ‰‚Ì€”õ
-		m_Camera = std::make_unique<Camera::DebugCamera>();
+		m_Camera = std::make_unique<Camera::Camera>();
 
 		//const XMVECTOR eye = { 0.0f, 1.0f, -5.0f, 0.0f };
 		//const XMVECTOR at = { 0.0f, 1.0f, 0.0f, 0.0f };
