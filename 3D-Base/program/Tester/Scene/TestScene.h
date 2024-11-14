@@ -7,7 +7,7 @@
 // 作成日	: 2024/04/23
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "Scene.h"
-#include "../../Base/Camera/Camera.h"
+#include "../../Base/Camera/DebugCamera.h"
 
 namespace Scene {
 	class TestScene : public Scene
@@ -15,7 +15,7 @@ namespace Scene {
 	private:
 
 		/// @brief カメラクラス
-		std::unique_ptr<Camera::Camera> m_Camera;
+		std::unique_ptr<Camera::DebugCamera> m_Camera;
 
 	public:
 		/// @brief コンストラクタ

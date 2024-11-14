@@ -95,6 +95,9 @@
     <ClCompile Include="program\Base\Model\Mesh\FbxMesh.cpp">
       <Filter>Base\Model\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Camera\DebugCamera.cpp">
+      <Filter>Base\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\pch.h" />
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="program\Base\Tools\WStringToString.h">
       <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Camera\DebugCamera.h">
+      <Filter>Base\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
