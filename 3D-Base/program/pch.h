@@ -73,6 +73,7 @@ using namespace DirectX;
 // ツール類
 #include "Base/Tools/WStringToString.h"
 #include "Base/Tools/FilePath.h"
+#include "Base/Tools/LowercaseAndUppercase.h"
 #include "Base/Math/AK_Math.h"	// Mathフォルダのものは全部ここにある
 
 #include "Base/WinMain.h"
