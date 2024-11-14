@@ -191,6 +191,9 @@
     <ClInclude Include="program\Base\Reader\tiny_gltf.h">
       <Filter>Base\Reader</Filter>
     </ClInclude>
+    <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="program\Base\Shader\BasicShader.hlsli">

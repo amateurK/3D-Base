@@ -27,7 +27,7 @@ namespace Mesh {
 	}
 
 	//--------------------------------------------------------------------------------------
-	HRESULT MeshManager::CreateMesh(std::wstring& fileName, MeshType meshType, Mesh*& mesh)
+	HRESULT MeshManager::CreateMesh(std::wstring& fileName, Mesh*& mesh)
 	{
 		// メッシュを探す
 		auto itr = m_MeshList.begin();
@@ -47,14 +47,18 @@ namespace Mesh {
 		ID3D11DeviceContext* d3dDeviceContext = bw.GetImmediateContext();
 		HRESULT hr = S_OK;
 
-		// メッシュタイプ別にメッシュを新規作成
+		// 拡張子別にメッシュを新規作成
 		Mesh* newMesh = nullptr;
-		switch (meshType) {
-		default:
-		case MeshType::VRMMesh:
+		auto extension = Tools::GetFileExtension(fileName);
+		extension = Tools::ToLowercase(extension);
+		if(extension == L"vrm"){
 			newMesh = new VRMMesh();
-			break;
 		}
+		else {
+			throw std::exception("拡張子が不明です。");
+			return S_FALSE;
+		}
+
 		hr = newMesh->CreateMesh(d3dDevice, d3dDeviceContext, fileName);
 		if (FAILED(hr)) {
 			throw std::exception("メッシュの作成に失敗。");

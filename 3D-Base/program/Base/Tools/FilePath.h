@@ -27,8 +27,9 @@ namespace Tools {
 	/// @return 拡張子（'.'は付いていない）
 	inline std::wstring GetFileExtension(const std::wstring& path)
 	{
-		auto idx = path.find_last_of(L'.');
-		return path.substr(idx + 1);
+		// '.'までの長さ（'.'を含む）
+		auto idx = path.find_last_of(L'.') + 1;
+		return path.substr(idx, wcslen(path.c_str() + idx));
 	}
 
 	/// @brief ファイルの拡張子を書き換える（中身は変更しない）

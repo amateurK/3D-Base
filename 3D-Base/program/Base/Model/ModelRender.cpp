@@ -34,7 +34,7 @@ namespace AK_Base {
 		HRESULT hr = S_OK;
 
 		hr = Mesh::MeshManager::GetInstance()->
-			CreateMesh(fileName, Mesh::MeshType::VRMMesh, m_Mesh);
+			CreateMesh(fileName, m_Mesh);
 		if (FAILED(hr))
 			return hr;
 

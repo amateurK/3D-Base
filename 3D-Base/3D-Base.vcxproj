@@ -250,6 +250,7 @@
     <ClInclude Include="program\Base\Shader\Shader.h" />
     <ClInclude Include="program\Base\Singleton.h" />
     <ClInclude Include="program\Base\Tools\FilePath.h" />
+    <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h" />
     <ClInclude Include="program\Base\Tools\WStringToString.h" />
     <ClInclude Include="program\Base\WinMain.h" />
     <ClInclude Include="program\pch.h" />

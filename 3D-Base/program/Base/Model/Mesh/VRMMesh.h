@@ -29,9 +29,6 @@ namespace Mesh {
 		/// @brief デストラクタ
 		virtual ~VRMMesh();
 
-		/// @brief メッシュの解放
-		void DestroyMesh();
-
 		/// @brief メッシュを作成
 		/// @param device デバイスへのポインタ
 		/// @param context デバイスコンテキストへのポインタ

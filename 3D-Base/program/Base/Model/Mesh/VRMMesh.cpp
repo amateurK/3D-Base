@@ -30,12 +30,6 @@ namespace Mesh {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void VRMMesh::DestroyMesh()
-	{
-
-	}
-
-	//--------------------------------------------------------------------------------------
 	HRESULT VRMMesh::CreateMesh(ID3D11Device* const device,
 		ID3D11DeviceContext* const context,
 		const std::wstring fileName,

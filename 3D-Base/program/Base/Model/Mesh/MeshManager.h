@@ -11,12 +11,6 @@
 
 namespace Mesh {
 
-	enum class MeshType {
-		BasicMesh,
-		FbxMesh,
-		VRMMesh,
-	};
-
 	/// @brief メッシュデータを管理するマネージャークラス
 	class MeshManager
 	{
@@ -69,7 +63,7 @@ namespace Mesh {
 		/// @param fileName メッシュファイルへのパス
 		/// @param mesh 作成したメッシュを返す
 		/// @return 正常に取得できたか
-		HRESULT CreateMesh(std::wstring& fileName, MeshType meshType, Mesh*& mesh);
+		HRESULT CreateMesh(std::wstring& fileName, Mesh*& mesh);
 
 		/// @brief 指定したメッシュを破棄する
 		/// @param fileName 破棄したいメッシュファイルへのパス
