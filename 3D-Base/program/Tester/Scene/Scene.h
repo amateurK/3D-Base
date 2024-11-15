@@ -6,7 +6,7 @@
 // »ìÒ	: amateurK
 // ì¬“ú	: 2024/04/22
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-#include "../../Base/Actor.h"
+#include "Base/Actor.h"
 #include "../MyGame.h"
 
 namespace Scene {

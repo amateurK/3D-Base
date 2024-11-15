@@ -8,8 +8,8 @@
 // »ìÒ	: amateurK
 // ì¬“ú	: 2024/03/06
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-#include "../Base/BaseWindow.h"
-#include "../Base/Shader/Shader.h"
+#include "Base/BaseWindow.h"
+#include "Base/Shader/Shader.h"
 
 class MyGame :public AK_Base::BaseWindow
 {

@@ -7,7 +7,7 @@
 // ì¬“ú	: 2024/04/22
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "TestScene.h"
-#include "../../Base/Model/ModelActor.h"
+#include "Base/Model/ModelActor.h"
 #include "../Piece/Piece.h"
 
 namespace Scene {

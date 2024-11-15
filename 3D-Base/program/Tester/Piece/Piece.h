@@ -6,7 +6,7 @@
 // »ìÒ	: amateurK
 // ì¬“ú	: 2024/04/23
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-#include "../../Base/Model/ModelActor.h"
+#include "Base/Model/ModelActor.h"
 
 namespace Piece {
 

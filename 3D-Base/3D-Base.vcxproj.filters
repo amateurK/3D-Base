@@ -8,9 +8,6 @@
     <Filter Include="Base">
       <UniqueIdentifier>{4ec5a09d-79c0-49fe-bd56-584afbec1b50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tester">
-      <UniqueIdentifier>{78d9f497-ee4c-4ae3-bfa5-dfdc674e816e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Base\Model">
       <UniqueIdentifier>{a351de56-417b-41d6-a72c-621bcde91507}</UniqueIdentifier>
     </Filter>
@@ -19,12 +16,6 @@
     </Filter>
     <Filter Include="Base\Model\Mesh">
       <UniqueIdentifier>{47856819-797a-4589-a385-8333a119fb60}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tester\Scene">
-      <UniqueIdentifier>{ae204382-d4a1-4f38-9f65-309cfa2115f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tester\Piece">
-      <UniqueIdentifier>{e1e717d5-d21a-49cc-a333-ac99efcf07a5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Base\Camera">
       <UniqueIdentifier>{cff82949-de56-42a8-a4ae-37d1507f8ddc}</UniqueIdentifier>
@@ -40,7 +31,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="program\pch.cpp" />
     <ClCompile Include="program\Base\WinMain.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -49,9 +39,6 @@
     </ClCompile>
     <ClCompile Include="program\Base\Math\AK_Math.cpp">
       <Filter>Base\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Tester\MyGame.cpp">
-      <Filter>Tester</Filter>
     </ClCompile>
     <ClCompile Include="program\Base\Actor.cpp">
       <Filter>Base</Filter>
@@ -64,15 +51,6 @@
     </ClCompile>
     <ClCompile Include="program\Base\Shader\BasicShader.cpp">
       <Filter>Base\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Tester\Scene\Scene.cpp">
-      <Filter>Tester\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Tester\Scene\TestScene.cpp">
-      <Filter>Tester\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Tester\Piece\Piece.cpp">
-      <Filter>Tester\Piece</Filter>
     </ClCompile>
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp">
       <Filter>Base\Model\Mesh</Filter>
@@ -98,9 +76,11 @@
     <ClCompile Include="program\Base\Reader\tiny_gltf.cc">
       <Filter>Base\Reader</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\pch.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="program\pch.h" />
     <ClInclude Include="program\Base\WinMain.h">
       <Filter>Base</Filter>
     </ClInclude>
@@ -125,9 +105,6 @@
     <ClInclude Include="program\Base\Math\Segment.h">
       <Filter>Base\Math</Filter>
     </ClInclude>
-    <ClInclude Include="program\Tester\MyGame.h">
-      <Filter>Tester</Filter>
-    </ClInclude>
     <ClInclude Include="program\Base\Actor.h">
       <Filter>Base</Filter>
     </ClInclude>
@@ -139,15 +116,6 @@
     </ClInclude>
     <ClInclude Include="program\Base\Shader\BasicShader.h">
       <Filter>Base\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Tester\Scene\Scene.h">
-      <Filter>Tester\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Tester\Scene\TestScene.h">
-      <Filter>Tester\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Tester\Piece\Piece.h">
-      <Filter>Tester\Piece</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h">
       <Filter>Base\Model\Mesh</Filter>
@@ -193,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h">
       <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\pch.h">
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

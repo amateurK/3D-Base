@@ -89,9 +89,10 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>$(ProjectDir)program\pch.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>$(ProjectDir)program\Base\pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>$(ProjectDir)program\Base\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(SolutionDir)packages\directxtex_desktop_win10.2024.10.29.1\include</AdditionalIncludeDirectories>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,9 +148,10 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>$(ProjectDir)program\pch.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>$(ProjectDir)program\Base\pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>$(ProjectDir)program\Base\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(SolutionDir)packages\directxtex_desktop_win10.2024.10.29.1\include</AdditionalIncludeDirectories>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -209,21 +211,15 @@
     <ClCompile Include="program\Base\Model\ModelActor.cpp" />
     <ClCompile Include="program\Base\Model\ModelRender.cpp" />
     <ClCompile Include="program\Base\Model\PictureResource.cpp" />
+    <ClCompile Include="program\Base\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="program\Base\Reader\tiny_gltf.cc" />
     <ClCompile Include="program\Base\Shader\BasicShader.cpp" />
     <ClCompile Include="program\Base\Shader\LambertShader.cpp" />
     <ClCompile Include="program\Base\Shader\Shader.cpp" />
     <ClCompile Include="program\Base\WinMain.cpp" />
-    <ClCompile Include="program\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="program\Tester\MyGame.cpp" />
-    <ClCompile Include="program\Tester\Piece\Piece.cpp" />
-    <ClCompile Include="program\Tester\Scene\Scene.cpp" />
-    <ClCompile Include="program\Tester\Scene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Actor.h" />
@@ -240,6 +236,7 @@
     <ClInclude Include="program\Base\Model\ModelActor.h" />
     <ClInclude Include="program\Base\Model\ModelRender.h" />
     <ClInclude Include="program\Base\Model\PictureResource.h" />
+    <ClInclude Include="program\Base\pch.h" />
     <ClInclude Include="program\Base\Reader\json.hpp" />
     <ClInclude Include="program\Base\Reader\ReadData.h" />
     <ClInclude Include="program\Base\Reader\stb_image.h" />
@@ -253,11 +250,6 @@
     <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h" />
     <ClInclude Include="program\Base\Tools\WStringToString.h" />
     <ClInclude Include="program\Base\WinMain.h" />
-    <ClInclude Include="program\pch.h" />
-    <ClInclude Include="program\Tester\MyGame.h" />
-    <ClInclude Include="program\Tester\Piece\Piece.h" />
-    <ClInclude Include="program\Tester\Scene\Scene.h" />
-    <ClInclude Include="program\Tester\Scene\TestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

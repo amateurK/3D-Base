@@ -9,9 +9,9 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "MyGame.h"
 #include "Scene/TestScene.h"
-#include "../Base/Model/Mesh/MeshManager.h"
-#include "../Base/Shader/BasicShader.h"
-#include "../Base/Shader/LambertShader.h"
+#include "Base/Model/Mesh/MeshManager.h"
+#include "Base/Shader/BasicShader.h"
+#include "Base/Shader/LambertShader.h"
 
 
 // –{‘Ì‚ð¶¬

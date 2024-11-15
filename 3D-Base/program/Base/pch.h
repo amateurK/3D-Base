@@ -67,16 +67,16 @@
 using namespace DirectX;
 
 // 借り物
-#include "Base/Reader/ReadData.h"	// コンパイル済シェーダーの読み込み
+#include "Reader/ReadData.h"	// コンパイル済シェーダーの読み込み
 
 
 // ツール類
-#include "Base/Tools/WStringToString.h"
-#include "Base/Tools/FilePath.h"
-#include "Base/Tools/LowercaseAndUppercase.h"
-#include "Base/Math/AK_Math.h"	// Mathフォルダのものは全部ここにある
+#include "Tools/WStringToString.h"
+#include "Tools/FilePath.h"
+#include "Tools/LowercaseAndUppercase.h"
+#include "Math/AK_Math.h"	// Mathフォルダのものは全部ここにある
 
-#include "Base/WinMain.h"
+#include "WinMain.h"
 
 
 

@@ -7,7 +7,7 @@
 // ì¬“ú	: 2024/04/23
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "Scene.h"
-#include "../../Base/Camera/Camera.h"
+#include "Base/Camera/Camera.h"
 
 namespace Scene {
 	class TestScene : public Scene
