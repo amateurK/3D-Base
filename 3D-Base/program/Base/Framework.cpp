@@ -9,6 +9,14 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "BaseWindow.h"
 
+// Indicates to hybrid graphics systems to prefer the discrete part by default
+extern "C"
+{
+	__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+
+//--------------------------------------------------------------------------------------
 int FrameworkMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow, _In_ std::function<void(AK_Base::Actor* root)> sceneFunc)
 {
 	// ÉÅÉÇÉäÉäÅ[ÉNÇÃä«óùÅH
@@ -62,7 +70,7 @@ int FrameworkMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _I
 	return (int)msg.wParam;
 }
 
-
+//--------------------------------------------------------------------------------------
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps = {};

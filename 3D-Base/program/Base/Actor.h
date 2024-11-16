@@ -8,6 +8,7 @@
 // 作成日	: 2024/03/21
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "BaseWindow.h"
+#include "Component.h"
 
 namespace AK_Base {
 
@@ -29,6 +30,8 @@ namespace AK_Base {
 
 		std::list<Actor*> m_Children;	// 子Actorのリスト
 		Actor* m_Parent;	// 親Actorへのポインタ
+
+		std::list<Component::Component> m_Component;
 
 	public:
 		/// @brief コンストラクタ

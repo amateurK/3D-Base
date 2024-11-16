@@ -204,6 +204,7 @@
     <ClCompile Include="program\Base\Actor.cpp" />
     <ClCompile Include="program\Base\BaseWindow.cpp" />
     <ClCompile Include="program\Base\Camera\Camera.cpp" />
+    <ClCompile Include="program\Base\Component.cpp" />
     <ClCompile Include="program\Base\Framework.cpp" />
     <ClCompile Include="program\Base\Math\AK_Math.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="program\Base\Actor.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
     <ClInclude Include="program\Base\Camera\Camera.h" />
+    <ClInclude Include="program\Base\Component.h" />
     <ClInclude Include="program\Base\Framework.h" />
     <ClInclude Include="program\Base\Math\AK_Math.h" />
     <ClInclude Include="program\Base\Math\Capsule.h" />
@@ -247,6 +249,7 @@
     <ClInclude Include="program\Base\Shader\LambertShader.h" />
     <ClInclude Include="program\Base\Shader\Shader.h" />
     <ClInclude Include="program\Base\Singleton.h" />
+    <ClInclude Include="program\Base\StepTimer.h" />
     <ClInclude Include="program\Base\Tools\FilePath.h" />
     <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h" />
     <ClInclude Include="program\Base\Tools\WStringToString.h" />
