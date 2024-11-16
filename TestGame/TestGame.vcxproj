@@ -82,8 +82,10 @@
       <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)3D-Base\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,8 +116,10 @@
       <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)3D-Base\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,21 +144,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\3D-Base\program\Tester\MyGame.h" />
-    <ClInclude Include="..\3D-Base\program\Tester\Piece\Piece.h" />
-    <ClInclude Include="..\3D-Base\program\Tester\Scene\Scene.h" />
-    <ClInclude Include="..\3D-Base\program\Tester\Scene\TestScene.h" />
     <ClInclude Include="program\pch.h" />
+    <ClInclude Include="program\Piece\Piece.h" />
+    <ClInclude Include="program\Scene\Scene.h" />
+    <ClInclude Include="program\Scene\TestScene.h" />
+    <ClInclude Include="program\TestGameMain.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\3D-Base\program\Tester\MyGame.cpp" />
-    <ClCompile Include="..\3D-Base\program\Tester\Piece\Piece.cpp" />
-    <ClCompile Include="..\3D-Base\program\Tester\Scene\Scene.cpp" />
-    <ClCompile Include="..\3D-Base\program\Tester\Scene\TestScene.cpp" />
     <ClCompile Include="program\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="program\Piece\Piece.cpp" />
+    <ClCompile Include="program\Scene\Scene.cpp" />
+    <ClCompile Include="program\Scene\TestScene.cpp" />
+    <ClCompile Include="program\TestGameMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

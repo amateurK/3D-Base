@@ -11,6 +11,7 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include"Singleton.h"
 #include "StepTimer.h"
+#include "Shader/Shader.h"
 
 namespace AK_Base {
 
@@ -59,6 +60,9 @@ namespace AK_Base {
 		/// @brief 時間経過を管理するステップタイマー
 		DX::StepTimer m_StepTimer;
 
+		// TODO : シェーダー管理クラスを作ったほうが良いかも
+		std::unique_ptr<Shader::Shader> m_TestShader;
+
 	public:
 		/// @brief コンストラクタ
 		BaseWindow();
@@ -75,9 +79,11 @@ namespace AK_Base {
 		/// @return デバイスの作成に成功したらS_OK
 		HRESULT InitDevice();
 
-		/// @brief 子アクターを作成する
-		/// @details デバイス作成後に子アクターの処理を行うため
-		virtual void CreateActor() = 0;
+		/// @brief マネージャークラスを作成する
+		void CreateManager();
+
+		/// @brief マネージャークラスを破棄する
+		void CleanupManager();
 
 		/// @brief 作成したデバイスの削除
 		void CleanupDevice();
@@ -117,6 +123,14 @@ namespace AK_Base {
 		inline Actor* const GetRootActor()
 		{
 			return m_RootActor;
+		}
+
+
+		/// @brief Shaderへのポインタを返す
+		/// @return ポインタ
+		inline Shader::Shader* const GetTestShader()
+		{
+			return m_TestShader.get();
 		}
 
 

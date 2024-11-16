@@ -27,7 +27,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -204,6 +204,7 @@
     <ClCompile Include="program\Base\Actor.cpp" />
     <ClCompile Include="program\Base\BaseWindow.cpp" />
     <ClCompile Include="program\Base\Camera\Camera.cpp" />
+    <ClCompile Include="program\Base\Framework.cpp" />
     <ClCompile Include="program\Base\Math\AK_Math.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp" />
@@ -219,12 +220,12 @@
     <ClCompile Include="program\Base\Shader\BasicShader.cpp" />
     <ClCompile Include="program\Base\Shader\LambertShader.cpp" />
     <ClCompile Include="program\Base\Shader\Shader.cpp" />
-    <ClCompile Include="program\Base\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Actor.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
     <ClInclude Include="program\Base\Camera\Camera.h" />
+    <ClInclude Include="program\Base\Framework.h" />
     <ClInclude Include="program\Base\Math\AK_Math.h" />
     <ClInclude Include="program\Base\Math\Capsule.h" />
     <ClInclude Include="program\Base\Math\Line.h" />
@@ -249,7 +250,6 @@
     <ClInclude Include="program\Base\Tools\FilePath.h" />
     <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h" />
     <ClInclude Include="program\Base\Tools\WStringToString.h" />
-    <ClInclude Include="program\Base\WinMain.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

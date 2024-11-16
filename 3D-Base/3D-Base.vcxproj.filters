@@ -31,9 +31,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="program\Base\WinMain.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
     <ClCompile Include="program\Base\BaseWindow.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -79,11 +76,11 @@
     <ClCompile Include="program\Base\pch.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Framework.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="program\Base\WinMain.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="program\Base\Singleton.h">
       <Filter>Base</Filter>
     </ClInclude>
@@ -163,6 +160,9 @@
       <Filter>Base\Tools</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\pch.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Framework.h">
       <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>

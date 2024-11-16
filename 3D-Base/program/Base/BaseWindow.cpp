@@ -9,6 +9,9 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "BaseWindow.h"
 #include "Actor.h"
+#include "Model/Mesh/MeshManager.h"
+#include "Shader/BasicShader.h"
+#include "Shader/LambertShader.h"
 
 namespace AK_Base {
 	//--------------------------------------------------------------------------------------
@@ -23,6 +26,7 @@ namespace AK_Base {
 	BaseWindow::~BaseWindow()
 	{
 		if(m_RootActor)delete m_RootActor;
+		this->CleanupManager();
 		this->CleanupDevice();
 	}
 
@@ -230,6 +234,27 @@ namespace AK_Base {
 		SetFrameRate(60);
 
 		return S_OK;
+	}
+
+
+	//--------------------------------------------------------------------------------------
+	void BaseWindow::CreateManager()
+	{
+		// シェーダーの準備
+		m_TestShader = std::make_unique<Shader::LambertShader>();
+
+
+		// マネージャーの生成
+		Mesh::MeshManager::Create();
+	}
+
+	//--------------------------------------------------------------------------------------
+	void BaseWindow::CleanupManager()
+	{
+		m_TestShader.reset();
+
+		// マネージャーの破棄
+		Mesh::MeshManager::Destroy();
 	}
 
 	//--------------------------------------------------------------------------------------

@@ -2,43 +2,36 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="program\pch.h" />
-    <ClInclude Include="..\3D-Base\program\Tester\MyGame.h">
-      <Filter>Tester</Filter>
+    <ClInclude Include="program\Scene\TestScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\3D-Base\program\Tester\Scene\Scene.h">
-      <Filter>Tester\Scene</Filter>
+    <ClInclude Include="program\Scene\Scene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\3D-Base\program\Tester\Scene\TestScene.h">
-      <Filter>Tester\Scene</Filter>
+    <ClInclude Include="program\Piece\Piece.h">
+      <Filter>Piece</Filter>
     </ClInclude>
-    <ClInclude Include="..\3D-Base\program\Tester\Piece\Piece.h">
-      <Filter>Tester\Piece</Filter>
-    </ClInclude>
+    <ClInclude Include="program\TestGameMain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\pch.cpp" />
-    <ClCompile Include="..\3D-Base\program\Tester\MyGame.cpp">
-      <Filter>Tester</Filter>
+    <ClCompile Include="program\Scene\TestScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\3D-Base\program\Tester\Scene\Scene.cpp">
-      <Filter>Tester\Scene</Filter>
+    <ClCompile Include="program\Scene\Scene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\3D-Base\program\Tester\Scene\TestScene.cpp">
-      <Filter>Tester\Scene</Filter>
+    <ClCompile Include="program\Piece\Piece.cpp">
+      <Filter>Piece</Filter>
     </ClCompile>
-    <ClCompile Include="..\3D-Base\program\Tester\Piece\Piece.cpp">
-      <Filter>Tester\Piece</Filter>
-    </ClCompile>
+    <ClCompile Include="program\TestGameMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Tester">
-      <UniqueIdentifier>{90f49236-176d-43ef-822f-c11d5a7acaef}</UniqueIdentifier>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{49c00871-5cac-42ce-8918-f2edc6a67d58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tester\Scene">
-      <UniqueIdentifier>{46bd83c6-be74-4eda-9063-8afa4e1c342e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tester\Piece">
-      <UniqueIdentifier>{0ab1fb24-3e72-45a2-b1b7-8dbc74bf8afe}</UniqueIdentifier>
+    <Filter Include="Piece">
+      <UniqueIdentifier>{cf8eadde-e01f-4c38-9ebe-76e69fca0a54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

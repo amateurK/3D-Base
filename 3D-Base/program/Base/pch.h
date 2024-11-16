@@ -8,6 +8,7 @@
 // プロパティ > C/C++ > プリコンパイル済みヘッダー から設定する
 // pch.cppにコメントを書くとなぜかwarningが出る
 
+
 // リンカーに渡す追加ライブラリ
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
@@ -76,7 +77,7 @@ using namespace DirectX;
 #include "Tools/LowercaseAndUppercase.h"
 #include "Math/AK_Math.h"	// Mathフォルダのものは全部ここにある
 
-#include "WinMain.h"
+#include "Framework.h"
 
 
 
