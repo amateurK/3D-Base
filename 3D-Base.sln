@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3D-Base", "3D-Base\3D-Base.vcxproj", "{060C9E25-60F5-41B6-9B78-AD64A79D0532}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestGame", "TestGame\TestGame.vcxproj", "{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{060C9E25-60F5-41B6-9B78-AD64A79D0532}.Release|x64.Build.0 = Release|x64
 		{060C9E25-60F5-41B6-9B78-AD64A79D0532}.Release|x86.ActiveCfg = Release|Win32
 		{060C9E25-60F5-41B6-9B78-AD64A79D0532}.Release|x86.Build.0 = Release|Win32
+		{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}.Debug|x64.ActiveCfg = Debug|x64
+		{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}.Debug|x64.Build.0 = Debug|x64
+		{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}.Debug|x86.ActiveCfg = Debug|Win32
+		{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}.Debug|x86.Build.0 = Debug|Win32
+		{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}.Release|x64.ActiveCfg = Release|x64
+		{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}.Release|x64.Build.0 = Release|x64
+		{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}.Release|x86.ActiveCfg = Release|Win32
+		{CABA22C1-B18F-4B6F-9B92-92A0B98DF443}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
