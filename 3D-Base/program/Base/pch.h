@@ -60,6 +60,8 @@
 #include <stack>
 #include <string>
 #include <thread>
+#include <typeindex>
+#include <typeinfo>
 #include <utility>
 #include <unordered_map>
 #include <vector>

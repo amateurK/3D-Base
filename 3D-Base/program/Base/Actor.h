@@ -8,9 +8,11 @@
 // 作成日	: 2024/03/21
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "BaseWindow.h"
-#include "Component.h"
+
 
 namespace AK_Base {
+
+	class Component;
 
 	/// @brief Actorの状態を表す
 	enum class ActorStatus {
@@ -31,8 +33,11 @@ namespace AK_Base {
 		std::list<Actor*> m_Children;	// 子Actorのリスト
 		Actor* m_Parent;	// 親Actorへのポインタ
 
-		std::list<Component::Component> m_Component;
-
+		/// @brief コンポーネントのリスト
+		/// @details キー：コンポーネントのクラスの型（typeid()で取れるもの）
+		/// @details 値　：コンポーネントの実体 
+		std::unordered_map<std::type_index, Component*> m_ComponentList;
+		
 	public:
 		/// @brief コンストラクタ
 		/// @param name : 識別名
@@ -56,6 +61,18 @@ namespace AK_Base {
 		/// @brief 子アクターの追加
 		/// @param actor : 追加する子アクター
 		virtual void AddChild(Actor* const actor);
+		/// @brief 子アクターを作成して追加
+		/// @tparam T アクター型
+		/// @tparam ...Args アクターのコンストラクタに渡す可変引数
+		/// @param ...args 引数の値
+		/// @return 作成されたアクターのポインタ
+		template<typename T, typename... Args>
+		T* AddChild(Args&&... args)
+		{
+			auto actor = new T(std::forward<Args>(args)...);
+			AddChild(actor);
+			return actor;
+		}
 		/// @brief 現在の状態を確認して、DEAD状態なら削除
 		virtual void CheckStatus();
 
@@ -83,5 +100,35 @@ namespace AK_Base {
 		/// @brief 親のActorをセット
 		/// @param actor 親Actorへのポインタ
 		void SetParent(Actor* const actor);
+
+		/// @brief コンポーネントを追加
+		/// @tparam T コンポーネントの型
+		/// @tparam ...Args コンポーネントにわたす可変引数
+		/// @param ...args 引数の値
+		/// @return 作成されたコンポーネントのポインタ
+		template<typename T, typename... Args>
+		T* AddComponent(Args&&... args)
+		{
+			auto component = new T(std::forward<Args>(args)...);
+			m_ComponentList[std::type_index(typeid(T))] = std::move(component);
+			return component;
+		}
+
+		/// @brief コンポーネントを取得
+		/// @tparam T コンポーネントの型
+		/// @return 見つけたコンポーネント（なければnullptr）
+		template<typename T>
+		T* GetComponent() const
+		{
+			auto itr = m_ComponentList.find(std::type_index(typeid(T)));
+			return (itr != m_ComponentList.end()) ?
+				static_cast<T*>(itr->second) : nullptr;
+		}
+
+		template<typename T>
+		void RemoveComponent()
+		{
+			m_ComponentList.erase(std::type_index(typeid(T)));
+		}
 	};
 }
