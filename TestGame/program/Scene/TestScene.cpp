@@ -9,6 +9,7 @@
 #include "TestScene.h"
 #include "Base/Model/ModelActor.h"
 #include "../Piece/Piece.h"
+#include "Base/Input/InputManager.h"
 
 namespace Scene {
 
@@ -61,19 +62,28 @@ namespace Scene {
 	{
 		// カメラ回転テスト
 		{
-			// キー入力の検知
-			bool w = (GetAsyncKeyState('W') & 0x8000) == 0x8000;
-			bool s = (GetAsyncKeyState('S') & 0x8000) == 0x8000;
-			bool a = (GetAsyncKeyState('A') & 0x8000) == 0x8000;
-			bool d = (GetAsyncKeyState('D') & 0x8000) == 0x8000;
-			bool z = (GetAsyncKeyState('Z') & 0x8000) == 0x8000;
-			bool x = (GetAsyncKeyState('X') & 0x8000) == 0x8000;
+			//// キー入力の検知
+			//bool w = (GetAsyncKeyState('W') & 0x8000) == 0x8000;
+			//bool s = (GetAsyncKeyState('S') & 0x8000) == 0x8000;
+			//bool a = (GetAsyncKeyState('A') & 0x8000) == 0x8000;
+			//bool d = (GetAsyncKeyState('D') & 0x8000) == 0x8000;
+			//bool z = (GetAsyncKeyState('Z') & 0x8000) == 0x8000;
+			//bool x = (GetAsyncKeyState('X') & 0x8000) == 0x8000;
+
+			auto input = AK_Base::InputManager::GetInstance();
+			bool w = input->IsKeyPressed('W');
+			bool s = input->IsKeyPressed('S');
+			bool a = input->IsKeyPressed('A');
+			bool d = input->IsKeyPressed('D');
+			bool z = input->IsKeyPressed('Z');
+			bool x = input->IsKeyPressed('X');
+
 
 			// カメラの試運転
-			float speed = 2.0f;
-			float front = (float)(w - s) * elapsedTime * speed;
-			float right = (float)(d - a) * elapsedTime * speed;
-			float up = (float)(z - x) * elapsedTime * speed;
+			float speed = 2.0f * elapsedTime;
+			float front = (float)(w - s) * speed;
+			float right = (float)(d - a) * speed;
+			float up = (float)(z - x) * speed;
 			m_Camera->MoveWithViewpoint(front, right, up);
 		}
 

@@ -12,6 +12,7 @@
 #include "Model/Mesh/MeshManager.h"
 #include "Shader/BasicShader.h"
 #include "Shader/LambertShader.h"
+#include "Input/InputManager.h"
 
 namespace AK_Base {
 	//--------------------------------------------------------------------------------------
@@ -246,6 +247,7 @@ namespace AK_Base {
 
 		// マネージャーの生成
 		Mesh::MeshManager::Create();
+		InputManager::Create();
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -255,6 +257,7 @@ namespace AK_Base {
 
 		// マネージャーの破棄
 		Mesh::MeshManager::Destroy();
+		InputManager::Destroy();
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -284,11 +287,13 @@ namespace AK_Base {
 
 		m_StepTimer.Tick([&]()
 			{
+				// Managerを動かす
+				InputManager::GetInstance()->Update();
+
 				auto time = static_cast<double>(m_StepTimer.GetTotalSeconds());
 				auto elapsedTime = static_cast<float>(m_StepTimer.GetElapsedSeconds());
 				m_RootActor->Move(time, elapsedTime);
 				m_RootActor->CheckStatus();
-
 
 				// 背景塗りつぶし
 				//m_ImmediateContext->ClearRenderTargetView(m_RenderTargetView, DirectX::Colors::LightSeaGreen);
