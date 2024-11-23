@@ -113,7 +113,7 @@ namespace AK_Base {
 		template<typename T, typename... Args>
 		T* AddComponent(Args&&... args)
 		{
-			auto component = new T(std::forward<Args>(args)...);
+			auto component = new T(this, std::forward<Args>(args)...);
 			m_ComponentList[std::type_index(typeid(T))] = std::move(component);
 			return component;
 		}

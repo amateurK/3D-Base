@@ -32,8 +32,9 @@ namespace AK_Base {
 
 	public:
 		/// @brief コンストラクタ
+		/// @param parent このコンポーネントを所有しているActor
 		/// @param addChild 親ActorがTransformを持っているときに親子関係にするか
-		Transform(bool addChild = true);
+		Transform(Actor* const parent, bool addChild = true);
 		/// @brief デストラクタ
 		virtual ~Transform() = default;
 

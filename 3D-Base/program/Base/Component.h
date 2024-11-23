@@ -23,13 +23,11 @@ namespace AK_Base {
 	public:
 
 		/// @brief コンストラクタ
-		Component()
-		{
-		}
+		Component(Actor* const parent)
+			: m_Parent(parent)
+		{}
 		/// @brief デストラクタ
-		virtual ~Component()
-		{
-		}
+		virtual ~Component() {}
 
 		/// @brief コンポーネントの名前を取得
 		/// @return 名前の文字列

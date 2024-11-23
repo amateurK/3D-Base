@@ -12,8 +12,8 @@
 namespace AK_Base {
 
 	//--------------------------------------------------------------------------------------
-	Transform::Transform(bool addChild)
-		: Component()
+	Transform::Transform(Actor* const parent, bool addChild)
+		: Component(parent)
 		, m_Position{ 0.0f, 0.0f, 0.0f }
 		, m_Rotation{ 0.0f, 0.0f, 0.0f, 1.0f }
 		, m_Scale{ 1.0f, 1.0f, 1.0f }
