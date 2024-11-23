@@ -82,6 +82,9 @@
     <ClCompile Include="program\Base\Framework.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Component\Transform.cpp">
+      <Filter>Base\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -173,6 +176,12 @@
     </ClInclude>
     <ClInclude Include="program\Base\StepTimer.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\Transform.h">
+      <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Tools\Alignment.h">
+      <Filter>Base\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,7 @@ namespace AK_Base {
 	/// @brief コンポーネント
 	class Component
 	{
-	protected:
+	private:
 
 		/// @brief このコンポーネントを所有しているActor
 		AK_Base::Actor* m_Parent;
@@ -25,23 +25,16 @@ namespace AK_Base {
 		/// @brief コンストラクタ
 		Component()
 		{
-			Setup();
 		}
 		/// @brief デストラクタ
 		virtual ~Component()
 		{
-			Destroy();
 		}
 
 		/// @brief コンポーネントの名前を取得
 		/// @return 名前の文字列
 		virtual std::string GetName() const = 0;
 
-		/// @brief コンポーネント作成時に呼び出される関数
-		virtual void Setup() {}
-
-		/// @brief コンポーネント破棄時に呼び出される
-		virtual void Destroy() {}
 
 		/// @brief 更新
 		/// @param totalTime : アプリケーション起動からの経過時間（秒）

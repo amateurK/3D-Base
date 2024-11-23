@@ -101,6 +101,10 @@ namespace AK_Base {
 		/// @param actor 親Actorへのポインタ
 		void SetParent(Actor* const actor);
 
+		/// @brief 親のActorを取得
+		/// @return 親Actorへのポインタ
+		inline Actor* const GetParent() const { return m_Parent; }
+
 		/// @brief コンポーネントを追加
 		/// @tparam T コンポーネントの型
 		/// @tparam ...Args コンポーネントにわたす可変引数
