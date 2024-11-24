@@ -85,6 +85,9 @@
     <ClCompile Include="program\Base\Component\Transform.cpp">
       <Filter>Base\Component</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Component\MeshRender.cpp">
+      <Filter>Base\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -182,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="program\Base\Tools\Alignment.h">
       <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\MeshRender.h">
+      <Filter>Base\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

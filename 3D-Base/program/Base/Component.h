@@ -17,12 +17,13 @@ namespace AK_Base {
 	private:
 
 		/// @brief このコンポーネントを所有しているActor
-		AK_Base::Actor* m_Parent;
+		Actor* m_Parent;
 
 
 	public:
 
 		/// @brief コンストラクタ
+		/// @param parent このコンポーネントを所有しているActor（AddComponent<T>()で追加される）
 		Component(Actor* const parent)
 			: m_Parent(parent)
 		{}
@@ -46,7 +47,7 @@ namespace AK_Base {
 
 		/// @brief このコンポーネントを所有しているActorを返す
 		/// @return Actorのポインタ
-		AK_Base::Actor* GetActor() const
+		Actor* GetActor() const
 		{
 			return m_Parent;
 		}

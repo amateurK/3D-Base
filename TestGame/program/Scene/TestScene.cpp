@@ -10,6 +10,7 @@
 #include "Base/Model/ModelActor.h"
 #include "../Piece/Piece.h"
 #include "Base/Component/Transform.h"
+#include "Base/Component/MeshRender.h"
 
 namespace Scene {
 
@@ -29,6 +30,9 @@ namespace Scene {
 
 		auto piece1 = this->AddChild<AK_Base::Actor>(L"tester");
 		piece1->AddComponent<AK_Base::Transform>();
+		auto meshRender = piece1->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
+		meshRender->SetShader(myGame->GetTestShader());
+
 
 		auto piece2 = this->AddChild<Piece::Piece>(myGame->GetTestShader(), L"no.2", L"resource/testData/AvatarSample_A.vrm");
 		piece2->SetPosition(3.0f, 0.0f, 3.0f);
