@@ -1,4 +1,4 @@
-
+#pragma once
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
 // コンポーネント
@@ -7,38 +7,50 @@
 // 製作者	: amateurK
 // 作成日	: 2024/11/16
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-#pragma once
+#include "Actor.h"
 
-
-namespace AK_Base { class Actor; }
-
-namespace Component {
+namespace AK_Base {
 
 	/// @brief コンポーネント
 	class Component
 	{
+	private:
+
+		/// @brief このコンポーネントを所有しているActor
+		Actor* m_Parent;
+
+
 	public:
 
 		/// @brief コンストラクタ
-		Component();
+		/// @param parent このコンポーネントを所有しているActor（AddComponent<T>()で追加される）
+		Component(Actor* const parent)
+			: m_Parent(parent)
+		{}
 		/// @brief デストラクタ
-		virtual ~Component();
+		virtual ~Component() {}
 
-		/// @brief このコンポーネントを所有しているActor
-		AK_Base::Actor* m_Parent;
+		/// @brief コンポーネントの名前を取得
+		/// @return 名前の文字列
+		virtual std::string GetName() const = 0;
 
-		/// @brief コンポーネント作成時に呼び出される関数
-		virtual void Setup();
 
 		/// @brief 更新
 		/// @param totalTime : アプリケーション起動からの経過時間（秒）
 		/// @param elapsedTime : 前回のMove()からの経過時間（秒）
-		virtual void Move(const double& totalTime, const float& elapsedTime);
+		virtual void Move(const double& totalTime, const float& elapsedTime) {};
 
 		/// @brief 描画
 		/// @param totalTime : アプリケーション起動からの経過時間（秒）
 		/// @param elapsedTime : 前回のRender()からの経過時間（秒）
-		virtual void Render(const double& totalTime, const float& elapsedTime);
+		virtual void Render(const double& totalTime, const float& elapsedTime) {};
+
+		/// @brief このコンポーネントを所有しているActorを返す
+		/// @return Actorのポインタ
+		Actor* GetActor() const
+		{
+			return m_Parent;
+		}
 	};
 
 }

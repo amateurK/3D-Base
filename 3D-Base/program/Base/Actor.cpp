@@ -7,6 +7,7 @@
 // 作成日	: 2024/03/21
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "Actor.h"
+#include "Component.h"
 
 namespace AK_Base {
 	//--------------------------------------------------------------------------------------
@@ -18,21 +19,29 @@ namespace AK_Base {
 		, m_Parent(nullptr)
 	{
 		m_Children.clear();
+		m_ComponentList.clear();
 	}
 
 	//--------------------------------------------------------------------------------------
 	Actor::~Actor()
 	{
-		for (auto child : m_Children) {
+		for (auto& child : m_Children) {
 			delete child;
 		}
 		m_Children.clear();
+		for (auto& component : m_ComponentList) {
+			delete component.second;
+		}
+		m_ComponentList.clear();
 	}
 
 	//--------------------------------------------------------------------------------------
 	void Actor::Move(const double& totalTime, const float& elapsedTime)
 	{
-		for (auto child : m_Children) {
+		for (auto& component : m_ComponentList) {
+			component.second->Move(totalTime, elapsedTime);
+		}
+		for (auto& child : m_Children) {
 			if (child->m_Status == ActorStatus::ACTION ||
 				child->m_Status == ActorStatus::MOVEONLY) {
 				child->Move(totalTime, elapsedTime);
@@ -43,7 +52,10 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Actor::Render(const double& totalTime, const float& elapsedTime)
 	{
-		for (auto child : m_Children) {
+		for (auto& component : m_ComponentList) {
+			component.second->Render(totalTime, elapsedTime);
+		}
+		for (auto& child : m_Children) {
 			if (child->m_Status == ActorStatus::ACTION ||
 				child->m_Status == ActorStatus::RENDERONLY) {
 				child->Render(totalTime, elapsedTime);
@@ -69,7 +81,7 @@ namespace AK_Base {
 		}
 
 		// 子を巡回（再帰処理）
-		for (auto child : m_Children) {
+		for (auto& child : m_Children) {
 			child->CheckStatus();
 		}
 
@@ -90,7 +102,7 @@ namespace AK_Base {
 	int Actor::GetActionChildren() const
 	{
 		int cnt = 0;
-		for (auto child : m_Children) {
+		for (auto& child : m_Children) {
 			if (child->m_Status == ActorStatus::ACTION) {
 				cnt++;
 				cnt += child->GetActionChildren();
@@ -103,7 +115,7 @@ namespace AK_Base {
 	int Actor::GetAliveChildren() const
 	{
 		int cnt = 0;
-		for (auto child : m_Children) {
+		for (auto& child : m_Children) {
 			if (child->m_Status != ActorStatus::DEAD) {
 				cnt++;
 				cnt += child->GetAliveChildren();
@@ -119,7 +131,7 @@ namespace AK_Base {
 			list->push_back(this);
 		}
 
-		for (auto child : m_Children) {
+		for (auto& child : m_Children) {
 			child->SearchClass(type, list);
 		}
 
@@ -134,7 +146,7 @@ namespace AK_Base {
 		}
 
 		const Actor* target = nullptr;
-		for (auto child : m_Children) {
+		for (auto& child : m_Children) {
 			target = child->SearchName(name);
 			if (target != nullptr)return target;
 		}
@@ -145,7 +157,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Actor::SetStatus(const ActorStatus status)
 	{
-		m_Status = std::move(status);
+		m_Status = status;
 	}
 
 	//--------------------------------------------------------------------------------------
