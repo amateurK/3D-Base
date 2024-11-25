@@ -36,15 +36,15 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Actor::Move(const double& totalTime, const float& elapsedTime)
+	void Actor::Update(const double& totalTime, const float& elapsedTime)
 	{
 		for (auto& component : m_ComponentList) {
-			component.second->Move(totalTime, elapsedTime);
+			component.second->Update(totalTime, elapsedTime);
 		}
 		for (auto& child : m_Children) {
 			if (child->m_Status == ActorStatus::ACTION ||
-				child->m_Status == ActorStatus::MOVEONLY) {
-				child->Move(totalTime, elapsedTime);
+				child->m_Status == ActorStatus::UPDATEONLY) {
+				child->Update(totalTime, elapsedTime);
 			}
 		}
 	}

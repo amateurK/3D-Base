@@ -49,8 +49,8 @@ namespace AK_Base {
 		
 		/// @brief 更新
 		/// @param totalTime : アプリケーション起動からの経過時間（秒）
-		/// @param elapsedTime : 前回のMove()からの経過時間（秒）
-		virtual void Move(const double& totalTime, const float& elapsedTime) override;
+		/// @param elapsedTime : 前回のUpdate()からの経過時間（秒）
+		virtual void Update(const double& totalTime, const float& elapsedTime) override;
 		/// @brief 描画
 		/// @param totalTime : アプリケーション起動からの経過時間（秒）
 		/// @param elapsedTime : 前回のRender()からの経過時間（秒）
