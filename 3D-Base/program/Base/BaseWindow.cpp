@@ -286,7 +286,7 @@ namespace AK_Base {
 			{
 				auto time = static_cast<double>(m_StepTimer.GetTotalSeconds());
 				auto elapsedTime = static_cast<float>(m_StepTimer.GetElapsedSeconds());
-				m_RootActor->Move(time, elapsedTime);
+				m_RootActor->Update(time, elapsedTime);
 				m_RootActor->CheckStatus();
 
 

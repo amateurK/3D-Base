@@ -64,7 +64,7 @@ namespace Scene {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void TestScene::Move(const double& totalTime, const float& elapsedTime)
+	void TestScene::Update(const double& totalTime, const float& elapsedTime)
 	{
 		// カメラ回転テスト
 		{
@@ -83,14 +83,31 @@ namespace Scene {
 			float up = (float)(z - x) * elapsedTime * speed;
 			m_Camera->MoveWithViewpoint(front, right, up);
 		}
+		// 移動テスト
+		{
+			// キー入力の検知
+			bool w = (GetAsyncKeyState(VK_UP) & 0x8000) == 0x8000;
+			bool s = (GetAsyncKeyState(VK_DOWN) & 0x8000) == 0x8000;
+			bool a = (GetAsyncKeyState(VK_LEFT) & 0x8000) == 0x8000;
+			bool d = (GetAsyncKeyState(VK_RIGHT) & 0x8000) == 0x8000;
+			bool z = (GetAsyncKeyState('O') & 0x8000) == 0x8000;
+			bool x = (GetAsyncKeyState('P') & 0x8000) == 0x8000;
 
+			// 試運転
+			float speed = 2.0f;
+			float front = (float)(w - s) * elapsedTime * speed;
+			float right = (float)(d - a) * elapsedTime * speed;
+			float up = (float)(z - x) * elapsedTime * speed;
+			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester");;
+			actor->GetComponent<AK_Base::Transform>()->Move(front, right, up);
+		}
 
 		// シェーダーにview行列を入れる
 		auto myGame(&AK_Base::BaseWindow::GetInstance());
 		auto shader = myGame->GetTestShader();
 		shader->SetViewMatrix(m_Camera->GetView());
 
-		Scene::Move(totalTime, elapsedTime);
+		Scene::Update(totalTime, elapsedTime);
 	}
 
 

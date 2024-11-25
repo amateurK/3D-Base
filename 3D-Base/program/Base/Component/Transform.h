@@ -42,20 +42,20 @@ namespace AK_Base {
 		/// @return –¼‘O‚Ì•¶š—ñ
 		inline virtual std::string GetName() const override{ return "Transform"; }
 
-		/// @brief ˆÚ“®
+		/// @brief Œ»İ’n‚©‚çw’è‚µ‚½‹——£ˆÚ“®
 		/// @param offset ˆÚ“®—Ê
 		void Translate(const DirectX::XMVECTOR& offset);
-		/// @brief ˆÚ“®
+		/// @brief Œ»İ’n‚©‚çw’è‚µ‚½‹——£ˆÚ“®
 		/// @param x x²•ûŒü‚ÌˆÚ“®—Ê
 		/// @param y y²•ûŒü‚ÌˆÚ“®—Ê
 		/// @param z z²•ûŒü‚ÌˆÚ“®—Ê
 		void Translate(float x, float y, float z);
 
-		/// @brief ‰ñ“]
+		/// @brief Œ»İ‚ÌŠp“x‚©‚ç‰ñ“]
 		/// @param axis ‰ñ“]‚·‚é²
 		/// @param angle Šp“x
 		void Rotate(const DirectX::XMVECTOR& axis, float angle);
-		/// @brief ‰ñ“]
+		/// @brief Œ»İ‚ÌŠp“x‚©‚ç‰ñ“]
 		/// @param axis ³‹K‰»Ï‚İ‚Ì‰ñ“]‚·‚é²i³‹K‰»‚µ‚Ä‚¢‚È‚¢‚È‚çRotate()‚ğg‚¤j
 		/// @param angle Šp“x
 		void RotateNorm(const DirectX::XMVECTOR& axis, float angle);
@@ -66,6 +66,12 @@ namespace AK_Base {
 		/// @brief Šg‘åk¬
 		/// @param mul ”{—¦
 		void Scale(const DirectX::XMVECTOR& mul);
+
+		/// @brief ³–Ê•ûŒü‚ğŠî€‚ÉˆÚ“®‚·‚é
+		/// @param forward ³–Ê•ûŒü‚ÌˆÚ“®—Ê
+		/// @param right ‰E•ûŒü‚ÌˆÚ“®—Ê
+		/// @param up ã•ûŒü‚ÌˆÚ“®—Ê
+		void Move(float forward, float right, float up);
 
 		/// @brief w’è‚µ‚½À•W‚ÉŒü‚«‚ğ‡‚í‚¹‚é
 		/// @param position À•W

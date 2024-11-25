@@ -44,10 +44,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Transform::Translate(float x, float y, float z)
 	{
-		m_Position.m128_f32[0] += x;
-		m_Position.m128_f32[1] += y;
-		m_Position.m128_f32[2] += z;
-		MarkChanged();
+		Translate(XMVectorSet(x, y, z, 1.0f));
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -76,6 +73,12 @@ namespace AK_Base {
 	{
 		m_Scale *= mul;
 		MarkChanged();
+	}
+
+	//--------------------------------------------------------------------------------------
+	void Transform::Move(float forward, float right, float up)
+	{
+		Translate(XMVector3Rotate(XMVectorSet(right, up, forward, 0.0f), m_Rotation));
 	}
 
 	//--------------------------------------------------------------------------------------
