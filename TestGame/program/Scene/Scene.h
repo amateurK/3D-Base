@@ -14,7 +14,7 @@ namespace Scene {
 	class Scene :public AK_Base::Actor 
 	{
 	protected:
-		/// @brief Move()の実行回数
+		/// @brief Update()の実行回数
 		uint32_t m_Times;
 
 	public:
@@ -25,8 +25,8 @@ namespace Scene {
 
 		/// @brief シーンの更新
 		/// @param totalTime : アプリケーション起動からの経過時間（秒）
-		/// @param elapsedTime : 前回のMove()からの経過時間（秒）
-		virtual void Move(const double& totalTime, const float& elapsedTime) override;
+		/// @param elapsedTime : 前回のUpdate()からの経過時間（秒）
+		virtual void Update(const double& totalTime, const float& elapsedTime) override;
 
 
 		/// @brief ACTION状態に移行

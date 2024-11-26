@@ -35,12 +35,12 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void ModelActor::Move(const double& totalTime, const float& elapsedTime)
+	void ModelActor::Update(const double& totalTime, const float& elapsedTime)
 	{
 		//m_Rotation += 0.0001f;
 		CalcWorldMatrix();
 
-		Actor::Move(totalTime, elapsedTime);
+		Actor::Update(totalTime, elapsedTime);
 	}
 
 	//--------------------------------------------------------------------------------------

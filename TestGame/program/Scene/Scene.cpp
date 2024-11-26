@@ -25,10 +25,10 @@ namespace Scene {
 	}
 
 
-	void Scene::Move(const double& totalTime, const float& elapsedTime)
+	void Scene::Update(const double& totalTime, const float& elapsedTime)
 	{
 		m_Times++;
 
-		Actor::Move(totalTime, elapsedTime);
+		Actor::Update(totalTime, elapsedTime);
 	}
 }

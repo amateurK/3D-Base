@@ -29,6 +29,9 @@
     <Filter Include="Base\Math">
       <UniqueIdentifier>{5dc54e4b-2c7f-4819-8bda-525d7af4d4d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Component">
+      <UniqueIdentifier>{769c5b6e-8aa7-423a-b733-51031e8b47cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
@@ -79,8 +82,11 @@
     <ClCompile Include="program\Base\Framework.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="program\Base\Component.cpp">
-      <Filter>Base</Filter>
+    <ClCompile Include="program\Base\Component\Transform.cpp">
+      <Filter>Base\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Component\MeshRender.cpp">
+      <Filter>Base\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +179,15 @@
     </ClInclude>
     <ClInclude Include="program\Base\StepTimer.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\Transform.h">
+      <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Tools\Alignment.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\MeshRender.h">
+      <Filter>Base\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

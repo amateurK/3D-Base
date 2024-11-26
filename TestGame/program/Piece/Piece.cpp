@@ -27,11 +27,11 @@ namespace Piece {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Piece::Move(const double& totalTime, const float& elapsedTime)
+	void Piece::Update(const double& totalTime, const float& elapsedTime)
 	{
 		m_Rotation += elapsedTime;
 
-		AK_Base::ModelActor::Move(totalTime, elapsedTime);
+		AK_Base::ModelActor::Update(totalTime, elapsedTime);
 	}
 
 	//--------------------------------------------------------------------------------------
