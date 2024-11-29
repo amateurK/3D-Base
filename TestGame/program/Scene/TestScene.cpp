@@ -9,6 +9,7 @@
 #include "TestScene.h"
 #include "Base/Model/ModelActor.h"
 #include "../Piece/Piece.h"
+#include "Base/Input/InputManager.h"
 #include "Base/Component/Transform.h"
 #include "Base/Component/MeshRender.h"
 
@@ -69,12 +70,13 @@ namespace Scene {
 		// カメラ回転テスト
 		{
 			// キー入力の検知
-			bool w = (GetAsyncKeyState('W') & 0x8000) == 0x8000;
-			bool s = (GetAsyncKeyState('S') & 0x8000) == 0x8000;
-			bool a = (GetAsyncKeyState('A') & 0x8000) == 0x8000;
-			bool d = (GetAsyncKeyState('D') & 0x8000) == 0x8000;
-			bool z = (GetAsyncKeyState('Z') & 0x8000) == 0x8000;
-			bool x = (GetAsyncKeyState('X') & 0x8000) == 0x8000;
+			auto input = AK_Base::InputManager::GetInstance();
+			bool w = input->IsKeyPressed(DIK_W);
+			bool s = input->IsKeyPressed(DIK_S);
+			bool a = input->IsKeyPressed(DIK_A);
+			bool d = input->IsKeyPressed(DIK_D);
+			bool z = input->IsKeyPressed(DIK_Z);
+			bool x = input->IsKeyPressed(DIK_X);
 
 			// カメラの試運転
 			float speed = 2.0f;
@@ -86,12 +88,13 @@ namespace Scene {
 		// 移動テスト
 		{
 			// キー入力の検知
-			bool w = (GetAsyncKeyState(VK_UP) & 0x8000) == 0x8000;
-			bool s = (GetAsyncKeyState(VK_DOWN) & 0x8000) == 0x8000;
-			bool a = (GetAsyncKeyState(VK_LEFT) & 0x8000) == 0x8000;
-			bool d = (GetAsyncKeyState(VK_RIGHT) & 0x8000) == 0x8000;
-			bool z = (GetAsyncKeyState('O') & 0x8000) == 0x8000;
-			bool x = (GetAsyncKeyState('P') & 0x8000) == 0x8000;
+			auto input = AK_Base::InputManager::GetInstance();
+			bool w = input->IsKeyPressed(DIK_UP);
+			bool s = input->IsKeyPressed(DIK_DOWN);
+			bool a = input->IsKeyPressed(DIK_LEFT);
+			bool d = input->IsKeyPressed(DIK_RIGHT);
+			bool z = input->IsKeyPressed(DIK_O);
+			bool x = input->IsKeyPressed(DIK_P);
 
 			// 試運転
 			float speed = 2.0f;

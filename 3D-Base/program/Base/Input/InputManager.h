@@ -7,9 +7,18 @@
 // 製作者	: amateurK
 // 作成日	: 2024/11/21
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//#include <dinput.h>
+
+#define DIRECTINPUT_VERSION 0x0800
+#include <dinput.h>
+#pragma comment( lib, "dinput8.lib" )
+#pragma comment( lib, "dxguid.lib" )
+
 
 namespace AK_Base {
+
+	namespace {
+		constexpr uint16_t KEY_NUM = 256;
+	}
 
 	/// @brief 入力管理クラス
 	class InputManager
@@ -17,10 +26,15 @@ namespace AK_Base {
 	private:
 
 		/// @brief 現在のキー状態
-		BYTE m_KeyState[2][256];
+		BYTE m_KeyState[2][KEY_NUM];
 
 		// 現在のキー状態を示す配列のインデックス
 		bool m_NowSlot;
+
+		/// @brief DirectInputのオブジェクト
+		Microsoft::WRL::ComPtr<IDirectInput8> m_DirectInput;
+		/// @brief DirectInputのキーボードデバイス
+		Microsoft::WRL::ComPtr<IDirectInputDevice8> m_Keyboard;
 
 		/// @brief コンストラクタ
 		InputManager();
@@ -54,6 +68,10 @@ namespace AK_Base {
 			delete Instance;
 			Instance = nullptr;
 		}
+
+		/// @brief 初期化
+		/// @return 初期化が成功したか
+		HRESULT Init();
 
 		/// @brief キー状態を更新
 		void Update();
