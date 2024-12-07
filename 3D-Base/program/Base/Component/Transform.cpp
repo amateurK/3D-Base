@@ -78,7 +78,13 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Transform::Move(float forward, float right, float up)
 	{
-		Translate(XMVector3Rotate(XMVectorSet(right, up, forward, 0.0f), m_Rotation));
+		// ローカル座標系でのベクトル
+		auto local = XMVectorSet(right, up, forward, 0.0f);
+		// ワールド座標系でのベクトル
+		auto world = XMVector3Rotate(local, m_Rotation);
+		// 移動
+		Translate(world);
+
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -115,10 +121,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Transform::SetPosition(float x, float y, float z)
 	{
-		m_Position.m128_f32[0] = x;
-		m_Position.m128_f32[1] = y;
-		m_Position.m128_f32[2] = z;
-		MarkChanged();
+		SetPosition(XMVectorSet(x, y, z, 1.0f));
 	}
 
 
@@ -144,10 +147,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Transform::SetScele(float x, float y, float z)
 	{
-		m_Scale.m128_f32[0] = x;
-		m_Scale.m128_f32[1] = y;
-		m_Scale.m128_f32[2] = z;
-		MarkChanged();
+		SetScele(XMVectorSet(x, y, z, 1.0f));
 	}
 
 	//--------------------------------------------------------------------------------------

@@ -80,6 +80,7 @@
       <PrecompiledHeaderFile>$(ProjectDir)program\pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)3D-Base\program;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -114,6 +115,7 @@
       <PrecompiledHeaderFile>$(ProjectDir)program\pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)3D-Base\program;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,7 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\pch.h" />
-    <ClInclude Include="program\Piece\Piece.h" />
     <ClInclude Include="program\Scene\Scene.h" />
     <ClInclude Include="program\Scene\TestScene.h" />
     <ClInclude Include="program\TestGameMain.h" />
@@ -155,7 +156,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="program\Piece\Piece.cpp" />
     <ClCompile Include="program\Scene\Scene.cpp" />
     <ClCompile Include="program\Scene\TestScene.cpp" />
     <ClCompile Include="program\TestGameMain.cpp" />
