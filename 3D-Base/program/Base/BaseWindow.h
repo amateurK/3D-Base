@@ -11,7 +11,6 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include"Singleton.h"
 #include "StepTimer.h"
-#include "Shader/Shader.h"
 
 namespace AK_Base {
 
@@ -38,6 +37,8 @@ namespace AK_Base {
 		ID3D11RasterizerState* m_RasterStates = nullptr;
 		ID3D11Texture2D* m_DepthStencil = nullptr;
 		ID3D11DepthStencilView* m_DepthStencilView = nullptr;
+		ID3D11BlendState* m_BlendState = nullptr;
+		ID3D11SamplerState* m_Sampler = nullptr;
 
 
 		// メモリリーク監視用
@@ -59,9 +60,6 @@ namespace AK_Base {
 
 		/// @brief 時間経過を管理するステップタイマー
 		DX::StepTimer m_StepTimer;
-
-		// TODO : シェーダー管理クラスを作ったほうが良いかも
-		std::unique_ptr<Shader::Shader> m_TestShader;
 
 	public:
 		/// @brief コンストラクタ
@@ -123,14 +121,6 @@ namespace AK_Base {
 		inline Actor* const GetRootActor()
 		{
 			return m_RootActor;
-		}
-
-
-		/// @brief Shaderへのポインタを返す
-		/// @return ポインタ
-		inline Shader::Shader* const GetTestShader()
-		{
-			return m_TestShader.get();
 		}
 
 

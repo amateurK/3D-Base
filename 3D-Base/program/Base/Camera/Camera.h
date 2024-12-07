@@ -71,8 +71,8 @@ namespace Camera {
 		/// @brief ViewçsóÒÇçXêV
 		inline void UpdateViewMatrix();
 
-		inline DirectX::XMMATRIX GetView() const { return m_View; }
-		inline DirectX::XMMATRIX GetProjection() const { return m_Projection; }
+		inline const DirectX::XMMATRIX* GetView() const { return &m_View; }
+		inline const DirectX::XMMATRIX* GetProjection() const { return &m_Projection; }
 
 
 		void* operator new(size_t size) {

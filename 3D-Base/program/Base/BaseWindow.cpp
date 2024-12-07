@@ -10,8 +10,9 @@
 #include "BaseWindow.h"
 #include "Actor.h"
 #include "Model/Mesh/MeshManager.h"
-#include "Shader/BasicShader.h"
-#include "Shader/LambertShader.h"
+#include "Shader/ShaderManager.h"
+#include "Shader/VertexShader/LambertVS.h"
+#include "Shader/PixelShader/PixelShader.h"
 
 namespace AK_Base {
 	//--------------------------------------------------------------------------------------
@@ -25,7 +26,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	BaseWindow::~BaseWindow()
 	{
-		if(m_RootActor)delete m_RootActor;
+		if (m_RootActor)delete m_RootActor;
 		this->CleanupManager();
 		this->CleanupDevice();
 	}
@@ -214,8 +215,40 @@ namespace AK_Base {
 		if (FAILED(hr))
 			return hr;
 
-
 		m_ImmediateContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+
+		//ブレンドステートの設定
+		D3D11_BLEND_DESC bld = {};
+		bld.AlphaToCoverageEnable = FALSE;
+		bld.IndependentBlendEnable = FALSE;
+		bld.RenderTarget[0].BlendEnable = TRUE;
+		bld.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		bld.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		bld.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		bld.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+		bld.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+		bld.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		bld.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		m_D3DDevice->CreateBlendState(&bld, &m_BlendState);
+		float fBlendFactor[] = { 0, 0, 0, 0 };
+
+		m_ImmediateContext->OMSetBlendState(m_BlendState, fBlendFactor, 0xffffffff);
+
+
+		// サンプラーのセット
+		D3D11_SAMPLER_DESC smpDesc;
+
+		::ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
+		smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;	// ドットをきれいに表示（線形補間なし）
+		smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		smpDesc.BorderColor[0] = 1.0f;	// 上のAddress部分でD3D11_TEXTURE_ADDRESS_BORDERを使った場合の色
+		smpDesc.BorderColor[1] = 0.0f;	// #ff00ffでUnityみたいになる
+		smpDesc.BorderColor[2] = 1.0f;	// わかりやすい
+		smpDesc.BorderColor[3] = 1.0f;
+		m_D3DDevice->CreateSamplerState(&smpDesc, &m_Sampler);
+		m_ImmediateContext->PSSetSamplers(0, 1, &m_Sampler);
 
 		// Setup the viewport
 		D3D11_VIEWPORT vp = {};
@@ -240,21 +273,43 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void BaseWindow::CreateManager()
 	{
-		// シェーダーの準備
-		m_TestShader = std::make_unique<Shader::LambertShader>();
 
-
-		// マネージャーの生成
+		// メッシュマネージャーの生成
 		Mesh::MeshManager::Create();
+
+		// シェーダーの作成
+		Shader::ShaderManager::Create();
+		auto shaderM = Shader::ShaderManager::GetInstance();
+
+		// LambertVS
+		Shader::VertexShaderInitParam VSparam = {};
+		VSparam.FilePath = L"LambertVertexShader.cso";
+		D3D11_INPUT_ELEMENT_DESC layout[] = { // TODO 一気に入れれない？
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "NORMAL",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		VSparam.Layout = layout;
+		VSparam.LayoutCount = ARRAYSIZE(layout);
+		shaderM->AddShader<Shader::LambertVS>("LambertVS", VSparam);
+		// LambertPS
+		shaderM->AddShader<Shader::PixelShader>("LambertPS", { L"LambertPixelShader.cso" });
+
+		// LambertShader
+		std::unordered_map<Shader::ShaderType, std::string> list;
+		list[Shader::ShaderType::VertexShader] = "LambertVS";
+		list[Shader::ShaderType::PixelShader] = "LambertPS";
+		shaderM->AddShaderSet("LambertShader", list);
+
 	}
 
 	//--------------------------------------------------------------------------------------
 	void BaseWindow::CleanupManager()
 	{
-		m_TestShader.reset();
-
 		// マネージャーの破棄
 		Mesh::MeshManager::Destroy();
+
+		Shader::ShaderManager::Destroy();
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -262,6 +317,8 @@ namespace AK_Base {
 	{
 		if (m_ImmediateContext) m_ImmediateContext->ClearState();
 
+		if (m_Sampler)m_Sampler->Release();
+		if (m_BlendState)m_BlendState->Release();
 		if (m_DepthStencilView)m_DepthStencilView->Release();
 		if (m_DepthStencil)m_DepthStencil->Release();
 		if (m_RasterStates) m_RasterStates->Release();
