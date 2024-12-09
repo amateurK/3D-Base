@@ -11,7 +11,7 @@ Texture2D textureDiffuse : register(t0);
 SamplerState samplerPoint : register(s0);
 
 //--------------------------------------------------------------------------------------
-void main(
+void LambertPS(
 	in float4 inPosition : SV_Position,
 	in float4 inColor : COLOR0,
 	in float2 inTexcoord : TEXCOORD0,

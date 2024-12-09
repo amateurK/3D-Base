@@ -47,6 +47,10 @@ namespace AK_Base {
 		/// @param elapsedTime : 前回のRender()からの経過時間（秒）
 		virtual void Render(const double& totalTime, const float& elapsedTime) override;
 
+		/// @brief 使用するシェーダーをセット
+		/// @param name シェーダーセットの名前
+		void SetShader(const std::string& name);
+
 	private:
 
 		/// @brief リソースの作成

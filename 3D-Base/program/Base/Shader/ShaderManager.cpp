@@ -44,6 +44,7 @@ namespace Shader {
 		}
 
 		m_ShaderSetList[setName] = newSet;
+		newSet->SetName(setName);
 	}
 
 

@@ -30,7 +30,7 @@ cbuffer Light : register(b2)
 }
 
 //--------------------------------------------------------------------------------------
-void main(
+void LambertVS(
 	in float4 inPosition : POSITION,
 	in float3 inNormal : NORMAL,
 	in float2 inTexcoord : TEXCOORD0,

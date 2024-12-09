@@ -21,12 +21,21 @@ namespace Scene {
 
 
 		// モデルの作成
-		auto testmodel = this->AddChild<AK_Base::Actor>(L"tester");
-		auto transform = testmodel->AddComponent<AK_Base::Transform>();
-		transform->Scale(3.0f);
-		transform->SetPosition(3.0f, 0.0f, 3.0f);
-		auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
-
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester");
+			auto transform = testmodel->AddComponent<AK_Base::Transform>();
+			transform->Scale(3.0f);
+			transform->SetPosition(3.0f, 0.0f, 3.0f);
+			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
+			meshRender->SetShader("LambertShader");
+		}
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester2");
+			auto transform = testmodel->AddComponent<AK_Base::Transform>();
+			transform->SetPosition(-3.0f, 2.0f, 3.0f);
+			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
+			meshRender->SetShader("BasicShader");
+		}
 
 
 		// カメラの準備
@@ -41,7 +50,7 @@ namespace Scene {
 
 		auto windowSize = myGame->GetWindowSize();
 		m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
-		
+
 
 		// シェーダーにVP行列をセット
 		auto shaderM = Shader::ShaderManager::GetInstance();

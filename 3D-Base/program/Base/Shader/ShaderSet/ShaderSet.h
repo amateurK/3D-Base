@@ -27,6 +27,9 @@ namespace Shader {
 		/// @brief 使用するシェーダーのリスト
 		std::unordered_map<ShaderType, ShaderBase*> m_ShaderList;
 
+		// 名前
+		std::string m_Name;
+
 	public:
 		/// @brief コンストラクタ
 		ShaderSet();
@@ -45,5 +48,10 @@ namespace Shader {
 		/// @param type シェーダーの種類
 		/// @return ShaderBaseのポインタ
 		inline ShaderBase* GetShader(ShaderType type) { return m_ShaderList[type]; }
+
+
+
+		inline void SetName(const std::string& name) { m_Name = name; }
+		inline std::string GetName() const { return m_Name; }
 	};
 }

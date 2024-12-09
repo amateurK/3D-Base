@@ -38,6 +38,8 @@ namespace Mesh {
 		uint32_t NumFace;
 		/// @brief 使用されているテクスチャのリソースビューへのポインタ
 		ID3D11ShaderResourceView** SRView;
+		/// @brief インデックスバッファの1データのサイズ
+		DXGI_FORMAT DXGI_Format;
 
 		/// @brief デストラクタ
 		~MeshData() 
