@@ -99,6 +99,10 @@ namespace Shader {
 		/// @brief VP行列を更新（View * Projection）
 		void SetVPMatrix(const XMMATRIX& view, const XMMATRIX& proj);
 
+		/// @brief WVP行列を計算し取得する（転置済み）
+		/// @param world World行列
+		/// @return WVP行列
+		inline XMMATRIX CalcWVPMatrix(const XMMATRIX& world) const{ return XMMatrixTranspose(world * m_VPMatrix); }
 
 
 		// ゲッター

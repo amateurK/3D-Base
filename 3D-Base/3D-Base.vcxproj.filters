@@ -41,6 +41,9 @@
     <Filter Include="Base\Shader\VertexShader">
       <UniqueIdentifier>{a528ceae-bbbd-4ce7-bb4c-9d0f8e4372b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Shader\HLSL">
+      <UniqueIdentifier>{029a9791-8677-4b41-93d1-62547447e52e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
@@ -99,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="program\Base\Shader\PixelShader\PixelShader.cpp">
       <Filter>Base\Shader\PixelShader</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\VertexShader\BasicVS.cpp">
+      <Filter>Base\Shader\VertexShader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,16 +210,25 @@
     <ClInclude Include="program\Base\Shader\PixelShader\PixelShader.h">
       <Filter>Base\Shader\PixelShader</Filter>
     </ClInclude>
+    <ClInclude Include="program\Base\Shader\VertexShader\BasicVS.h">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="program\Base\Shader\LambertVertexShader.hlsl">
-      <Filter>Base\Shader</Filter>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertPixelShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="program\Base\Shader\LambertPixelShader.hlsl">
-      <Filter>Base\Shader</Filter>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertVertexShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\BasicVertexShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\BasicPixelShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

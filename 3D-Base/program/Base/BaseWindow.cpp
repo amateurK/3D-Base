@@ -12,6 +12,7 @@
 #include "Model/Mesh/MeshManager.h"
 #include "Shader/ShaderManager.h"
 #include "Shader/VertexShader/LambertVS.h"
+#include "Shader/VertexShader/BasicVS.h"
 #include "Shader/PixelShader/PixelShader.h"
 
 namespace AK_Base {
@@ -281,26 +282,50 @@ namespace AK_Base {
 		Shader::ShaderManager::Create();
 		auto shaderM = Shader::ShaderManager::GetInstance();
 
-		// LambertVS
-		Shader::VertexShaderInitParam VSparam = {};
-		VSparam.FilePath = L"LambertVertexShader.cso";
-		D3D11_INPUT_ELEMENT_DESC layout[] = { // TODO 一気に入れれない？
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "NORMAL",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		};
-		VSparam.Layout = layout;
-		VSparam.LayoutCount = ARRAYSIZE(layout);
-		shaderM->AddShader<Shader::LambertVS>("LambertVS", VSparam);
-		// LambertPS
-		shaderM->AddShader<Shader::PixelShader>("LambertPS", { L"LambertPixelShader.cso" });
+		{
+			// LambertVS
+			Shader::VertexShaderInitParam VSparam = {};
+			VSparam.FilePath = L"LambertVertexShader.cso";
+			D3D11_INPUT_ELEMENT_DESC layout[] = { // TODO 一気に入れれない？
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "NORMAL",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "TEXCOORD",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+			VSparam.Layout = layout;
+			VSparam.LayoutCount = ARRAYSIZE(layout);
+			shaderM->AddShader<Shader::LambertVS>("LambertVS", VSparam);
+			// LambertPS
+			shaderM->AddShader<Shader::PixelShader>("LambertPS", { L"LambertPixelShader.cso" });
+		}
+		{
+			// LambertShader
+			std::unordered_map<Shader::ShaderType, std::string> list;
+			list[Shader::ShaderType::VertexShader] = "LambertVS";
+			list[Shader::ShaderType::PixelShader] = "LambertPS";
+			shaderM->AddShaderSet("LambertShader", list);
+		}
 
-		// LambertShader
-		std::unordered_map<Shader::ShaderType, std::string> list;
-		list[Shader::ShaderType::VertexShader] = "LambertVS";
-		list[Shader::ShaderType::PixelShader] = "LambertPS";
-		shaderM->AddShaderSet("LambertShader", list);
-
+		{
+			// BasicVS
+			Shader::VertexShaderInitParam VSparam = {};
+			VSparam.FilePath = L"BasicVertexShader.cso";
+			D3D11_INPUT_ELEMENT_DESC layout[] = {
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+			VSparam.Layout = layout;
+			VSparam.LayoutCount = ARRAYSIZE(layout);
+			shaderM->AddShader<Shader::BasicVS>("BasicVS", VSparam);
+			// BasicPS
+			shaderM->AddShader<Shader::PixelShader>("BasicPS", { L"BasicPixelShader.cso" });
+		}
+		{
+			// BasicShader
+			std::unordered_map<Shader::ShaderType, std::string> list;
+			list[Shader::ShaderType::VertexShader] = "BasicVS";
+			list[Shader::ShaderType::PixelShader] = "BasicPS";
+			shaderM->AddShaderSet("BasicShader", list);
+		}
 	}
 
 	//--------------------------------------------------------------------------------------

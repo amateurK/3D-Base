@@ -51,7 +51,7 @@ namespace Mesh {
 		Mesh* newMesh = nullptr;
 		auto extension = Tools::GetFileExtension(fileName);
 		extension = Tools::ToLowercase(extension);
-		if(extension == L"vrm"){
+		if(extension == L"vrm" || extension == L"glb") {
 			newMesh = new VRMMesh();
 		}
 		else {
