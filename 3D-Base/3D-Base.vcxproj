@@ -229,6 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Actor.h" />
+    <ClInclude Include="program\Base\ActorSet\DebugAxis.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
     <ClInclude Include="program\Base\Camera\Camera.h" />
     <ClInclude Include="program\Base\Component.h" />
@@ -258,10 +259,10 @@
     <ClInclude Include="program\Base\Shader\VertexShader\LambertVS.h" />
     <ClInclude Include="program\Base\Shader\VertexShader\VertexShader.h" />
     <ClInclude Include="program\Base\Singleton.h" />
-    <ClInclude Include="program\Base\StepTimer.h" />
     <ClInclude Include="program\Base\Tools\Alignment.h" />
     <ClInclude Include="program\Base\Tools\FilePath.h" />
     <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h" />
+    <ClInclude Include="program\Base\Tools\StepTimer.h" />
     <ClInclude Include="program\Base\Tools\WStringToString.h" />
   </ItemGroup>
   <ItemGroup>

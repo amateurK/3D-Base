@@ -44,6 +44,9 @@
     <Filter Include="Base\Shader\HLSL">
       <UniqueIdentifier>{029a9791-8677-4b41-93d1-62547447e52e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\ActorSet">
+      <UniqueIdentifier>{04fb0b9a-c149-4cd1-90df-76741acafc95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
@@ -180,9 +183,6 @@
     <ClInclude Include="program\Base\Component.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="program\Base\StepTimer.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="program\Base\Component\Transform.h">
       <Filter>Base\Component</Filter>
     </ClInclude>
@@ -212,6 +212,12 @@
     </ClInclude>
     <ClInclude Include="program\Base\Shader\VertexShader\BasicVS.h">
       <Filter>Base\Shader\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\ActorSet\DebugAxis.h">
+      <Filter>Base\ActorSet</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Tools\StepTimer.h">
+      <Filter>Base\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

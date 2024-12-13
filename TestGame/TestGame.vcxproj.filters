@@ -9,6 +9,9 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="program\TestGameMain.h" />
+    <ClInclude Include="program\Scene\FastCheck.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\pch.cpp" />
@@ -19,6 +22,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="program\TestGameMain.cpp" />
+    <ClCompile Include="program\Scene\FaseCheck.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
