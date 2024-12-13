@@ -1,10 +1,10 @@
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
-// ãƒ†ã‚¹ãƒˆç”¨ã‚¯ãƒ©ã‚¹
+// ƒeƒXƒg—pƒNƒ‰ƒX
 // 
-// è£½ä½œè€…	: amateurK
-// ä½œæˆæ—¥	: 2024/04/22
+// »ìÒ	: amateurK
+// ì¬“ú	: 2024/04/22
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "TestScene.h"
 #include "Base/Component/Transform.h"
@@ -20,7 +20,7 @@ namespace Scene {
 		auto myGame(&AK_Base::BaseWindow::GetInstance());
 
 
-		// ãƒ¢ãƒ‡ãƒ«ã®ä½œæˆ
+		// ƒ‚ƒfƒ‹‚Ìì¬
 		{
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
@@ -42,7 +42,7 @@ namespace Scene {
 		}
 
 
-		// ã‚«ãƒ¡ãƒ©ã®æº–å‚™
+		// ƒJƒƒ‰‚Ì€”õ
 		m_Camera = std::make_unique<Camera::Camera>();
 
 		//const XMVECTOR eye = { 0.0f, 1.0f, -5.0f, 0.0f };
@@ -56,7 +56,7 @@ namespace Scene {
 		m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
 
 
-		// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«VPè¡Œåˆ—ã‚’ã‚»ãƒƒãƒˆ
+		// ƒVƒF[ƒ_[‚ÉVPs—ñ‚ğƒZƒbƒg
 		auto shaderM = Shader::ShaderManager::GetInstance();
 		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
 	}
@@ -69,36 +69,34 @@ namespace Scene {
 	//--------------------------------------------------------------------------------------
 	void TestScene::Update(const double& totalTime, const float& elapsedTime)
 	{
-		// ã‚«ãƒ¡ãƒ©å›è»¢ãƒ†ã‚¹ãƒˆ
+		// ƒJƒƒ‰‰ñ“]ƒeƒXƒg
 		{
-			// ã‚­ãƒ¼å…¥åŠ›ã®æ¤œçŸ¥
-			auto input = AK_Base::InputManager::GetInstance();
-			bool w = input->IsKeyPressed(DIK_W);
-			bool s = input->IsKeyPressed(DIK_S);
-			bool a = input->IsKeyPressed(DIK_A);
-			bool d = input->IsKeyPressed(DIK_D);
-			bool z = input->IsKeyPressed(DIK_Z);
-			bool x = input->IsKeyPressed(DIK_X);
+			// ƒL[“ü—Í‚ÌŒŸ’m
+			bool w = (GetAsyncKeyState('W') & 0x8000) == 0x8000;
+			bool s = (GetAsyncKeyState('S') & 0x8000) == 0x8000;
+			bool a = (GetAsyncKeyState('A') & 0x8000) == 0x8000;
+			bool d = (GetAsyncKeyState('D') & 0x8000) == 0x8000;
+			bool z = (GetAsyncKeyState('Z') & 0x8000) == 0x8000;
+			bool x = (GetAsyncKeyState('X') & 0x8000) == 0x8000;
 
-			// ã‚«ãƒ¡ãƒ©ã®è©¦é‹è»¢
+			// ƒJƒƒ‰‚Ì‰^“]
 			float speed = 2.0f;
 			float front = (float)(w - s) * elapsedTime * speed;
 			float right = (float)(d - a) * elapsedTime * speed;
 			float up = (float)(z - x) * elapsedTime * speed;
 			m_Camera->MoveWithViewpoint(front, right, up);
 		}
-		// ç§»å‹•ãƒ†ã‚¹ãƒˆ
+		// ˆÚ“®ƒeƒXƒg
 		{
-			// ã‚­ãƒ¼å…¥åŠ›ã®æ¤œçŸ¥
-			auto input = AK_Base::InputManager::GetInstance();
-			bool w = input->IsKeyPressed(DIK_UP);
-			bool s = input->IsKeyPressed(DIK_DOWN);
-			bool a = input->IsKeyPressed(DIK_LEFT);
-			bool d = input->IsKeyPressed(DIK_RIGHT);
-			bool z = input->IsKeyPressed(DIK_O);
-			bool x = input->IsKeyPressed(DIK_P);
+			// ƒL[“ü—Í‚ÌŒŸ’m
+			bool w = (GetAsyncKeyState(VK_UP) & 0x8000) == 0x8000;
+			bool s = (GetAsyncKeyState(VK_DOWN) & 0x8000) == 0x8000;
+			bool a = (GetAsyncKeyState(VK_LEFT) & 0x8000) == 0x8000;
+			bool d = (GetAsyncKeyState(VK_RIGHT) & 0x8000) == 0x8000;
+			bool z = (GetAsyncKeyState('O') & 0x8000) == 0x8000;
+			bool x = (GetAsyncKeyState('P') & 0x8000) == 0x8000;
 
-			// è©¦é‹è»¢
+			// ‰^“]
 			float speed = 2.0f;
 			float front = (float)(w - s) * elapsedTime * speed;
 			float right = (float)(d - a) * elapsedTime * speed;
@@ -106,39 +104,16 @@ namespace Scene {
 			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester");
 			actor->GetComponent<AK_Base::Transform>()->Move(front, right, up);
 		}
-		// ãƒã‚¦ã‚¹ãƒ†ã‚¹ãƒˆ
+		// ²ˆË‘¶‚Ì‰ñ“]
 		{
-			auto input = AK_Base::InputManager::GetInstance();
-			bool tab = input->IsKeyNowPressed(DIK_TAB);
-			if (tab) {
-				input->CursorClipByWindow(!input->GetIsCursorClippedByWindow());
-			}
-			bool c = input->IsKeyNowPressed(BUTTON_MOUSE0);
-			if (c) {
-				input->SetShowCursor(!input->GetIsCursorShown());
-			}
-			bool v = input->IsKeyNowPressed(BUTTON_MOUSE1);
-			if (v) {
-				input->SetCursorCenter();
-			}
-			bool b = input->IsKeyNowPressed(BUTTON_MOUSE2);
-			if (b) {
-				POINT nowPos = input->GetCursorPosition();
-				nowPos.x += 10;
-				nowPos.y += 10;
-				input->SetCursorPosition(nowPos);
-			}
-		}
-		// è»¸ä¾å­˜ã®å›è»¢
-		{
-			// ã‚­ãƒ¼å…¥åŠ›ã®æ¤œçŸ¥
+			// ƒL[“ü—Í‚ÌŒŸ’m
 			bool i = (GetAsyncKeyState('I') & 0x8000) == 0x8000;
 			bool k = (GetAsyncKeyState('K') & 0x8000) == 0x8000;
 			bool j = (GetAsyncKeyState('J') & 0x8000) == 0x8000;
 			bool l = (GetAsyncKeyState('L') & 0x8000) == 0x8000;
 			bool u = (GetAsyncKeyState('U') & 0x8000) == 0x8000;
 
-			// è©¦é‹è»¢
+			// ‰^“]
 			float speed = 2.0f;
 			float right = (float)(j - l) * elapsedTime * speed;
 			float up = (float)(i - k) * elapsedTime * speed;
@@ -150,7 +125,7 @@ namespace Scene {
 			if(u)actor->GetComponent<AK_Base::Transform>()->LookAtPosition(actor2->GetTransform()->GetPosition());
 		}
 
-		// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«VPè¡Œåˆ—ã‚’ã‚»ãƒƒãƒˆ
+		// ƒVƒF[ƒ_[‚ÉVPs—ñ‚ğƒZƒbƒg
 		auto shaderM = Shader::ShaderManager::GetInstance();
 		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
 

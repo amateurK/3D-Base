@@ -102,11 +102,27 @@ namespace AK_Base {
 		/// @return ウィンドウサイズ
 		const Point<int> GetWindowSize();
 
-		inline ID3D11Device* GetD3DDevice() { return m_D3DDevice; }
-		inline ID3D11DeviceContext* GetImmediateContext() { return m_ImmediateContext; }
-		inline Actor* const GetRootActor() { return m_RootActor; }
-		inline HINSTANCE* GetHInstance() { return &m_HInst; }
-		inline HWND* GetHWnd() { return &m_HWnd; }
+		/// @brief デバイスのアドレスを取得する
+		/// @return 取得したデバイスのアドレス
+		inline ID3D11Device* GetD3DDevice()
+		{
+			return m_D3DDevice;
+		}
+
+		/// @brief D3DDeviceContextを取得する
+		/// @return 取得したD3DDeviceContext
+		inline ID3D11DeviceContext* GetImmediateContext()
+		{
+			return m_ImmediateContext;
+		}
+
+		/// @brief ルートアクターを取得する
+		/// @return RootActorへのポインタ
+		inline Actor* const GetRootActor()
+		{
+			return m_RootActor;
+		}
+
 
 		void* operator new(size_t size) {
 			return _mm_malloc(size, alignof(BaseWindow));
