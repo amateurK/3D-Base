@@ -33,6 +33,8 @@ namespace AK_Base {
 				}
 			}
 		}
+
+		GetActor()->SetTransform(this);
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -88,16 +90,38 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Transform::LookAt(DirectX::XMVECTOR& position)
+	void Transform::LookAtPosition(const DirectX::XMVECTOR& position)
 	{
-		// 現在位置からターゲット位置への方向ベクトル
-		XMVECTOR forword = XMVector3Normalize(position - m_Position);
-		// ワールド座標での正面方向へのベクトル
-		XMVECTOR def = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+		//// 現在位置からターゲット位置への方向ベクトル
+		//XMVECTOR forword = XMVector3Normalize(position - m_Position);
+		//// ワールド座標での正面方向へのベクトル
+		//XMVECTOR def = XMVectorSet(0.0f, 1.0f, 0.0f, .0f);
 
-		m_Rotation = XMQuaternionNormalize(XMQuaternionRotationMatrix(
-			XMMatrixLookToLH(m_Rotation, forword, def)
-		));
+		//m_Rotation = XMQuaternionNormalize(XMQuaternionRotationMatrix(
+		//	XMMatrixLookToLH(m_Rotation, forword, def)
+		//));
+
+		// 現在位置からターゲット位置への方向ベクトル
+		XMVECTOR normDirection = XMVector3Normalize(position - m_Position);
+
+		// 正面方向のベクトル（+Zとする）
+		XMVECTOR pZ = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+
+		// 回転軸
+		XMVECTOR rotAxis = XMVector3Normalize(XMVector3Cross(pZ, normDirection));
+
+		// クォータニオンの計算
+		float dot = XMVectorGetX(XMVector3Dot(pZ, normDirection));
+		float w = sqrtf((1.0f + dot) * 0.5f);	// w成分
+		float s = sqrtf((1.0f - dot) * 0.5f);	// 回転軸に対するスケール
+
+		m_Rotation = XMVectorSet(
+			XMVectorGetX(rotAxis) * s,
+			XMVectorGetY(rotAxis) * s,
+			XMVectorGetZ(rotAxis) * s,
+			w
+		);
+
 		MarkChanged();
 	}
 

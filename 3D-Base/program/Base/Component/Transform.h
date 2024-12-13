@@ -75,7 +75,7 @@ namespace AK_Base {
 
 		/// @brief w’è‚µ‚½À•W‚ÉŒü‚«‚ğ‡‚í‚¹‚é
 		/// @param position À•W
-		void LookAt(DirectX::XMVECTOR& position);
+		void LookAtPosition(const DirectX::XMVECTOR& position);
 
 		/// @brief IsChanged‚ğtrue‚É‚·‚é
 		void MarkChanged();

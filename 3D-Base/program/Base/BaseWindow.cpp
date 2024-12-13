@@ -21,7 +21,7 @@ namespace AK_Base {
 		: m_WindowSize(0, 0)
 		, m_Vsync(1)
 	{
-		m_RootActor = new AK_Base::Actor();
+		m_RootActor = new AK_Base::Actor(L"RootActor");
 	}
 
 	//--------------------------------------------------------------------------------------

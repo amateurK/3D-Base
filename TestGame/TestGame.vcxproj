@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\pch.h" />
+    <ClInclude Include="program\Scene\FastCheck.h" />
     <ClInclude Include="program\Scene\Scene.h" />
     <ClInclude Include="program\Scene\TestScene.h" />
     <ClInclude Include="program\TestGameMain.h" />
@@ -156,6 +157,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="program\Scene\FaseCheck.cpp" />
     <ClCompile Include="program\Scene\Scene.cpp" />
     <ClCompile Include="program\Scene\TestScene.cpp" />
     <ClCompile Include="program\TestGameMain.cpp" />
