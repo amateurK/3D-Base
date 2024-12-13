@@ -157,7 +157,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="program\Scene\FaseCheck.cpp" />
+    <ClCompile Include="program\Scene\FastCheck.cpp" />
     <ClCompile Include="program\Scene\Scene.cpp" />
     <ClCompile Include="program\Scene\TestScene.cpp" />
     <ClCompile Include="program\TestGameMain.cpp" />

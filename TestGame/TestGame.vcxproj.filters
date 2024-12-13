@@ -22,7 +22,7 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="program\TestGameMain.cpp" />
-    <ClCompile Include="program\Scene\FaseCheck.cpp">
+    <ClCompile Include="program\Scene\FastCheck.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>

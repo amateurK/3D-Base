@@ -26,7 +26,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 				root->AddChild(scene);
 				scene->SetStatus(AK_Base::ActorStatus::ACTION);
 			}
-
 			{
 				auto scene = new Scene::FastCheck();
 				root->AddChild(scene);

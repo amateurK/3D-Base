@@ -11,6 +11,7 @@
 #include "Base/Component/MeshRender.h"
 #include "Base/Shader/ShaderManager.h"
 #include "Base/ActorSet/DebugAxis.h"
+#include "Base/Input/InputManager.h"
 
 namespace Scene {
 
