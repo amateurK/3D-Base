@@ -22,6 +22,8 @@
 #pragma comment(lib, "mfplat.lib")
 #pragma comment(lib, "Mfreadwrite.lib")
 #pragma comment(lib, "mfuuid.lib")
+#pragma comment(lib, "dinput8.lib" )
+#pragma comment(lib, "dxguid.lib" )
 
 
 // インクルードいっぱい
@@ -38,6 +40,8 @@
 #include <mfapi.h>			// Media Foundation関連
 #include <mfidl.h>
 #include <mfreadwrite.h>
+#define DIRECTINPUT_VERSION 0x0800
+#include <dinput.h>			// DirectInput関連
 
 
 
