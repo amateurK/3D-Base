@@ -34,6 +34,20 @@
     </Filter>
     <Filter Include="Base\Input">
       <UniqueIdentifier>{8fe13076-88c1-4fba-aae5-6cf054228fd6}</UniqueIdentifier>
+    <Filter Include="Base\Shader\ShaderSet">
+      <UniqueIdentifier>{baf5b2c1-524f-4fbe-8913-00ba7e9cb90a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Shader\PixelShader">
+      <UniqueIdentifier>{ecf40cc7-10c4-4e7a-b95a-9f74e03da5dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Shader\VertexShader">
+      <UniqueIdentifier>{a528ceae-bbbd-4ce7-bb4c-9d0f8e4372b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Shader\HLSL">
+      <UniqueIdentifier>{029a9791-8677-4b41-93d1-62547447e52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\ActorSet">
+      <UniqueIdentifier>{04fb0b9a-c149-4cd1-90df-76741acafc95}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,29 +60,14 @@
     <ClCompile Include="program\Base\Actor.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="program\Base\Model\ModelActor.cpp">
-      <Filter>Base\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Base\Model\ModelRender.cpp">
-      <Filter>Base\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Base\Shader\BasicShader.cpp">
-      <Filter>Base\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp">
       <Filter>Base\Model\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="program\Base\Camera\Camera.cpp">
       <Filter>Base\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="program\Base\Shader\Shader.cpp">
-      <Filter>Base\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp">
       <Filter>Base\Model\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Base\Shader\LambertShader.cpp">
-      <Filter>Base\Shader</Filter>
     </ClCompile>
     <ClCompile Include="program\Base\Model\PictureResource.cpp">
       <Filter>Base\Model</Filter>
@@ -93,6 +92,26 @@
     </ClCompile>
     <ClCompile Include="program\Base\Input\InputManager.cpp">
       <Filter>Base\Input</Filter>
+    <ClCompile Include="program\Base\Shader\ShaderManager.cpp">
+      <Filter>Base\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\ShaderSet\ShaderSet.cpp">
+      <Filter>Base\Shader\ShaderSet</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\ShaderBase.cpp">
+      <Filter>Base\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\VertexShader\VertexShader.cpp">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\VertexShader\LambertVS.cpp">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\PixelShader\PixelShader.cpp">
+      <Filter>Base\Shader\PixelShader</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\VertexShader\BasicVS.cpp">
+      <Filter>Base\Shader\VertexShader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,29 +139,14 @@
     <ClInclude Include="program\Base\Actor.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="program\Base\Model\ModelActor.h">
-      <Filter>Base\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Model\ModelRender.h">
-      <Filter>Base\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Shader\BasicShader.h">
-      <Filter>Base\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h">
       <Filter>Base\Model\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\Camera\Camera.h">
       <Filter>Base\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="program\Base\Shader\Shader.h">
-      <Filter>Base\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h">
       <Filter>Base\Model\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Shader\LambertShader.h">
-      <Filter>Base\Shader</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\Reader\ReadData.h">
       <Filter>Base\Reader</Filter>
@@ -183,9 +187,6 @@
     <ClInclude Include="program\Base\Component.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="program\Base\StepTimer.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="program\Base\Component\Transform.h">
       <Filter>Base\Component</Filter>
     </ClInclude>
@@ -197,20 +198,49 @@
     </ClInclude>
     <ClInclude Include="program\Base\Input\InputManager.h">
       <Filter>Base\Input</Filter>
+    <ClInclude Include="program\Base\Shader\ShaderManager.h">
+      <Filter>Base\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Shader\ShaderSet\ShaderSet.h">
+      <Filter>Base\Shader\ShaderSet</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Shader\ShaderBase.h">
+      <Filter>Base\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Shader\VertexShader\VertexShader.h">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Shader\VertexShader\LambertVS.h">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Shader\PixelShader\PixelShader.h">
+      <Filter>Base\Shader\PixelShader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Shader\VertexShader\BasicVS.h">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\ActorSet\DebugAxis.h">
+      <Filter>Base\ActorSet</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Tools\StepTimer.h">
+      <Filter>Base\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="program\Base\Shader\BasicShader.hlsli">
-      <Filter>Base\Shader</Filter>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="program\Base\Shader\LambertVertexShader.hlsl">
-      <Filter>Base\Shader</Filter>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertPixelShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="program\Base\Shader\LambertPixelShader.hlsl">
-      <Filter>Base\Shader</Filter>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertVertexShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\BasicVertexShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\BasicPixelShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

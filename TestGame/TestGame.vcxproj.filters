@@ -8,10 +8,10 @@
     <ClInclude Include="program\Scene\Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="program\Piece\Piece.h">
-      <Filter>Piece</Filter>
-    </ClInclude>
     <ClInclude Include="program\TestGameMain.h" />
+    <ClInclude Include="program\Scene\FastCheck.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\pch.cpp" />
@@ -21,17 +21,14 @@
     <ClCompile Include="program\Scene\Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="program\Piece\Piece.cpp">
-      <Filter>Piece</Filter>
-    </ClCompile>
     <ClCompile Include="program\TestGameMain.cpp" />
+    <ClCompile Include="program\Scene\FaseCheck.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
       <UniqueIdentifier>{49c00871-5cac-42ce-8918-f2edc6a67d58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Piece">
-      <UniqueIdentifier>{cf8eadde-e01f-4c38-9ebe-76e69fca0a54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

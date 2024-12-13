@@ -1,18 +1,20 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
-// ƒfƒoƒCƒX‚âƒXƒƒbƒvƒ`ƒFƒCƒ“‚È‚Ç‚ğì¬‚·‚éƒNƒ‰ƒX
-// ƒQ[ƒ€ƒ‹[ƒv‚âƒEƒBƒ“ƒhƒE‚Ö‚Ìˆ—‚à‚±‚±
+// ãƒ‡ãƒã‚¤ã‚¹ã‚„ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ãªã©ã‚’ä½œæˆã™ã‚‹ã‚¯ãƒ©ã‚¹
+// ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚„ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¸ã®å‡¦ç†ã‚‚ã“ã“
 // 
-// »ìÒ	: amateurK
-// ì¬“ú	: 2024/03/06
-// 2D-Base‚©‚çˆÚA‚µ‚½‚Ì‚ÅŒ³‚Ìì¬“ú‚Í•s–¾
+// è£½ä½œè€…	: amateurK
+// ä½œæˆæ—¥	: 2024/03/06
+// 2D-Baseã‹ã‚‰ç§»æ¤ã—ãŸã®ã§å…ƒã®ä½œæˆæ—¥ã¯ä¸æ˜
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "BaseWindow.h"
 #include "Actor.h"
 #include "Model/Mesh/MeshManager.h"
-#include "Shader/BasicShader.h"
-#include "Shader/LambertShader.h"
 #include "Input/InputManager.h"
+#include "Shader/ShaderManager.h"
+#include "Shader/VertexShader/LambertVS.h"
+#include "Shader/VertexShader/BasicVS.h"
+#include "Shader/PixelShader/PixelShader.h"
 
 namespace AK_Base {
 	//--------------------------------------------------------------------------------------
@@ -20,13 +22,13 @@ namespace AK_Base {
 		: m_WindowSize(0, 0)
 		, m_Vsync(1)
 	{
-		m_RootActor = new AK_Base::Actor();
+		m_RootActor = new AK_Base::Actor(L"RootActor");
 	}
 
 	//--------------------------------------------------------------------------------------
 	BaseWindow::~BaseWindow()
 	{
-		if(m_RootActor)delete m_RootActor;
+		if (m_RootActor)delete m_RootActor;
 		this->CleanupManager();
 		this->CleanupDevice();
 	}
@@ -34,7 +36,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	HRESULT BaseWindow::InitWindow(HINSTANCE hInstance, int nCmdShow)
 	{
-		// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ğ“o˜^
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²
 		WNDCLASSEX wcex = {};
 		wcex.cbSize = sizeof(WNDCLASSEX);
 		wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -51,10 +53,10 @@ namespace AK_Base {
 		if (!RegisterClassEx(&wcex))
 			return E_FAIL;
 
-		// ƒEƒBƒ“ƒhƒE‚ğì¬
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆ
 		m_HInst = hInstance;
-		// ‰æ–ÊƒTƒCƒY
-		// 1280x720(HD) ‚© 1920x1080(Full-HD) ‚É‡‚í‚¹‚½‚ç‚¢‚¢‚Ì‚©‚È‚Ÿ
+		// ç”»é¢ã‚µã‚¤ã‚º
+		// 1280x720(HD) ã‹ 1920x1080(Full-HD) ã«åˆã‚ã›ãŸã‚‰ã„ã„ã®ã‹ãªã
 		RECT rc = { 0, 0, m_WindowSize.x, m_WindowSize.y };
 		AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 		m_HWnd = CreateWindowEx(
@@ -62,10 +64,10 @@ namespace AK_Base {
 			L"MainWindowClass",
 			L"Title is here.",
 			WS_OVERLAPPEDWINDOW
-			^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,// ƒEƒBƒ“ƒhƒEƒTƒCƒY•ÏX‚ğ‘j~
-			CW_USEDEFAULT,// ƒEƒBƒ“ƒhƒE¶ã‚Ì‰æ–Êã‚ÌˆÊ’u
+			^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºå¤‰æ›´ã‚’é˜»æ­¢
+			CW_USEDEFAULT,// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å·¦ä¸Šã®ç”»é¢ä¸Šã®ä½ç½®
 			CW_USEDEFAULT,
-			rc.right - rc.left,// ƒEƒBƒ“ƒhƒEƒTƒCƒY
+			rc.right - rc.left,// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º
 			rc.bottom - rc.top,
 			nullptr,
 			nullptr,
@@ -75,7 +77,7 @@ namespace AK_Base {
 		if (!m_HWnd)
 			return E_FAIL;
 
-		// ƒEƒBƒ“ƒhƒE•\¦
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
 		ShowWindow(m_HWnd, nCmdShow);
 
 		return S_OK;
@@ -125,7 +127,7 @@ namespace AK_Base {
 		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		sd.BufferCount = 3;
 		sd.OutputWindow = m_HWnd;
-		sd.Windowed = TRUE;	// ƒtƒ‹ƒXƒNƒŠ[ƒ“‚É‚·‚é‚È‚çSetFullscreenState()‚Æ‚©‚ğg‚¨‚¤
+		sd.Windowed = TRUE;	// ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹ãªã‚‰SetFullscreenState()ã¨ã‹ã‚’ä½¿ãŠã†
 		sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 		for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++) {
@@ -151,7 +153,7 @@ namespace AK_Base {
 			return hr;
 
 #ifdef _DEBUG
-		// ƒfƒoƒbƒO—pƒfƒoƒCƒX‚Ìì¬
+		// ãƒ‡ãƒãƒƒã‚°ç”¨ãƒ‡ãƒã‚¤ã‚¹ã®ä½œæˆ
 		hr = m_D3DDevice->QueryInterface(
 			__uuidof(ID3D11Debug),
 			reinterpret_cast<void**>(&m_D3DDebug)
@@ -215,8 +217,40 @@ namespace AK_Base {
 		if (FAILED(hr))
 			return hr;
 
-
 		m_ImmediateContext->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+
+		//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
+		D3D11_BLEND_DESC bld = {};
+		bld.AlphaToCoverageEnable = FALSE;
+		bld.IndependentBlendEnable = FALSE;
+		bld.RenderTarget[0].BlendEnable = TRUE;
+		bld.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		bld.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		bld.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		bld.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+		bld.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+		bld.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		bld.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		m_D3DDevice->CreateBlendState(&bld, &m_BlendState);
+		float fBlendFactor[] = { 0, 0, 0, 0 };
+
+		m_ImmediateContext->OMSetBlendState(m_BlendState, fBlendFactor, 0xffffffff);
+
+
+		// ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã®ã‚»ãƒƒãƒˆ
+		D3D11_SAMPLER_DESC smpDesc;
+
+		::ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
+		smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;	// ãƒ‰ãƒƒãƒˆã‚’ãã‚Œã„ã«è¡¨ç¤ºï¼ˆç·šå½¢è£œé–“ãªã—ï¼‰
+		smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		smpDesc.BorderColor[0] = 1.0f;	// ä¸Šã®Addresséƒ¨åˆ†ã§D3D11_TEXTURE_ADDRESS_BORDERã‚’ä½¿ã£ãŸå ´åˆã®è‰²
+		smpDesc.BorderColor[1] = 0.0f;	// #ff00ffã§Unityã¿ãŸã„ã«ãªã‚‹
+		smpDesc.BorderColor[2] = 1.0f;	// ã‚ã‹ã‚Šã‚„ã™ã„
+		smpDesc.BorderColor[3] = 1.0f;
+		m_D3DDevice->CreateSamplerState(&smpDesc, &m_Sampler);
+		m_ImmediateContext->PSSetSamplers(0, 1, &m_Sampler);
 
 		// Setup the viewport
 		D3D11_VIEWPORT vp = {};
@@ -231,7 +265,7 @@ namespace AK_Base {
 		// Set primitive topology
 		m_ImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		// ƒtƒŒ[ƒ€ƒŒ[ƒg‚Ìİ’è
+		// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆã®è¨­å®š
 		SetFrameRate(60);
 
 		return S_OK;
@@ -241,23 +275,69 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void BaseWindow::CreateManager()
 	{
-		// ƒVƒF[ƒ_[‚Ì€”õ
-		m_TestShader = std::make_unique<Shader::LambertShader>();
 
-
-		// ƒ}ƒl[ƒWƒƒ[‚Ì¶¬
+		// ãƒ¡ãƒƒã‚·ãƒ¥ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ç”Ÿæˆ
 		Mesh::MeshManager::Create();
 		InputManager::Create();
+
+		// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®ä½œæˆ
+		Shader::ShaderManager::Create();
+		auto shaderM = Shader::ShaderManager::GetInstance();
+
+		{
+			// LambertVS
+			Shader::VertexShaderInitParam VSparam = {};
+			VSparam.FilePath = L"LambertVertexShader.cso";
+			D3D11_INPUT_ELEMENT_DESC layout[] = { // TODO ä¸€æ°—ã«å…¥ã‚Œã‚Œãªã„ï¼Ÿ
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "NORMAL",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "TEXCOORD",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+			VSparam.Layout = layout;
+			VSparam.LayoutCount = ARRAYSIZE(layout);
+			shaderM->AddShader<Shader::LambertVS>("LambertVS", VSparam);
+			// LambertPS
+			shaderM->AddShader<Shader::PixelShader>("LambertPS", { L"LambertPixelShader.cso" });
+		}
+		{
+			// LambertShader
+			std::unordered_map<Shader::ShaderType, std::string> list;
+			list[Shader::ShaderType::VertexShader] = "LambertVS";
+			list[Shader::ShaderType::PixelShader] = "LambertPS";
+			shaderM->AddShaderSet("LambertShader", list);
+		}
+
+		{
+			// BasicVS
+			Shader::VertexShaderInitParam VSparam = {};
+			VSparam.FilePath = L"BasicVertexShader.cso";
+			D3D11_INPUT_ELEMENT_DESC layout[] = {
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+			VSparam.Layout = layout;
+			VSparam.LayoutCount = ARRAYSIZE(layout);
+			shaderM->AddShader<Shader::BasicVS>("BasicVS", VSparam);
+			// BasicPS
+			shaderM->AddShader<Shader::PixelShader>("BasicPS", { L"BasicPixelShader.cso" });
+		}
+		{
+			// BasicShader
+			std::unordered_map<Shader::ShaderType, std::string> list;
+			list[Shader::ShaderType::VertexShader] = "BasicVS";
+			list[Shader::ShaderType::PixelShader] = "BasicPS";
+			shaderM->AddShaderSet("BasicShader", list);
+		}
 	}
 
 	//--------------------------------------------------------------------------------------
 	void BaseWindow::CleanupManager()
 	{
-		m_TestShader.reset();
-
-		// ƒ}ƒl[ƒWƒƒ[‚Ì”jŠü
+		// ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ç ´æ£„
 		Mesh::MeshManager::Destroy();
 		InputManager::Destroy();
+
+		Shader::ShaderManager::Destroy();
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -265,6 +345,8 @@ namespace AK_Base {
 	{
 		if (m_ImmediateContext) m_ImmediateContext->ClearState();
 
+		if (m_Sampler)m_Sampler->Release();
+		if (m_BlendState)m_BlendState->Release();
 		if (m_DepthStencilView)m_DepthStencilView->Release();
 		if (m_DepthStencil)m_DepthStencil->Release();
 		if (m_RasterStates) m_RasterStates->Release();
@@ -287,7 +369,7 @@ namespace AK_Base {
 
 		m_StepTimer.Tick([&]()
 			{
-				// Manager‚ğ“®‚©‚·
+				// Managerã‚’å‹•ã‹ã™
 				InputManager::GetInstance()->Update();
 
 				auto time = static_cast<double>(m_StepTimer.GetTotalSeconds());
@@ -295,7 +377,7 @@ namespace AK_Base {
 				m_RootActor->Update(time, elapsedTime);
 				m_RootActor->CheckStatus();
 
-				// ”wŒi“h‚è‚Â‚Ô‚µ
+				// èƒŒæ™¯å¡—ã‚Šã¤ã¶ã—
 				//m_ImmediateContext->ClearRenderTargetView(m_RenderTargetView, DirectX::Colors::LightSeaGreen);
 				m_ImmediateContext->ClearRenderTargetView(m_RenderTargetView, DirectX::Colors::Black);
 				m_ImmediateContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -311,15 +393,15 @@ namespace AK_Base {
 	{
 		switch (num)
 		{
-		case -1:	// ‚’¼“¯Šú
+		case -1:	// å‚ç›´åŒæœŸ
 			m_StepTimer.SetFixedTimeStep(false);
 			m_Vsync = 1;
 			break;
-		case 0:		// –³§ŒÀ
+		case 0:		// ç„¡åˆ¶é™
 			m_StepTimer.SetFixedTimeStep(false);
 			m_Vsync = 0;
 			break;
-		default:	// ŒÅ’è
+		default:	// å›ºå®š
 			m_StepTimer.SetFixedTimeStep(true);
 			m_StepTimer.SetTargetElapsedSeconds(1.0 / static_cast<double>(num));
 			m_Vsync = 0;

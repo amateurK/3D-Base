@@ -93,6 +93,7 @@
       <ForcedIncludeFiles>$(ProjectDir)program\Base\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(SolutionDir)packages\directxtex_desktop_win10.2024.10.29.1\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,6 +153,7 @@
       <ForcedIncludeFiles>$(ProjectDir)program\Base\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(SolutionDir)packages\directxtex_desktop_win10.2024.10.29.1\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -212,20 +214,23 @@
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\VRMMesh.cpp" />
-    <ClCompile Include="program\Base\Model\ModelActor.cpp" />
-    <ClCompile Include="program\Base\Model\ModelRender.cpp" />
     <ClCompile Include="program\Base\Model\PictureResource.cpp" />
     <ClCompile Include="program\Base\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="program\Base\Reader\tiny_gltf.cc" />
-    <ClCompile Include="program\Base\Shader\BasicShader.cpp" />
-    <ClCompile Include="program\Base\Shader\LambertShader.cpp" />
-    <ClCompile Include="program\Base\Shader\Shader.cpp" />
+    <ClCompile Include="program\Base\Shader\PixelShader\PixelShader.cpp" />
+    <ClCompile Include="program\Base\Shader\ShaderBase.cpp" />
+    <ClCompile Include="program\Base\Shader\ShaderManager.cpp" />
+    <ClCompile Include="program\Base\Shader\ShaderSet\ShaderSet.cpp" />
+    <ClCompile Include="program\Base\Shader\VertexShader\BasicVS.cpp" />
+    <ClCompile Include="program\Base\Shader\VertexShader\LambertVS.cpp" />
+    <ClCompile Include="program\Base\Shader\VertexShader\VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Actor.h" />
+    <ClInclude Include="program\Base\ActorSet\DebugAxis.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
     <ClInclude Include="program\Base\Camera\Camera.h" />
     <ClInclude Include="program\Base\Component.h" />
@@ -241,8 +246,6 @@
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h" />
     <ClInclude Include="program\Base\Model\Mesh\VRMMesh.h" />
-    <ClInclude Include="program\Base\Model\ModelActor.h" />
-    <ClInclude Include="program\Base\Model\ModelRender.h" />
     <ClInclude Include="program\Base\Model\PictureResource.h" />
     <ClInclude Include="program\Base\pch.h" />
     <ClInclude Include="program\Base\Reader\json.hpp" />
@@ -250,48 +253,51 @@
     <ClInclude Include="program\Base\Reader\stb_image.h" />
     <ClInclude Include="program\Base\Reader\stb_image_write.h" />
     <ClInclude Include="program\Base\Reader\tiny_gltf.h" />
-    <ClInclude Include="program\Base\Shader\BasicShader.h" />
-    <ClInclude Include="program\Base\Shader\LambertShader.h" />
-    <ClInclude Include="program\Base\Shader\Shader.h" />
+    <ClInclude Include="program\Base\Shader\PixelShader\PixelShader.h" />
+    <ClInclude Include="program\Base\Shader\ShaderBase.h" />
+    <ClInclude Include="program\Base\Shader\ShaderManager.h" />
+    <ClInclude Include="program\Base\Shader\ShaderSet\ShaderSet.h" />
+    <ClInclude Include="program\Base\Shader\VertexShader\BasicVS.h" />
+    <ClInclude Include="program\Base\Shader\VertexShader\LambertVS.h" />
+    <ClInclude Include="program\Base\Shader\VertexShader\VertexShader.h" />
     <ClInclude Include="program\Base\Singleton.h" />
-    <ClInclude Include="program\Base\StepTimer.h" />
     <ClInclude Include="program\Base\Tools\Alignment.h" />
     <ClInclude Include="program\Base\Tools\FilePath.h" />
     <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h" />
+    <ClInclude Include="program\Base\Tools\StepTimer.h" />
     <ClInclude Include="program\Base\Tools\WStringToString.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="program\Base\Shader\BasicShader.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="program\Base\Shader\LambertPixelShader.hlsl">
+    <FxCompile Include="program\Base\Shader\HLSL\BasicPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">BasicPS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BasicPS</EntryPointName>
     </FxCompile>
-    <FxCompile Include="program\Base\Shader\LambertVertexShader.hlsl">
+    <FxCompile Include="program\Base\Shader\HLSL\BasicVertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">main</EntryPointName>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">BasicVS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BasicVS</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertPixelShader.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">LambertPS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">LambertPS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertVertexShader.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">LambertVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">LambertVS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

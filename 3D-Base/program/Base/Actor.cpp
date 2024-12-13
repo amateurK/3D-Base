@@ -8,6 +8,7 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "Actor.h"
 #include "Component.h"
+#include "Component/Transform.h"
 
 namespace AK_Base {
 	//--------------------------------------------------------------------------------------
@@ -17,6 +18,7 @@ namespace AK_Base {
 		: m_Status(ActorStatus::ACTION)
 		, m_ActorName(name)
 		, m_Parent(nullptr)
+		, m_Transform(nullptr)
 	{
 		m_Children.clear();
 		m_ComponentList.clear();

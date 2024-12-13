@@ -9,6 +9,7 @@
 #include "TestGameMain.h"
 #include "Base/Framework.h"
 #include "Scene/TestScene.h"
+#include "Scene/FastCheck.h"
 #include "Base/Actor.h"
 
 
@@ -16,12 +17,20 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 {
 
 	// フレームワーク側に処理を一任
-	return FrameworkMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow, 
+	return FrameworkMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow,
 		[&](AK_Base::Actor* root) {
 
-		// シーンの生成
-		// テスト用のシーンを生成
-		auto testScene = new Scene::TestScene();
-		root->AddChild(testScene);
+			// シーンの生成
+			{
+				auto scene = new Scene::TestScene();
+				root->AddChild(scene);
+				scene->SetStatus(AK_Base::ActorStatus::ACTION);
+			}
+
+			{
+				auto scene = new Scene::FastCheck();
+				root->AddChild(scene);
+				//scene->SetStatus(AK_Base::ActorStatus::ACTION);
+			}
 		});
 }

@@ -8,6 +8,10 @@
 // プロパティ > C/C++ > プリコンパイル済みヘッダー から設定する
 // pch.cppにコメントを書くとなぜかwarningが出る
 
+// 一部C++20の機能を使っている。（construct_atなど）
+// プロパティ > C/C++ > 言語 > C++ 言語標準 から設定する
+// ISO C++ 20 標準 (/std:c++20) にセット
+
 
 // リンカーに渡す追加ライブラリ
 #pragma comment(lib, "d3d11.lib")
@@ -57,6 +61,7 @@
 #include <list>
 #include <math.h>
 #include <map>
+#include <memory>
 #include <numeric>
 #include <queue>
 #include <random>
@@ -66,6 +71,7 @@
 #include <thread>
 #include <typeindex>
 #include <typeinfo>
+#include <type_traits>
 #include <utility>
 #include <unordered_map>
 #include <vector>

@@ -10,7 +10,7 @@
 #include "../Actor.h"
 #include "Transform.h"
 
-namespace Shader { class Shader; }
+namespace Shader { class ShaderSet; }
 namespace Mesh { class Mesh; }
 
 namespace AK_Base {
@@ -25,7 +25,7 @@ namespace AK_Base {
 		Transform* m_Transform;
 
 		/// @brief 使用するシェーダーのポインタ
-		Shader::Shader* m_Shader;
+		Shader::ShaderSet* m_ShaderSet;
 
 		/// @brief 使用するメッシュのポインタ
 		Mesh::Mesh* m_Mesh;
@@ -47,9 +47,9 @@ namespace AK_Base {
 		/// @param elapsedTime : 前回のRender()からの経過時間（秒）
 		virtual void Render(const double& totalTime, const float& elapsedTime) override;
 
-		/// @brief シェーダーをセット
-		/// todo シェーダー管理クラスが出来たら消す
-		void SetShader(Shader::Shader* shader) { m_Shader = shader; }
+		/// @brief 使用するシェーダーをセット
+		/// @param name シェーダーセットの名前
+		void SetShader(const std::string& name);
 
 	private:
 

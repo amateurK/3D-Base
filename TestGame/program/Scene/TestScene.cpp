@@ -1,46 +1,48 @@
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
-// ƒeƒXƒg—pƒNƒ‰ƒX
+// ãƒ†ã‚¹ãƒˆç”¨ã‚¯ãƒ©ã‚¹
 // 
-// »ìÒ	: amateurK
-// ì¬“ú	: 2024/04/22
+// è£½ä½œè€…	: amateurK
+// ä½œæˆæ—¥	: 2024/04/22
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "TestScene.h"
-#include "Base/Model/ModelActor.h"
-#include "../Piece/Piece.h"
-#include "Base/Input/InputManager.h"
 #include "Base/Component/Transform.h"
 #include "Base/Component/MeshRender.h"
+#include "Base/Shader/ShaderManager.h"
+#include "Base/ActorSet/DebugAxis.h"
 
 namespace Scene {
 
 	TestScene::TestScene()
 		: Scene()
 	{
-		this->SetStatus(AK_Base::ActorStatus::ACTION);
 		auto myGame(&AK_Base::BaseWindow::GetInstance());
 
-		//auto testobj = new AK_Base::ModelActor(Game->GetBasicShader());
-		//Game->GetRootActor()->AddChild(testobj);
 
-		//auto piece1 = new Piece::Piece(myGame->GetTestShader(), L"no.1", L"resource/testData/Alicia_FBX/Alicia_solid_Unity.FBX");
-		//this->AddChild(piece1);
-		//piece1->SetPosition(-3.0f, 0.0f, 3.0f);
-		//piece1->Scaling(0.05f);
+		// ãƒ¢ãƒ‡ãƒ«ã®ä½œæˆ
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester");
+			auto transform = testmodel->AddComponent<AK_Base::Transform>();
+			transform->Scale(3.0f);
+			transform->SetPosition(3.0f, 0.0f, 3.0f);
+			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
+			meshRender->SetShader("LambertShader");
 
-		auto piece1 = this->AddChild<AK_Base::Actor>(L"tester");
-		piece1->AddComponent<AK_Base::Transform>();
-		auto meshRender = piece1->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
-		meshRender->SetShader(myGame->GetTestShader());
+			ActorSet::CreateDebugAxis(testmodel);
+		}
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester2");
+			auto transform = testmodel->AddComponent<AK_Base::Transform>();
+			transform->SetPosition(-3.0f, 2.0f, 3.0f);
+			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
+			meshRender->SetShader("BasicShader");
+
+			ActorSet::CreateDebugAxis(testmodel);
+		}
 
 
-		auto piece2 = this->AddChild<Piece::Piece>(myGame->GetTestShader(), L"no.2", L"resource/testData/AvatarSample_A.vrm");
-		piece2->SetPosition(3.0f, 0.0f, 3.0f);
-		piece2->Scaling(6.0f);
-
-
-		// ƒJƒƒ‰‚Ì€”õ
+		// ã‚«ãƒ¡ãƒ©ã®æº–å‚™
 		m_Camera = std::make_unique<Camera::Camera>();
 
 		//const XMVECTOR eye = { 0.0f, 1.0f, -5.0f, 0.0f };
@@ -53,10 +55,10 @@ namespace Scene {
 		auto windowSize = myGame->GetWindowSize();
 		m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
 
-		// ƒVƒF[ƒ_[‚ÉƒZƒbƒg
-		auto shader = myGame->GetTestShader();
-		shader->SetViewMatrix(m_Camera->GetView());
-		shader->SetProjectionMatrix(m_Camera->GetProjection());
+
+		// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«VPè¡Œåˆ—ã‚’ã‚»ãƒƒãƒˆ
+		auto shaderM = Shader::ShaderManager::GetInstance();
+		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
 	}
 	//--------------------------------------------------------------------------------------
 	TestScene::~TestScene()
@@ -67,9 +69,9 @@ namespace Scene {
 	//--------------------------------------------------------------------------------------
 	void TestScene::Update(const double& totalTime, const float& elapsedTime)
 	{
-		// ƒJƒƒ‰‰ñ“]ƒeƒXƒg
+		// ã‚«ãƒ¡ãƒ©å›è»¢ãƒ†ã‚¹ãƒˆ
 		{
-			// ƒL[“ü—Í‚ÌŒŸ’m
+			// ã‚­ãƒ¼å…¥åŠ›ã®æ¤œçŸ¥
 			auto input = AK_Base::InputManager::GetInstance();
 			bool w = input->IsKeyPressed(DIK_W);
 			bool s = input->IsKeyPressed(DIK_S);
@@ -78,16 +80,16 @@ namespace Scene {
 			bool z = input->IsKeyPressed(DIK_Z);
 			bool x = input->IsKeyPressed(DIK_X);
 
-			// ƒJƒƒ‰‚Ì‰^“]
+			// ã‚«ãƒ¡ãƒ©ã®è©¦é‹è»¢
 			float speed = 2.0f;
 			float front = (float)(w - s) * elapsedTime * speed;
 			float right = (float)(d - a) * elapsedTime * speed;
 			float up = (float)(z - x) * elapsedTime * speed;
 			m_Camera->MoveWithViewpoint(front, right, up);
 		}
-		// ˆÚ“®ƒeƒXƒg
+		// ç§»å‹•ãƒ†ã‚¹ãƒˆ
 		{
-			// ƒL[“ü—Í‚ÌŒŸ’m
+			// ã‚­ãƒ¼å…¥åŠ›ã®æ¤œçŸ¥
 			auto input = AK_Base::InputManager::GetInstance();
 			bool w = input->IsKeyPressed(DIK_UP);
 			bool s = input->IsKeyPressed(DIK_DOWN);
@@ -96,15 +98,15 @@ namespace Scene {
 			bool z = input->IsKeyPressed(DIK_O);
 			bool x = input->IsKeyPressed(DIK_P);
 
-			// ‰^“]
+			// è©¦é‹è»¢
 			float speed = 2.0f;
 			float front = (float)(w - s) * elapsedTime * speed;
 			float right = (float)(d - a) * elapsedTime * speed;
 			float up = (float)(z - x) * elapsedTime * speed;
-			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester");;
+			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester");
 			actor->GetComponent<AK_Base::Transform>()->Move(front, right, up);
 		}
-		// ƒ}ƒEƒXƒeƒXƒg
+		// ãƒã‚¦ã‚¹ãƒ†ã‚¹ãƒˆ
 		{
 			auto input = AK_Base::InputManager::GetInstance();
 			bool tab = input->IsKeyNowPressed(DIK_TAB);
@@ -127,11 +129,30 @@ namespace Scene {
 				input->SetCursorPosition(nowPos);
 			}
 		}
+		// è»¸ä¾å­˜ã®å›è»¢
+		{
+			// ã‚­ãƒ¼å…¥åŠ›ã®æ¤œçŸ¥
+			bool i = (GetAsyncKeyState('I') & 0x8000) == 0x8000;
+			bool k = (GetAsyncKeyState('K') & 0x8000) == 0x8000;
+			bool j = (GetAsyncKeyState('J') & 0x8000) == 0x8000;
+			bool l = (GetAsyncKeyState('L') & 0x8000) == 0x8000;
+			bool u = (GetAsyncKeyState('U') & 0x8000) == 0x8000;
 
-		// ƒVƒF[ƒ_[‚Éviews—ñ‚ğ“ü‚ê‚é
-		auto myGame(&AK_Base::BaseWindow::GetInstance());
-		auto shader = myGame->GetTestShader();
-		shader->SetViewMatrix(m_Camera->GetView());
+			// è©¦é‹è»¢
+			float speed = 2.0f;
+			float right = (float)(j - l) * elapsedTime * speed;
+			float up = (float)(i - k) * elapsedTime * speed;
+			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester");
+			auto actor2 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester2");
+
+			actor->GetComponent<AK_Base::Transform>()->Rotate(XMVECTOR{ 0.0f, 1.0f, 0.0f, 1.0f }, right);
+			actor->GetComponent<AK_Base::Transform>()->Rotate(XMVECTOR{ 1.0f, 0.0f, 0.0f, 1.0f }, up);
+			if(u)actor->GetComponent<AK_Base::Transform>()->LookAtPosition(actor2->GetTransform()->GetPosition());
+		}
+
+		// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã«VPè¡Œåˆ—ã‚’ã‚»ãƒƒãƒˆ
+		auto shaderM = Shader::ShaderManager::GetInstance();
+		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
 
 		Scene::Update(totalTime, elapsedTime);
 	}

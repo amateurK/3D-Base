@@ -7,9 +7,11 @@
 // 製作者	: amateurK
 // 作成日	: 2024/11/16
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-#include "Actor.h"
+
 
 namespace AK_Base {
+
+	class Actor;
 
 	/// @brief コンポーネント
 	class Component

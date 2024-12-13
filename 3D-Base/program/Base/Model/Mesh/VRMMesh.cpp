@@ -61,7 +61,7 @@ namespace Mesh {
 			// このインデックスはVRMファイル内のtextures配列のインデックスのこと
 			if (material.values.find("baseColorTexture") != material.values.end()) {
 				int textureIndex = material.values.at("baseColorTexture").TextureIndex();
-				
+
 				// テクスチャ配列からテクスチャ情報を抜き出す
 				if (textureIndex >= 0 && textureIndex < model.textures.size()) {
 					const auto& texture = model.textures[textureIndex];
@@ -76,7 +76,7 @@ namespace Mesh {
 						// 画像データをロード
 						hr = resource.LoadPicture(image.image.data(),
 							Point<int>(image.width, image.height), image.component);
-						if (FAILED(hr)) 
+						if (FAILED(hr))
 						{
 							throw std::exception("テクスチャの読み込みに失敗。");
 						}
@@ -98,7 +98,6 @@ namespace Mesh {
 				MeshData matData;
 
 				std::vector<SimpleVertex> vertices;
-				std::vector<WORD> indices;
 
 				// 頂点座標の取得
 				const tinygltf::Accessor& posAccessor = model.accessors[primitive.attributes.find("POSITION")->second];
@@ -143,22 +142,32 @@ namespace Mesh {
 				// インデックスデータの取得
 				const tinygltf::Accessor& indexAccessor = model.accessors[primitive.indices];
 				const tinygltf::BufferView& indexBufferView = model.bufferViews[indexAccessor.bufferView];
-				const uint32_t* indexData = reinterpret_cast<const uint32_t*>(&model.buffers[indexBufferView.buffer].data[indexBufferView.byteOffset + indexAccessor.byteOffset]);
+				const auto bufferData = &model.buffers[indexBufferView.buffer].data[indexBufferView.byteOffset + indexAccessor.byteOffset];
 
-				// インデックスバッファ用配列に入れる
-				for (size_t i = 0; i < indexAccessor.count; ++i) {
-					indices.push_back(std::move(static_cast<WORD>(indexData[i])));
+				// 1データあたりのサイズごとに処理
+				size_t elementSize = 0;
+				if (indexAccessor.componentType == TINYGLTF_COMPONENT_TYPE_UNSIGNED_SHORT) {
+					matData.DXGI_Format = DXGI_FORMAT_R16_UINT;
+					elementSize = sizeof(uint16_t);
 				}
-				matData.NumFace = static_cast<uint32_t>(indices.size()) / 3;
+				else if (indexAccessor.componentType == TINYGLTF_COMPONENT_TYPE_UNSIGNED_INT) {
+					matData.DXGI_Format = DXGI_FORMAT_R32_UINT;
+					elementSize = sizeof(uint32_t);
+				}
+				else {
+					return E_FAIL;
+				}
+
+				matData.NumFace = static_cast<uint32_t>(indexAccessor.count) / 3;
 
 				// インデックスバッファを作成
 				bd.Usage = D3D11_USAGE_DEFAULT;
-				bd.ByteWidth = sizeof(WORD) * static_cast<UINT>(indices.size());
+				bd.ByteWidth = static_cast<UINT>(indexAccessor.count * elementSize);
 				bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 				bd.CPUAccessFlags = 0;
-				InitData.pSysMem = indices.data();
+				InitData.pSysMem = bufferData;
+
 				hr = device->CreateBuffer(&bd, &InitData, matData.IndexBuffer.ReleaseAndGetAddressOf());
-				indices.clear();
 				if (FAILED(hr))
 					return hr;
 
@@ -190,7 +199,7 @@ namespace Mesh {
 		UINT offset = 0;
 		context->IASetVertexBuffers(0, 1, m_Mesh[id].VertexBuffer.GetAddressOf(), &stride, &offset);
 		// Set index buffer
-		context->IASetIndexBuffer(m_Mesh[id].IndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+		context->IASetIndexBuffer(m_Mesh[id].IndexBuffer.Get(), m_Mesh[id].DXGI_Format, 0);
 
 		// 画像をセット
 		if (m_Mesh[id].SRView != nullptr) {

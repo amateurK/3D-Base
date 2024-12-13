@@ -13,6 +13,7 @@
 namespace AK_Base {
 
 	class Component;
+	class Transform;
 
 	/// @brief Actorの状態を表す
 	enum class ActorStatus {
@@ -37,6 +38,11 @@ namespace AK_Base {
 		/// @details キー：コンポーネントのクラスの型（typeid()で取れるもの）
 		/// @details 値　：コンポーネントの実体 
 		std::unordered_map<std::type_index, Component*> m_ComponentList;
+
+		/// @brief Transformコンポーネントへのポインタ
+		/// @details よくアクセスするので保持しておく
+		/// @details Transform側がセットするので、Actorで触る必要はない
+		Transform* m_Transform;
 		
 	public:
 		/// @brief コンストラクタ
@@ -101,9 +107,11 @@ namespace AK_Base {
 		/// @param actor 親Actorへのポインタ
 		void SetParent(Actor* const actor);
 
-		/// @brief 親のActorを取得
-		/// @return 親Actorへのポインタ
+
 		inline Actor* const GetParent() const { return m_Parent; }
+		inline std::wstring GetName() const { return m_ActorName; }
+		inline const Transform* GetTransform() const { return m_Transform; }
+		inline void SetTransform(Transform* ptr) { m_Transform = ptr; }
 
 		/// @brief コンポーネントを追加
 		/// @tparam T コンポーネントの型
