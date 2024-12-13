@@ -32,6 +32,9 @@
     <Filter Include="Base\Component">
       <UniqueIdentifier>{769c5b6e-8aa7-423a-b733-51031e8b47cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Input">
+      <UniqueIdentifier>{8fe13076-88c1-4fba-aae5-6cf054228fd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
@@ -87,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="program\Base\Component\MeshRender.cpp">
       <Filter>Base\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Input\InputManager.cpp">
+      <Filter>Base\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="program\Base\Component\MeshRender.h">
       <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Input\InputManager.h">
+      <Filter>Base\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

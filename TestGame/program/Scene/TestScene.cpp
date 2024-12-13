@@ -104,6 +104,29 @@ namespace Scene {
 			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester");;
 			actor->GetComponent<AK_Base::Transform>()->Move(front, right, up);
 		}
+		// マウステスト
+		{
+			auto input = AK_Base::InputManager::GetInstance();
+			bool tab = input->IsKeyNowPressed(DIK_TAB);
+			if (tab) {
+				input->CursorClipByWindow(!input->GetIsCursorClippedByWindow());
+			}
+			bool c = input->IsKeyNowPressed(BUTTON_MOUSE0);
+			if (c) {
+				input->SetShowCursor(!input->GetIsCursorShown());
+			}
+			bool v = input->IsKeyNowPressed(BUTTON_MOUSE1);
+			if (v) {
+				input->SetCursorCenter();
+			}
+			bool b = input->IsKeyNowPressed(BUTTON_MOUSE2);
+			if (b) {
+				POINT nowPos = input->GetCursorPosition();
+				nowPos.x += 10;
+				nowPos.y += 10;
+				input->SetCursorPosition(nowPos);
+			}
+		}
 
 		// シェーダーにview行列を入れる
 		auto myGame(&AK_Base::BaseWindow::GetInstance());
