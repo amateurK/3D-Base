@@ -19,7 +19,7 @@ namespace Scene {
 
 	public:
 		/// @brief コンストラクタ
-		FastCheck();
+		FastCheck(std::wstring name = L"unnamed");
 		/// @brief デストラクタ
 		virtual ~FastCheck();
 

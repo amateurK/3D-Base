@@ -92,14 +92,6 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Transform::LookAtPosition(const DirectX::XMVECTOR& position)
 	{
-		//// 現在位置からターゲット位置への方向ベクトル
-		//XMVECTOR forword = XMVector3Normalize(position - m_Position);
-		//// ワールド座標での正面方向へのベクトル
-		//XMVECTOR def = XMVectorSet(0.0f, 1.0f, 0.0f, .0f);
-
-		//m_Rotation = XMQuaternionNormalize(XMQuaternionRotationMatrix(
-		//	XMMatrixLookToLH(m_Rotation, forword, def)
-		//));
 
 		// 現在位置からターゲット位置への方向ベクトル
 		XMVECTOR normDirection = XMVector3Normalize(position - m_Position);

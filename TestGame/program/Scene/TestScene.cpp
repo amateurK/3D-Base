@@ -15,8 +15,8 @@
 
 namespace Scene {
 
-	TestScene::TestScene()
-		: Scene()
+	TestScene::TestScene(std::wstring name)
+		: Scene(name)
 	{
 		auto myGame(&AK_Base::BaseWindow::GetInstance());
 

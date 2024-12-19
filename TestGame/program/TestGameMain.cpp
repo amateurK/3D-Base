@@ -22,12 +22,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 			// ƒV[ƒ“‚Ì¶¬
 			{
-				auto scene = new Scene::TestScene();
+				auto scene = new Scene::TestScene(L"TestScene");
 				root->AddChild(scene);
 				scene->SetStatus(AK_Base::ActorStatus::ACTION);
 			}
 			{
-				auto scene = new Scene::FastCheck();
+				auto scene = new Scene::FastCheck(L"SpeedCheck");
 				root->AddChild(scene);
 				//scene->SetStatus(AK_Base::ActorStatus::ACTION);
 			}

@@ -19,7 +19,7 @@ namespace Scene {
 
 	public:
 		/// @brief コンストラクタ
-		TestScene();
+		TestScene(std::wstring name = L"unnamed");
 		/// @brief デストラクタ
 		virtual ~TestScene();
 
