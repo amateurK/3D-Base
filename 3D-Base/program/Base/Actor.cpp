@@ -28,7 +28,7 @@ namespace AK_Base {
 	Actor::~Actor()
 	{
 		for (auto& child : m_Children) {
-			delete child;
+			delete child.second;
 		}
 		m_Children.clear();
 		for (auto& component : m_ComponentList) {
@@ -44,9 +44,9 @@ namespace AK_Base {
 			component.second->Update(totalTime, elapsedTime);
 		}
 		for (auto& child : m_Children) {
-			if (child->m_Status == ActorStatus::ACTION ||
-				child->m_Status == ActorStatus::UPDATEONLY) {
-				child->Update(totalTime, elapsedTime);
+			if (child.second->m_Status == ActorStatus::ACTION ||
+				child.second->m_Status == ActorStatus::UPDATEONLY) {
+				child.second->Update(totalTime, elapsedTime);
 			}
 		}
 	}
@@ -58,9 +58,9 @@ namespace AK_Base {
 			component.second->Render(totalTime, elapsedTime);
 		}
 		for (auto& child : m_Children) {
-			if (child->m_Status == ActorStatus::ACTION ||
-				child->m_Status == ActorStatus::RENDERONLY) {
-				child->Render(totalTime, elapsedTime);
+			if (child.second->m_Status == ActorStatus::ACTION ||
+				child.second->m_Status == ActorStatus::RENDERONLY) {
+				child.second->Render(totalTime, elapsedTime);
 			}
 		}
 	}
@@ -68,7 +68,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Actor::AddChild(Actor* const actor)
 	{
-		m_Children.push_back(actor);
+		m_Children[actor->GetName()] = actor;
 		actor->SetParent(this);
 	}
 
@@ -78,20 +78,20 @@ namespace AK_Base {
 		// 自分が死んでいたら子をDEAD状態にする
 		if (this->m_Status == ActorStatus::DEAD) {
 			for (auto child : m_Children) {
-				child->m_Status = ActorStatus::DEAD;
+				child.second->m_Status = ActorStatus::DEAD;
 			}
 		}
 
 		// 子を巡回（再帰処理）
 		for (auto& child : m_Children) {
-			child->CheckStatus();
+			child.second->CheckStatus();
 		}
 
 		// DEAT状態の子を削除
 		// erase()を使うので範囲forはダメ
 		for (auto itr = m_Children.begin(); itr != m_Children.end();) {
-			if ((*itr)->m_Status == ActorStatus::DEAD) {
-				delete* itr;
+			if ((*itr).second->m_Status == ActorStatus::DEAD) {
+				delete itr->second;
 				itr = m_Children.erase(itr);
 			}
 			else {
@@ -105,9 +105,9 @@ namespace AK_Base {
 	{
 		int cnt = 0;
 		for (auto& child : m_Children) {
-			if (child->m_Status == ActorStatus::ACTION) {
+			if (child.second->m_Status == ActorStatus::ACTION) {
 				cnt++;
-				cnt += child->GetActionChildren();
+				cnt += child.second->GetActionChildren();
 			}
 		}
 		return cnt;
@@ -118,9 +118,9 @@ namespace AK_Base {
 	{
 		int cnt = 0;
 		for (auto& child : m_Children) {
-			if (child->m_Status != ActorStatus::DEAD) {
+			if (child.second->m_Status != ActorStatus::DEAD) {
 				cnt++;
-				cnt += child->GetAliveChildren();
+				cnt += child.second->GetAliveChildren();
 			}
 		}
 		return cnt;
@@ -134,14 +134,14 @@ namespace AK_Base {
 		}
 
 		for (auto& child : m_Children) {
-			child->SearchClass(type, list);
+			child.second->SearchClass(type, list);
 		}
 
 		return;
 	}
 
 	//--------------------------------------------------------------------------------------
-	const Actor* Actor::SearchName(const std::wstring name) const
+	const Actor* Actor::SearchName(const std::wstring& name) const
 	{
 		if (this->m_ActorName == name) {
 			return this;
@@ -149,7 +149,7 @@ namespace AK_Base {
 
 		const Actor* target = nullptr;
 		for (auto& child : m_Children) {
-			target = child->SearchName(name);
+			target = child.second->SearchName(name);
 			if (target != nullptr)return target;
 		}
 
@@ -157,7 +157,7 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Actor::SetStatus(const ActorStatus status)
+	void Actor::SetStatus(const ActorStatus& status)
 	{
 		m_Status = status;
 	}

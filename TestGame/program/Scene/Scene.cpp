@@ -10,8 +10,8 @@
 
 namespace Scene {
 	//--------------------------------------------------------------------------------------
-	Scene::Scene()
-		: Actor()
+	Scene::Scene(std::wstring name)
+		: Actor(name)
 		, m_Times(0)
 	{
 		// Šî–{‚¨‹x‚Ý

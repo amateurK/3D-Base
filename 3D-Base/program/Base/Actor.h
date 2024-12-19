@@ -31,7 +31,10 @@ namespace AK_Base {
 		ActorStatus m_Status;	// 現在の状態
 		std::wstring m_ActorName;	// Actorの識別名
 
-		std::list<Actor*> m_Children;	// 子Actorのリスト
+		/// @brief 子Actorのリスト
+		/// @details キー：アクターの識別名
+		/// @details 値　：子アクターへのポインタ
+		std::unordered_map<std::wstring, Actor*> m_Children;	// 子Actorのリスト
 		Actor* m_Parent;	// 親Actorへのポインタ
 
 		/// @brief コンポーネントのリスト
@@ -97,11 +100,11 @@ namespace AK_Base {
 		/// @brief 子Actorから特定の名前のActorを探す
 		/// @param name : 探したいActorの名前
 		/// @return 見つかったActorへのポインタ
-		const Actor* SearchName(const std::wstring name) const;
+		const Actor* SearchName(const std::wstring& name) const;
 
 		/// @brief 現在の状態を変更
 		/// @param status 変更したい状態（ActorStatus型）
-		void SetStatus(const ActorStatus status);
+		void SetStatus(const ActorStatus& status);
 
 		/// @brief 親のActorをセット
 		/// @param actor 親Actorへのポインタ
