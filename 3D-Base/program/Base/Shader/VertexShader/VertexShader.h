@@ -40,7 +40,8 @@ namespace Shader {
 		virtual HRESULT Init(const ShaderInitParam& params) override;
 
 		/// @brief シェーダーをGPUにセットする
-		virtual void SetShader() override;
+		/// @param set ShaderSetのポインタ
+		virtual void SetShader(const ShaderSet* set) override;
 
 		/// @brief コンスタントバッファをバインド
 		/// @param index バインドするコンスタントバッファのインデックス

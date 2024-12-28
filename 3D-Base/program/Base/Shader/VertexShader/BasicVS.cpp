@@ -38,6 +38,20 @@ namespace Shader {
 	}
 
 	//--------------------------------------------------------------------------------------
+	void BasicVS::SetPerObject(const ShaderSet* set)
+	{
+		SetChangeFrame(*(set->GetData<const XMMATRIX*>("worldMatrix")));
+		SetConstantBuffer<Material>(1, set->GetData<XMFLOAT4>("color"));
+	}
+
+	//--------------------------------------------------------------------------------------
+	void BasicVS::AddDataForShaderSet(ShaderSet* set) const
+	{
+		set->SetData<const XMMATRIX*>("worldMatrix", nullptr);
+		set->SetData<XMFLOAT4>("color", {1.0f, 1.0f, 1.0f, 1.0f});
+	}
+
+	//--------------------------------------------------------------------------------------
 	void BasicVS::SetChangeFrame(const XMMATRIX& world)
 	{
 		// WVPs—ñ‚ğZo

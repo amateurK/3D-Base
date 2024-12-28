@@ -45,19 +45,10 @@ namespace AK_Base {
 
 		m_Mesh->Render(d3dDeviceContext, [&](int id, const std::vector<Mesh::MeshData> material)
 			{
-				// TODO : Materialクラスを作るまで仮置き
-				if (m_ShaderSet->GetName() == "LambertShader") {
-					auto vs = static_cast<Shader::LambertVS*>(m_ShaderSet->GetShader(Shader::ShaderType::VertexShader));
-					vs->SetChangeFrame(m_Transform->GetWorldMatrix(), lightDirection);
-					vs->SetConstantBuffer<Shader::LambertVS::Material>(1, materialAmbient, materialDiffuse);
-					vs->SetConstantBuffer<Shader::LambertVS::Light>(2, lightAmbient, lightDiffuse);
-				}
-				else {
-					auto vs = static_cast<Shader::BasicVS*>(m_ShaderSet->GetShader(Shader::ShaderType::VertexShader));
-					vs->SetChangeFrame(m_Transform->GetWorldMatrix());
-					vs->SetConstantBuffer<Shader::BasicVS::Material>(1, color);
-				}
+				m_ShaderSet->SetData<const XMMATRIX*>("worldMatrix", m_Transform->GetWorldMatrix());
 
+				// 描画順を変更できるようになったら分離
+				m_ShaderSet->SetPerObject();
 				m_ShaderSet->SetShaders();
 				
 			}, 0);

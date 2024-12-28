@@ -304,7 +304,12 @@ namespace AK_Base {
 			std::unordered_map<Shader::ShaderType, std::string> list;
 			list[Shader::ShaderType::VertexShader] = "LambertVS";
 			list[Shader::ShaderType::PixelShader] = "LambertPS";
-			shaderM->AddShaderSet("LambertShader", list);
+			auto newSet = shaderM->AddShaderSet("LambertShader", list);
+			newSet->SetData<XMFLOAT4>("materialAmbient", { 1.0f, 1.0f, 1.0f, 1.0f });
+			newSet->SetData<XMFLOAT4>("materialDiffuse", { 1.0f, 1.0f, 1.0f, 1.0f });
+			newSet->SetData<XMFLOAT4>("lightAmbient", { 0.1f, 0.1f, 0.1f, 1.0f });
+			newSet->SetData<XMFLOAT4>("lightDiffuse", { 1.0f, 1.0f, 1.0f, 1.0f });
+			newSet->SetData<XMVECTOR>("lightDirection", XMVectorSet( 0.0f, 0.0f, -1.0f, 1.0f ));
 		}
 
 		{
@@ -326,7 +331,8 @@ namespace AK_Base {
 			std::unordered_map<Shader::ShaderType, std::string> list;
 			list[Shader::ShaderType::VertexShader] = "BasicVS";
 			list[Shader::ShaderType::PixelShader] = "BasicPS";
-			shaderM->AddShaderSet("BasicShader", list);
+			auto newSet = shaderM->AddShaderSet("BasicShader", list);
+			newSet->SetData<XMFLOAT4>("color", { 1.0f, 1.0f, 1.0f, 1.0f });
 		}
 	}
 

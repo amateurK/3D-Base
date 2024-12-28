@@ -54,6 +54,18 @@ namespace Shader {
 		/// @return 成功したか
 		virtual HRESULT Init(const ShaderInitParam& params) override;
 
+		/// @brief シェーダーをGPUにセットする
+		/// @param set ShaderSetのポインタ
+		virtual void SetShader(const ShaderSet* set) override;
+
+		/// @brief オブジェクトごとに変更される値をGPUにセットする
+		/// @param set ShaderSetのポインタ
+		virtual void SetPerObject(const ShaderSet* set) override;
+
+		/// @brief シェーダーで使用される値をShaderSetに追加
+		/// @param set ShaderSetのポインタ
+		virtual void AddDataForShaderSet(ShaderSet* set) const override;
+
 		/// @brief ChageFrameコンスタントバッファを更新
 		/// @param world World行列
 		/// @param light 光の行列（ワールド座標系）

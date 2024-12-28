@@ -10,6 +10,9 @@
 
 namespace Shader {
 
+	class ShaderSet;
+
+
 	/// @brief コンスタントバッファを管理するための構造体
 	struct ConstantBuffer {
 		/// @brief コンスタントバッファ
@@ -52,7 +55,16 @@ namespace Shader {
 		virtual HRESULT Init(const ShaderInitParam& params) = 0;
 
 		/// @brief シェーダーをGPUにセットする
-		virtual void SetShader() = 0;
+		/// @param set ShaderSetのポインタ
+		virtual void SetShader(const ShaderSet* set) = 0;
+
+		/// @brief オブジェクトごとに変更される値をGPUにセットする
+		/// @param set ShaderSetのポインタ
+		virtual void SetPerObject(const ShaderSet* set) {};
+
+		/// @brief シェーダーで使用される値をShaderSetに追加
+		/// @param set ShaderSetのポインタ
+		virtual void AddDataForShaderSet(ShaderSet* set) const {};
 
 		/// @brief コンスタントバッファのデータを更新
 		/// @param index 更新するコンスタントバッファのインデックス

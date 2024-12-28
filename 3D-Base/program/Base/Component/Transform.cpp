@@ -167,7 +167,7 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	const DirectX::XMMATRIX& Transform::GetWorldMatrix()
+	const DirectX::XMMATRIX* Transform::GetWorldMatrix()
 	{
 		if (m_IsChanged) {
 			// このコンポーネントのworld行列
@@ -177,7 +177,7 @@ namespace AK_Base {
 
 			// 親と掛け合わせる
 			if (m_Parent != nullptr) {
-				m_World = localMatrix * m_Parent->GetWorldMatrix();
+				m_World = localMatrix * *(m_Parent->GetWorldMatrix());
 			}
 			else {
 				m_World = localMatrix;
@@ -185,7 +185,7 @@ namespace AK_Base {
 
 			m_IsChanged = false;
 		}
-		return m_World;
+		return &m_World;
 	}
 
 	//--------------------------------------------------------------------------------------

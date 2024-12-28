@@ -1,4 +1,3 @@
-
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
 // テスト用クラス
@@ -149,6 +148,21 @@ namespace Scene {
 			actor->GetComponent<AK_Base::Transform>()->Rotate(XMVECTOR{ 0.0f, 1.0f, 0.0f, 1.0f }, right);
 			actor->GetComponent<AK_Base::Transform>()->Rotate(XMVECTOR{ 1.0f, 0.0f, 0.0f, 1.0f }, up);
 			if(u)actor->GetComponent<AK_Base::Transform>()->LookAtPosition(actor2->GetTransform()->GetPosition());
+		}
+		// シェーダーテスト
+		{
+			auto shaderM = Shader::ShaderManager::GetInstance();
+
+			// ブロックの色変更（緑と青の間が変なのは未修正）
+			float hue = fmodf((float)totalTime, 6.0f); // 色相を6分割 (0〜6)
+			float r = std::max(0.0f, 2.0f - fabs(hue - 3.0f));
+			float g = std::max(0.0f, 2.0f - fabs(hue - 1.0f));
+			float b = std::max(0.0f, 2.0f - fabs(hue - 5.0f));
+			auto shader = shaderM->GetShaderSet("BasicShader");
+			shader->SetData<XMFLOAT4>("color", { r, g, b, 1.0f });
+			auto shader2 = shaderM->GetShaderSet("LambertShader");
+			//shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet(0.0f, 0.0f, -1.0f, 1.0f));
+			shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet((float)cos(totalTime) * 10.0f, (float)sin(totalTime)* 10.0f, -1.0f, 1.0f));
 		}
 
 		// シェーダーにVP行列をセット
