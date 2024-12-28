@@ -28,7 +28,16 @@ namespace Shader
 	{
 		// 全シェーダーのシェーダーをセット
 		for (auto& shader : m_ShaderList) {
-			shader.second->SetShader();
+			shader.second->SetShader(this);
+		}
+	}
+
+	//--------------------------------------------------------------------------------------
+	void ShaderSet::SetPerObject()
+	{
+		// 全シェーダーのシェーダーをセット
+		for (auto& shader : m_ShaderList) {
+			shader.second->SetPerObject(this);
 		}
 	}
 

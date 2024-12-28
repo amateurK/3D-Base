@@ -50,7 +50,7 @@ namespace Shader {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void VertexShader::SetShader()
+	void VertexShader::SetShader(const ShaderSet* set)
 	{
 		// •`‰æ€”õ
 		m_ImmediateContext->VSSetShader(m_VertexShader.Get(), nullptr, 0);

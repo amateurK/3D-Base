@@ -32,7 +32,7 @@ namespace Shader {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void ShaderManager::AddShaderSet(
+	ShaderSet* ShaderManager::AddShaderSet(
 		const std::string& setName,
 		const std::unordered_map<ShaderType, std::string>& nameList
 	)
@@ -40,11 +40,15 @@ namespace Shader {
 		auto newSet = new ShaderSet();
 
 		for (auto& shader : nameList) {
-			newSet->AddShader(shader.first, GetShader(shader.second));
+			auto ptr = GetShader(shader.second);
+			newSet->AddShader(shader.first, ptr);
+			ptr->AddDataForShaderSet(newSet);
 		}
 
 		m_ShaderSetList[setName] = newSet;
 		newSet->SetName(setName);
+
+		return newSet;
 	}
 
 

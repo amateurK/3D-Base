@@ -97,7 +97,7 @@ namespace AK_Base {
 		void SetScele(const DirectX::XMVECTOR& scale);
 		void SetScele(float x, float y, float z);
 
-		const DirectX::XMMATRIX& GetWorldMatrix();
+		const DirectX::XMMATRIX* GetWorldMatrix();
 
 		inline Transform* GetParent() const { return m_Parent; }
 		void SetParent(Transform* parent);

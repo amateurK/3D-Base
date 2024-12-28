@@ -81,7 +81,8 @@ namespace Shader {
 		/// @brief シェーダーセットを作成
 		/// @param setName シェーダーセットの名前
 		/// @param nameList 使用するシェーダーの名前リスト
-		void AddShaderSet(
+		/// @return 作成したShaderSetへのポインタ
+		ShaderSet* AddShaderSet(
 			const std::string& setName,
 			const std::unordered_map<ShaderType, std::string>& nameList
 		);

@@ -41,6 +41,14 @@ namespace Shader {
 		/// @return 成功したか
 		virtual HRESULT Init(const ShaderInitParam& params) override;
 
+		/// @brief オブジェクトごとに変更される値をGPUにセットする
+		/// @param set ShaderSetのポインタ
+		virtual void SetPerObject(const ShaderSet* set) override;
+
+		/// @brief シェーダーで使用される値をShaderSetに追加
+		/// @param set ShaderSetのポインタ
+		virtual void AddDataForShaderSet(ShaderSet* set) const override;
+
 		/// @brief ChageFrameコンスタントバッファを更新
 		/// @param world World行列
 		/// @details 追加処理があるため、SetConstantBufferを使わないでこちらを使う

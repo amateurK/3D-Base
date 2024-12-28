@@ -26,6 +26,11 @@ namespace Scene {
 
 	}
 
+	void stfunc()
+	{
+		int a;
+		a = 1;
+	}
 
 	//--------------------------------------------------------------------------------------
 	void FastCheck::Update(const double& totalTime, const float& elapsedTime)
@@ -34,41 +39,51 @@ namespace Scene {
 		uint64_t second = 0;
 		uint64_t third = 0;
 
-		int testCount = 1000;
+		int testCount = 1000000;
 		int loopCount = 1;
 		float dummy;
+		dummy;
 
 		auto myGame(&AK_Base::BaseWindow::GetInstance());
 
+		std::function<void()> func;
+
+		func = []() {
+			int a;
+			a = 1;
+			};
 
 		for (int cnt = 0; cnt < loopCount; ++cnt) {
 
+			m_StepTimer.Tick([]() {});
 			for (int i = 0; i < testCount; ++i) {
-				m_StepTimer.Tick([]() {});
 				// start First
-				this->AddChild<AK_Base::Actor>(L"tester" + i);
+
+				int a;
+				a = 1;
+
 				// end First
-				m_StepTimer.Tick([]() {});
-				first += m_StepTimer.GetElapsedTicks();
 			}
+			m_StepTimer.Tick([]() {});
+			first += m_StepTimer.GetElapsedTicks();
 
+			m_StepTimer.Tick([]() {});
 			for (int i = 0; i < testCount; ++i) {
-				m_StepTimer.Tick([]() {});
 				// start Second
-				this->SearchName(L"tester" + i);
+				func();
 				// end Second
-				m_StepTimer.Tick([]() {});
-				second += m_StepTimer.GetElapsedTicks();
 			}
+			m_StepTimer.Tick([]() {});
+			second += m_StepTimer.GetElapsedTicks();
 
+			m_StepTimer.Tick([]() {});
 			for (int i = 0; i < testCount; ++i) {
-				m_StepTimer.Tick([]() {});
 				// start Third
-				this->GetAliveChildren();
+				stfunc();
 				// end Third
-				m_StepTimer.Tick([]() {});
-				third += m_StepTimer.GetElapsedTicks();
 			}
+			m_StepTimer.Tick([]() {});
+			third += m_StepTimer.GetElapsedTicks();
 		}
 
 		Scene::Update(totalTime, elapsedTime);

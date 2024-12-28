@@ -42,7 +42,7 @@ namespace Shader {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void PixelShader::SetShader()
+	void PixelShader::SetShader(const ShaderSet* set)
 	{
 		// •`‰æ€”õ
 		m_ImmediateContext->PSSetShader(m_PixelShader.Get(), nullptr, 0);
