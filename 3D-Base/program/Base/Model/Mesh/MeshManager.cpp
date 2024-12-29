@@ -29,15 +29,12 @@ namespace Mesh {
 	//--------------------------------------------------------------------------------------
 	HRESULT MeshManager::CreateMesh(std::wstring& fileName, Mesh*& mesh)
 	{
-		// メッシュを探す
-		auto itr = m_MeshList.begin();
-		while (itr != m_MeshList.end()) {
-			// 位置
-			if (fileName == itr->Name) {
-				mesh = itr->Mesh;
-				return S_OK;
-			}
-			itr++;
+		// メッシュが作成済みかをチェック
+		auto itr = m_MeshList.find(fileName);
+		if (itr != m_MeshList.end()) {
+			// 作成済み
+			mesh = itr->second;
+			return S_OK;
 		}
 		
 		// メッシュが作られていないので準備
@@ -66,10 +63,7 @@ namespace Mesh {
 		}
 
 		// リストに登録
-		MeshData data;
-		data.Name = fileName;
-		data.Mesh = newMesh;
-		m_MeshList.push_back(data);
+		m_MeshList[fileName] = newMesh;
 
 		mesh = newMesh;
 		return S_OK;
@@ -78,16 +72,10 @@ namespace Mesh {
 	//--------------------------------------------------------------------------------------
 	void MeshManager::DestroyMesh(std::wstring& fileName)
 	{
-		auto itr = m_MeshList.begin();
-		while (itr != m_MeshList.end()) {
-			if (fileName == itr->Name) {
-				delete itr->Mesh;
-				itr->Mesh = nullptr;
-				itr = m_MeshList.erase(itr);
-			}
-			else {
-				itr++;
-			}
+		auto itr = m_MeshList.find(fileName);
+		if (itr != m_MeshList.end()) {
+			delete itr->second;
+			itr->second = nullptr;
 		}
 	}
 
@@ -96,8 +84,8 @@ namespace Mesh {
 	{
 		auto itr = m_MeshList.begin();
 		while (itr != m_MeshList.end()) {
-			delete itr->Mesh;
-			itr->Mesh = nullptr;
+			delete itr->second;
+			itr->second = nullptr;
 			itr = m_MeshList.erase(itr);
 		}
 	}
