@@ -12,6 +12,12 @@
     <ClInclude Include="program\Scene\FastCheck.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="program\Scene\GameMainScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Component\Health.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\pch.cpp" />
@@ -25,10 +31,19 @@
     <ClCompile Include="program\Scene\FastCheck.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="program\Scene\GameMainScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Component\Health.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scene">
       <UniqueIdentifier>{49c00871-5cac-42ce-8918-f2edc6a67d58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{50bb64ea-5b27-4dac-8aa9-1018ea5e0ad5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
