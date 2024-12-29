@@ -39,6 +39,11 @@ namespace Shader {
 		/// @brief デストラクタ
 		virtual ~ShaderSet();
 
+		/// @brief 自身とメンバ変数が同じShaderSetを作成する
+		/// @param copyName 作成したShaderSetの名前
+		/// @return 作成したShaderSetのポインタ
+		ShaderSet* Clone(const std::string& copyName);
+
 		/// @brief リストにあるシェーダーのSetShader()を実行
 		/// @details シェーダーを切り替える時に使用
 		void SetShaders();

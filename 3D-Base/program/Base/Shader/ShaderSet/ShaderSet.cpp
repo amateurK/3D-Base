@@ -23,6 +23,19 @@ namespace Shader
 
 	}
 
+	//---------------------------------------------------------------------------------------------
+	ShaderSet* ShaderSet::Clone(const std::string& copyName)
+	{
+		ShaderSet* newSet = new ShaderSet();
+
+		newSet->m_ShaderList = this->m_ShaderList;
+		newSet->m_Data = this->m_Data;
+
+		newSet->m_Name = copyName;
+
+		return newSet;
+	}
+
 	//--------------------------------------------------------------------------------------
 	void ShaderSet::SetShaders()
 	{
