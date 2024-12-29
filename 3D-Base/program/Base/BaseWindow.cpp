@@ -334,6 +334,26 @@ namespace AK_Base {
 			auto newSet = shaderM->AddShaderSet("BasicShader", list);
 			newSet->SetData<XMFLOAT4>("color", { 1.0f, 1.0f, 1.0f, 1.0f });
 		}
+		{
+			// BasicRed
+			auto newSet = shaderM->CopyShaderSet("BasicShader", "BasicRed");
+			newSet->SetData<XMFLOAT4>("color", { 1.0f, 0.0f, 0.0f, 1.0f });
+		}
+		{
+			// BasicGreen
+			auto newSet = shaderM->CopyShaderSet("BasicShader", "BasicGreen");
+			newSet->SetData<XMFLOAT4>("color", { 0.0f, 1.0f, 0.0f, 1.0f });
+		}
+		{
+			// BasicBlue
+			auto newSet = shaderM->CopyShaderSet("BasicShader", "BasicBlue");
+			newSet->SetData<XMFLOAT4>("color", { 0.0f, 0.0f, 1.0f, 1.0f });
+		}
+		{
+			// BasicRainbow
+			auto newSet = shaderM->CopyShaderSet("BasicShader", "BasicRainbow");
+			// TestSceneにて色変更
+		}
 	}
 
 	//--------------------------------------------------------------------------------------
