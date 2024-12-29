@@ -15,11 +15,6 @@ namespace Mesh {
 	class MeshManager
 	{
 	private:
-		/// @brief メッシュクラスと名前のセット
-		struct MeshData {
-			std::wstring Name;
-			Mesh* Mesh;
-		};
 
 		/// @brief コンストラクタ
 		MeshManager();
@@ -55,8 +50,9 @@ namespace Mesh {
 		}
 
 	private:
+
 		/// @brief メッシュのリスト
-		std::list<MeshData> m_MeshList;
+		std::unordered_map<std::wstring, Mesh*> m_MeshList;
 
 	public:
 		/// @brief メッシュを作成して取得する
