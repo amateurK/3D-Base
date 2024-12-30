@@ -55,9 +55,6 @@
     <ClCompile Include="program\Base\BaseWindow.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="program\Base\Math\AK_Math.cpp">
-      <Filter>Base\Math</Filter>
-    </ClCompile>
     <ClCompile Include="program\Base\Actor.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -122,21 +119,6 @@
     </ClInclude>
     <ClInclude Include="program\Base\BaseWindow.h">
       <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\AK_Math.h">
-      <Filter>Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\Capsule.h">
-      <Filter>Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\Line.h">
-      <Filter>Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\Point.h">
-      <Filter>Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\Segment.h">
-      <Filter>Base\Math</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\Actor.h">
       <Filter>Base</Filter>

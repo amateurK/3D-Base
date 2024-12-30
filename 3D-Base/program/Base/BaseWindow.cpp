@@ -436,13 +436,13 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void BaseWindow::SetWindowSize(const Point<int>& size)
+	void BaseWindow::SetWindowSize(const POINT& size)
 	{
 		m_WindowSize = size;
 	}
 
 	//--------------------------------------------------------------------------------------
-	const Point<int> BaseWindow::GetWindowSize()
+	const POINT BaseWindow::GetWindowSize()
 	{
 		return m_WindowSize;
 	}

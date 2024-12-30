@@ -75,7 +75,7 @@ namespace Mesh {
 						AK_Base::PictureResource resource;
 						// 画像データをロード
 						hr = resource.LoadPicture(image.image.data(),
-							Point<int>(image.width, image.height), image.component);
+							POINT(image.width, image.height), image.component);
 						if (FAILED(hr))
 						{
 							throw std::exception("テクスチャの読み込みに失敗。");

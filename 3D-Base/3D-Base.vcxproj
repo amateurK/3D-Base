@@ -210,7 +210,6 @@
     <ClCompile Include="program\Base\Component\Transform.cpp" />
     <ClCompile Include="program\Base\Framework.cpp" />
     <ClCompile Include="program\Base\Input\InputManager.cpp" />
-    <ClCompile Include="program\Base\Math\AK_Math.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\VRMMesh.cpp" />
@@ -238,11 +237,6 @@
     <ClInclude Include="program\Base\Component\Transform.h" />
     <ClInclude Include="program\Base\Framework.h" />
     <ClInclude Include="program\Base\Input\InputManager.h" />
-    <ClInclude Include="program\Base\Math\AK_Math.h" />
-    <ClInclude Include="program\Base\Math\Capsule.h" />
-    <ClInclude Include="program\Base\Math\Line.h" />
-    <ClInclude Include="program\Base\Math\Point.h" />
-    <ClInclude Include="program\Base\Math\Segment.h" />
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h" />
     <ClInclude Include="program\Base\Model\Mesh\VRMMesh.h" />

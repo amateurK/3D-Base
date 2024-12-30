@@ -88,7 +88,6 @@ using namespace DirectX;
 #include "Tools/WStringToString.h"
 #include "Tools/FilePath.h"
 #include "Tools/LowercaseAndUppercase.h"
-#include "Math/AK_Math.h"	// Mathフォルダのものは全部ここにある
 
 #include "Framework.h"
 
