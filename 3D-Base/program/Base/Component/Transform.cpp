@@ -9,6 +9,8 @@
 #include "Transform.h"
 #include "../Tools/Alignment.h"
 
+using namespace DirectX;
+
 namespace AK_Base {
 
 	//--------------------------------------------------------------------------------------

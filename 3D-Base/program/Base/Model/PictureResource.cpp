@@ -16,6 +16,8 @@
 #include "../BaseWindow.h"
 #include <DirectXTex.h>
 
+using namespace DirectX;
+
 // 対応するlibファイルを読み込み
 #if defined( DEBUG ) || defined( _DEBUG )
 // Debug用

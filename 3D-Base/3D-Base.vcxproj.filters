@@ -112,6 +112,9 @@
     <ClCompile Include="program\Base\Input\InputManager.cpp">
       <Filter>Base\Input</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Math\AK_Math.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -209,6 +212,15 @@
     </ClInclude>
     <ClInclude Include="program\Base\Input\InputManager.h">
       <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Math\Primitive.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Math\AK_Math.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\Collider.h">
+      <Filter>Base\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

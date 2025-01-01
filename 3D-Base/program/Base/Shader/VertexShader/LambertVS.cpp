@@ -9,6 +9,8 @@
 #include "LambertVS.h"
 #include "../ShaderManager.h"
 
+using namespace DirectX;
+
 namespace Shader {
 
 	LambertVS::LambertVS()

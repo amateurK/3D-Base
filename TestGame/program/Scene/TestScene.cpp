@@ -12,6 +12,8 @@
 #include "Base/ActorSet/DebugAxis.h"
 #include "Base/Input/InputManager.h"
 
+using namespace DirectX;
+
 namespace Scene {
 
 	TestScene::TestScene(std::wstring name)
@@ -168,6 +170,8 @@ namespace Scene {
 		// シェーダーにVP行列をセット
 		auto shaderM = Shader::ShaderManager::GetInstance();
 		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
+
+		
 
 		Scene::Update(totalTime, elapsedTime);
 	}

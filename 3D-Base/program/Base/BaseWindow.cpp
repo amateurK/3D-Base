@@ -16,10 +16,12 @@
 #include "Shader/VertexShader/BasicVS.h"
 #include "Shader/PixelShader/PixelShader.h"
 
+using namespace DirectX;
+
 namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	BaseWindow::BaseWindow()
-		: m_WindowSize(0, 0)
+		: m_WindowSize({ 0, 0 })
 		, m_Vsync(1)
 	{
 		m_RootActor = new AK_Base::Actor(L"RootActor");

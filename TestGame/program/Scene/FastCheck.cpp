@@ -9,14 +9,14 @@
 #include "FastCheck.h"
 #include "Base/Actor.h"
 
+using namespace DirectX;
+
 namespace Scene {
 
 	FastCheck::FastCheck(std::wstring name)
 		: Scene(name)
 	{
 		m_StepTimer.SetFixedTimeStep(false);
-
-
 
 
 	}

@@ -78,8 +78,6 @@
 #include <vector>
 
 
-using namespace DirectX;
-
 // 借り物
 #include "Reader/ReadData.h"	// コンパイル済シェーダーの読み込み
 

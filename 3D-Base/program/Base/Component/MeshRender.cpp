@@ -13,6 +13,8 @@
 #include "../Shader/VertexShader/LambertVS.h"
 #include "../Shader/VertexShader/BasicVS.h"
 
+using namespace DirectX;
+
 namespace AK_Base {
 
 	//--------------------------------------------------------------------------------------

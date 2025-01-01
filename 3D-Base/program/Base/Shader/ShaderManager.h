@@ -58,7 +58,7 @@ namespace Shader {
 		std::unordered_map<std::string, ShaderSet*> m_ShaderSetList;
 
 		/// @brief VP行列（View * Projection）
-		XMMATRIX m_VPMatrix;
+		DirectX::XMMATRIX m_VPMatrix;
 
 	public:
 
@@ -98,12 +98,12 @@ namespace Shader {
 		inline ShaderSet* GetShaderSet(const std::string& name) { return m_ShaderSetList[name]; }
 
 		/// @brief VP行列を更新（View * Projection）
-		void SetVPMatrix(const XMMATRIX& view, const XMMATRIX& proj);
+		void SetVPMatrix(const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj);
 
 		/// @brief WVP行列を計算し取得する（転置済み）
 		/// @param world World行列
 		/// @return WVP行列
-		inline XMMATRIX CalcWVPMatrix(const XMMATRIX& world) const{ return XMMatrixTranspose(world * m_VPMatrix); }
+		inline DirectX::XMMATRIX CalcWVPMatrix(const DirectX::XMMATRIX& world) const{ return XMMatrixTranspose(world * m_VPMatrix); }
 
 		/// @brief ShaderSetを複製する
 		/// @param name コピー元のShaderSetの名前
@@ -114,7 +114,7 @@ namespace Shader {
 
 		// ゲッター
 
-		inline const XMMATRIX* GetVPMatrix() const { return &m_VPMatrix; }
+		inline const DirectX::XMMATRIX* GetVPMatrix() const { return &m_VPMatrix; }
 
 	};
 }

@@ -14,7 +14,6 @@ namespace Shader { class ShaderSet; }
 namespace Mesh { class Mesh; }
 
 namespace AK_Base {
-	class Transform;
 
 	__declspec(align(16))
 		class MeshRender : public Component
