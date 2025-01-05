@@ -115,6 +115,12 @@
     <ClCompile Include="program\Base\Math\AK_Math.cpp">
       <Filter>Base\Math</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Component\Collider.cpp">
+      <Filter>Base\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Math\CollisionManager.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -221,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="program\Base\Component\Collider.h">
       <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Math\CollisionManager.h">
+      <Filter>Base\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

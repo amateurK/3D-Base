@@ -8,6 +8,7 @@
 #include "TestScene.h"
 #include "Base/Component/Transform.h"
 #include "Base/Component/MeshRender.h"
+#include "Base/Component/Collider.h"
 #include "Base/Shader/ShaderManager.h"
 #include "Base/ActorSet/DebugAxis.h"
 #include "Base/Input/InputManager.h"
@@ -30,6 +31,7 @@ namespace Scene {
 			transform->SetPosition(3.0f, 0.0f, 3.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
 			meshRender->SetShader("LambertShader");
+			auto collider = testmodel->AddComponent<AK_Base::Collider>();
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
