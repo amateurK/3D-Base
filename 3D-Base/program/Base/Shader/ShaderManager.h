@@ -105,6 +105,12 @@ namespace Shader {
 		/// @return WVP行列
 		inline XMMATRIX CalcWVPMatrix(const XMMATRIX& world) const{ return XMMatrixTranspose(world * m_VPMatrix); }
 
+		/// @brief ShaderSetを複製する
+		/// @param name コピー元のShaderSetの名前
+		/// @param copyName 作成するShaderSetの名前
+		/// @return 作成されたShaderSetへのポインタ
+		ShaderSet* CopyShaderSet(const std::string& name, const std::string& copyName);
+
 
 		// ゲッター
 

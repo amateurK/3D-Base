@@ -57,4 +57,15 @@ namespace Shader {
 	{
 		m_VPMatrix = view * proj;
 	}
+
+	//---------------------------------------------------------------------------------------------
+	ShaderSet* ShaderManager::CopyShaderSet(const std::string& name, const std::string& copyName)
+	{
+		// •¡»‚·‚é
+		auto newSet = m_ShaderSetList[name]->Clone(copyName);
+
+		m_ShaderSetList[copyName] = newSet;
+
+		return newSet;
+	}
 }

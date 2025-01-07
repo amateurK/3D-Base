@@ -36,7 +36,7 @@ namespace Scene {
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->SetPosition(-3.0f, 2.0f, 3.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
-			meshRender->SetShader("BasicShader");
+			meshRender->SetShader("BasicRainbow");
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
@@ -158,7 +158,7 @@ namespace Scene {
 			float r = std::max(0.0f, 2.0f - fabs(hue - 3.0f));
 			float g = std::max(0.0f, 2.0f - fabs(hue - 1.0f));
 			float b = std::max(0.0f, 2.0f - fabs(hue - 5.0f));
-			auto shader = shaderM->GetShaderSet("BasicShader");
+			auto shader = shaderM->GetShaderSet("BasicRainbow");
 			shader->SetData<XMFLOAT4>("color", { r, g, b, 1.0f });
 			auto shader2 = shaderM->GetShaderSet("LambertShader");
 			//shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet(0.0f, 0.0f, -1.0f, 1.0f));
