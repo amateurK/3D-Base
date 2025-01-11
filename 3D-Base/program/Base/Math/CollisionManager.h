@@ -76,6 +76,7 @@ namespace AK_Base {
 			/// @param listName2 リストの名前
 			void RemoveCheckList(const std::string& listName1, const std::string& listName2);
 
-			
+			/// @brief リスト内のColliderが衝突しているかを調べる
+			void CheckCollide(std::vector<Collider*>& list1, std::vector<Collider*> list2) const;
 	};
 }

@@ -27,7 +27,7 @@ namespace AK_Base {
 
 		m_Children.clear();
 		if (addChild) {
-			auto parent = GetActor()->GetParent();
+			auto parent = m_ParentActor->GetParent();
 			if (parent != nullptr) {
 				auto comp = parent->GetComponent<Transform>();
 				if (comp != nullptr) {
@@ -36,7 +36,7 @@ namespace AK_Base {
 			}
 		}
 
-		GetActor()->SetTransform(this);
+		m_ParentActor->SetTransform(this);
 	}
 
 	//--------------------------------------------------------------------------------------

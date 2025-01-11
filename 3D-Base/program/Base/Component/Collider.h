@@ -15,9 +15,6 @@ namespace AK_Base {
 	{
 	private:
 
-		/// @brief 同じActorのTransformコンポーネント
-		Transform* m_Transform;
-
 
 	public:
 		/// @brief コンストラクタ

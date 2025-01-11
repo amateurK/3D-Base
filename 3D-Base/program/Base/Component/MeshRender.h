@@ -20,9 +20,6 @@ namespace AK_Base {
 	{
 	private:
 
-		/// @brief 同じActorのTransformコンポーネント
-		Transform* m_Transform;
-
 		/// @brief 使用するシェーダーのポインタ
 		Shader::ShaderSet* m_ShaderSet;
 

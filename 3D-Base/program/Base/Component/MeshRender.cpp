@@ -20,11 +20,9 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	MeshRender::MeshRender(Actor* const parent, std::wstring fileName)
 		: Component(parent)
-		, m_Transform(nullptr)
 		, m_ShaderSet(nullptr)
 		, m_Mesh(nullptr)
 	{
-		m_Transform = GetActor()->GetComponent<Transform>();
 
 		CreateResource(fileName);
 
@@ -47,7 +45,7 @@ namespace AK_Base {
 
 		m_Mesh->Render(d3dDeviceContext, [&](int id, const std::vector<Mesh::MeshData> material)
 			{
-				m_ShaderSet->SetData<const XMMATRIX*>("worldMatrix", m_Transform->GetWorldMatrix());
+				m_ShaderSet->SetData<const XMMATRIX*>("worldMatrix", m_ParentActor->GetTransform()->GetWorldMatrix());
 
 				// •`‰æ‡‚ð•ÏX‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚½‚ç•ª—£
 				m_ShaderSet->SetPerObject();
