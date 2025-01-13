@@ -50,6 +50,12 @@
     <Filter Include="Base\Input">
       <UniqueIdentifier>{ce5efa48-6445-4022-b268-0455c98aecea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Collision">
+      <UniqueIdentifier>{d9ff28d0-884a-40c2-98b4-0ac67de114d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Component\Collider">
+      <UniqueIdentifier>{54298036-ed44-466f-a839-8f5c100b6a9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
@@ -115,11 +121,8 @@
     <ClCompile Include="program\Base\Math\AK_Math.cpp">
       <Filter>Base\Math</Filter>
     </ClCompile>
-    <ClCompile Include="program\Base\Component\Collider.cpp">
-      <Filter>Base\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Base\Math\CollisionManager.cpp">
-      <Filter>Base\Math</Filter>
+    <ClCompile Include="program\Base\Collision\CollisionManager.cpp">
+      <Filter>Base\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,8 +231,11 @@
     <ClInclude Include="program\Base\Component\Collider.h">
       <Filter>Base\Component</Filter>
     </ClInclude>
-    <ClInclude Include="program\Base\Math\CollisionManager.h">
-      <Filter>Base\Math</Filter>
+    <ClInclude Include="program\Base\Collision\CollisionManager.h">
+      <Filter>Base\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\Collider\SphereCollider.h">
+      <Filter>Base\Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -27,6 +27,9 @@ namespace AK_Base {
 		/// @brief 更新が入ったか（falseならWorld行列を使いまわす）
 		bool m_IsChanged;
 
+		/// @brief 更新がされた回数
+		uint32_t m_ChangedCount;
+
 		Transform* m_Parent;
 		std::vector<Transform*> m_Children;
 
@@ -42,6 +45,7 @@ namespace AK_Base {
 		/// @return 名前の文字列
 		inline virtual std::string GetName() const override{ return "Transform"; }
 
+
 		/// @brief 現在地から指定した距離移動
 		/// @param offset 移動量
 		void Translate(const DirectX::XMVECTOR& offset);
@@ -50,6 +54,13 @@ namespace AK_Base {
 		/// @param y y軸方向の移動量
 		/// @param z z軸方向の移動量
 		void Translate(float x, float y, float z);
+
+		/// @brief 正面方向を基準に移動する
+		/// @param forward 正面方向の移動量
+		/// @param right 右方向の移動量
+		/// @param up 上方向の移動量
+		void Move(float forward, float right, float up);
+
 
 		/// @brief 現在の角度から回転
 		/// @param axis 回転する軸
@@ -60,6 +71,36 @@ namespace AK_Base {
 		/// @param angle 角度
 		void RotateNorm(const DirectX::XMVECTOR& axis, float angle);
 
+		/// @brief 現在の角度からローカル軸座標系で回転
+		/// @param axis 回転する軸
+		/// @param angle 角度
+		void RotateLocal(const DirectX::XMVECTOR& axis, float angle);
+
+		/// @brief X軸を中心に回転
+		/// @param angle 角度
+		void RotateX(float angle);
+		/// @brief Y軸を中心に回転
+		/// @param angle 角度
+		void RotateY(float angle);
+		/// @brief Z軸を中心に回転
+		/// @param angle 角度
+		void RotateZ(float angle);
+
+		/// @brief X軸を中心に回転
+		/// @param angle 角度
+		void RotateLocalX(float angle);
+		/// @brief Y軸を中心に回転
+		/// @param angle 角度
+		void RotateLocalY(float angle);
+		/// @brief Z軸を中心に回転
+		/// @param angle 角度
+		void RotateLocalZ(float angle);
+
+		/// @brief 指定した座標に向きを合わせる
+		/// @param position 座標
+		void LookAtPosition(const DirectX::XMVECTOR& position);
+
+
 		/// @brief 拡大縮小
 		/// @param mul 倍率
 		void Scale(float mul);
@@ -67,15 +108,6 @@ namespace AK_Base {
 		/// @param mul 倍率
 		void Scale(const DirectX::XMVECTOR& mul);
 
-		/// @brief 正面方向を基準に移動する
-		/// @param forward 正面方向の移動量
-		/// @param right 右方向の移動量
-		/// @param up 上方向の移動量
-		void Move(float forward, float right, float up);
-
-		/// @brief 指定した座標に向きを合わせる
-		/// @param position 座標
-		void LookAtPosition(const DirectX::XMVECTOR& position);
 
 		/// @brief IsChangedをtrueにする
 		void MarkChanged();
@@ -98,6 +130,8 @@ namespace AK_Base {
 		void SetScele(float x, float y, float z);
 
 		const DirectX::XMMATRIX* GetWorldMatrix();
+
+		inline const uint32_t GetChengedCount() const { return m_ChangedCount; }
 
 		inline Transform* GetParent() const { return m_Parent; }
 		void SetParent(Transform* parent);

@@ -7,11 +7,25 @@
 // 製作者	: amateurK
 // 作成日	: 2025/01/01
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-#include "../Component/Collider.h"
+//#include "../Component/Collider.h"
+
+//
+// そのうち処理速度が厳しくなると思うので、そのうちやることをメモ
+// 1. Collisionを複数のリストに分ける
+// 　"Enemy"、"Player"などのようなリストに分ける
+// 　"Enemy"同士の衝突判定は行わない、"Enemy"と"EnemyBullet"の衝突判定は行わない、など
+// 　必要なリストのみを衝突判定を行うことで処理速度を向上させる
+// 2. 衝突判定の結果をキャッシュする
+// 3. Octreeを実装する
+//　衝突判定を行うオブジェクトを空間分割することで、衝突判定の対象を絞り込む
+// 4. 球や四角でオブジェクトを囲い、それで大まかに衝突判定を行う
+// 　3.があるので要らないかも
+//
 
 
 namespace AK_Base {
 
+	class Collider;
 	__declspec(align(16))
 		class CollisionManager {
 
@@ -50,33 +64,21 @@ namespace AK_Base {
 			}
 
 		private:
-			/// @brief Colliderコンポーネントのリスト
-			/// @details キー : 登録するリストの名前
-			/// @details 値　 : リスト
-			std::unordered_map<std::string, std::vector<Collider*>> m_ColliderList;
-
-			/// @brief 衝突判定を行うリスト
-			/// @details ColliderListのインデックスをpairにして追加する
-			std::vector<std::pair<std::string, std::string>> m_CheckList;
+			/// @brief 衝突判定を行うColliderの集合
+			std::unordered_set<Collider*> m_ColliderSet;
 
 		public:
+			/// @brief Colliderを追加
+			inline void AddCollider(Collider* collider) {
+				m_ColliderSet.insert(collider);
+			}
 
-			/// @brief Colliderのリストに追加する
-			/// @param listName 登録するリストの名前
-			/// @param ptr 登録するColliderの名前
-			void AddColliderList(const std::string& listName, Collider* ptr);
+			/// @brief Colliderを削除
+			inline void RemoveCollider(Collider* collider) {
+				m_ColliderSet.erase(collider);
+			}
 
-			/// @brief あたり判定を行うペアを追加
-			/// @param listName1 リストの名前
-			/// @param listName2 リストの名前（listName1と同じでもよい）
-			void AddCkeckList(const std::string& listName1, const std::string& listName2);
-
-			/// @brief あたり判定を行うペアを削除
-			/// @param listName1 リストの名前
-			/// @param listName2 リストの名前
-			void RemoveCheckList(const std::string& listName1, const std::string& listName2);
-
-			/// @brief リスト内のColliderが衝突しているかを調べる
-			void CheckCollide(std::vector<Collider*>& list1, std::vector<Collider*> list2) const;
+			/// @brief 衝突判定を行う
+			void CollisionDetection();
 	};
 }

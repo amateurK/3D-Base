@@ -15,13 +15,13 @@ namespace AK_Math {
 
 	// XMVECTORの演算子を追加
 
-	DirectX::XMVECTOR operator+(const DirectX::XMVECTOR& left, const DirectX::XMVECTOR& right) {
+	inline DirectX::XMVECTOR operator+(const DirectX::XMVECTOR& left, const DirectX::XMVECTOR& right) {
 		return DirectX::XMVectorAdd(left, right);
 	}
-	DirectX::XMVECTOR operator-(const DirectX::XMVECTOR& left, const DirectX::XMVECTOR& right) {
+	inline DirectX::XMVECTOR operator-(const DirectX::XMVECTOR& left, const DirectX::XMVECTOR& right) {
 		return DirectX::XMVectorSubtract(left, right);
 	}
-	DirectX::XMVECTOR operator*(const DirectX::XMVECTOR& vec, float scalar) {
+	inline DirectX::XMVECTOR operator*(const DirectX::XMVECTOR& vec, float scalar) {
 		return DirectX::XMVectorScale(vec, scalar);
 	}
 
@@ -82,15 +82,15 @@ namespace AK_Math {
 	/// @details 中心の点と半径
 	struct Sphere3 {
 		DirectX::XMVECTOR point;
-		float r;
+		float radius;
 		Sphere3() = default;
 		Sphere3(const DirectX::XMVECTOR& p, float r)
 			: point(p)
-			, r(r)
+			, radius(r)
 		{}
 		Sphere3(const Sphere3& sphere)
 			: point(sphere.point)
-			, r(sphere.r)
+			, radius(sphere.radius)
 		{}
 		~Sphere3() = default;
 	};
@@ -99,19 +99,19 @@ namespace AK_Math {
 	/// @details 線分上を半径rの球体がスィープした形
 	struct Capsule3 {
 		Segment3 seg;
-		float r;
+		float radius;
 		Capsule3() = default;
 		Capsule3(const Segment3& s, float r)
 			: seg(s)
-			, r(r)
+			, radius(r)
 		{}
 		Capsule3(const DirectX::XMVECTOR& begin, const DirectX::XMVECTOR& end, float r)
 			: seg(begin, end)
-			, r(r)
+			, radius(r)
 		{}
 		Capsule3(const Capsule3& capsule)
 			: seg(capsule.seg)
-			, r(capsule.r)
+			, radius(capsule.radius)
 		{}
 		~Capsule3() = default;
 

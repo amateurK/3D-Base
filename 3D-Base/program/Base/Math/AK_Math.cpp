@@ -128,4 +128,12 @@ namespace AK_Math {
 		return XMVector3Dot(v1, plane.vec).m128_f32[0] *
 			XMVector3Dot(v2, plane.vec).m128_f32[0] <= 0;
 	}
+
+	//--------------------------------------------------------------------------------------
+	bool IsCollide(const Sphere3& sphere1, const Sphere3& sphere2)
+	{
+		auto v = sphere1.point - sphere2.point;
+		auto r = sphere1.radius + sphere2.radius;
+		return XMVector3LengthSq(v).m128_f32[0] <= r * r;
+	}
 }

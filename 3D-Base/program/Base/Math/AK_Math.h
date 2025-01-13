@@ -38,5 +38,7 @@ namespace AK_Math {
 	inline bool IsCollide(const Plane3& plane, const Line3& line) { return IsCollide(line, plane); }
 	inline bool IsCollide(const Plane3& plane, const Segment3& seg) { return IsCollide(seg, plane); }
 
+	// ‹…‘Ì‚Æ‹…‘Ì
+	bool IsCollide(const Sphere3& sphere1, const Sphere3& sphere2);
 
 }

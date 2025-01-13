@@ -15,6 +15,7 @@
 #include "Shader/VertexShader/LambertVS.h"
 #include "Shader/VertexShader/BasicVS.h"
 #include "Shader/PixelShader/PixelShader.h"
+#include "Collision/CollisionManager.h"
 
 using namespace DirectX;
 
@@ -281,6 +282,7 @@ namespace AK_Base {
 		// メッシュマネージャーの生成
 		Mesh::MeshManager::Create();
 		InputManager::Create();
+		CollisionManager::Create();
 
 		// シェーダーの作成
 		Shader::ShaderManager::Create();
@@ -362,10 +364,11 @@ namespace AK_Base {
 	void BaseWindow::CleanupManager()
 	{
 		// マネージャーの破棄
-		Mesh::MeshManager::Destroy();
-		InputManager::Destroy();
-
 		Shader::ShaderManager::Destroy();
+		CollisionManager::Destroy();
+		InputManager::Destroy();
+		Mesh::MeshManager::Destroy();
+
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -399,6 +402,7 @@ namespace AK_Base {
 			{
 				// Managerを動かす
 				InputManager::GetInstance()->Update();
+				CollisionManager::GetInstance()->CollisionDetection();
 
 				auto time = static_cast<double>(m_StepTimer.GetTotalSeconds());
 				auto elapsedTime = static_cast<float>(m_StepTimer.GetElapsedSeconds());

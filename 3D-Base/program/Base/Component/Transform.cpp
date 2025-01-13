@@ -17,10 +17,11 @@ namespace AK_Base {
 	Transform::Transform(Actor* const parent, bool addChild)
 		: Component(parent)
 		, m_Position{ 0.0f, 0.0f, 0.0f }
-		, m_Rotation{ 0.0f, 0.0f, 0.0f, 1.0f }
+		, m_Rotation(XMQuaternionIdentity())
 		, m_Scale{ 1.0f, 1.0f, 1.0f }
 		, m_World(XMMatrixIdentity())
 		, m_IsChanged(true)
+		, m_ChangedCount(0)
 		, m_Parent(nullptr)
 	{
 		Tools::CheckAlignment(this);
@@ -52,6 +53,18 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
+	void Transform::Move(float forward, float right, float up)
+	{
+		// ローカル座標系でのベクトル
+		auto local = XMVectorSet(right, up, forward, 0.0f);
+		// ワールド座標系でのベクトル
+		auto world = XMVector3Rotate(local, m_Rotation);
+		// 移動
+		Translate(world);
+
+	}
+
+	//--------------------------------------------------------------------------------------
 	void Transform::Rotate(const DirectX::XMVECTOR& axis, float angle)
 	{
 		RotateNorm(XMQuaternionNormalize(axis), angle);
@@ -67,28 +80,49 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Transform::Scale(float mul)
+	void Transform::RotateLocal(const DirectX::XMVECTOR& axis, float angle)
 	{
-		m_Scale *= mul;
-		MarkChanged();
-	}
-	//--------------------------------------------------------------------------------------
-	void Transform::Scale(const DirectX::XMVECTOR& mul)
-	{
-		m_Scale *= mul;
+		// 回転する用のクォータニオンを作成
+		XMVECTOR rotQuat = XMQuaternionRotationAxis(axis, angle);
+		// クォータニオン同士を乗算
+		m_Rotation = XMQuaternionNormalize(XMQuaternionMultiply(rotQuat, m_Rotation));
 		MarkChanged();
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Transform::Move(float forward, float right, float up)
+	void Transform::RotateX(float angle)
 	{
-		// ローカル座標系でのベクトル
-		auto local = XMVectorSet(right, up, forward, 0.0f);
-		// ワールド座標系でのベクトル
-		auto world = XMVector3Rotate(local, m_Rotation);
-		// 移動
-		Translate(world);
+		RotateNorm(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), angle);
+	}
 
+	//--------------------------------------------------------------------------------------
+	void Transform::RotateY(float angle)
+	{
+		RotateNorm(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), angle);
+	}
+
+	//--------------------------------------------------------------------------------------
+	void Transform::RotateZ(float angle)
+	{
+		RotateNorm(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), angle);
+	}
+
+	//--------------------------------------------------------------------------------------
+	void Transform::RotateLocalX(float angle)
+	{
+		RotateLocal(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), angle);
+	}
+
+	//--------------------------------------------------------------------------------------
+	void Transform::RotateLocalY(float angle)
+	{
+		RotateLocal(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), angle);
+	}
+
+	//--------------------------------------------------------------------------------------
+	void Transform::RotateLocalZ(float angle)
+	{
+		RotateLocal(XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f), angle);
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -120,6 +154,19 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
+	void Transform::Scale(float mul)
+	{
+		m_Scale *= mul;
+		MarkChanged();
+	}
+	//--------------------------------------------------------------------------------------
+	void Transform::Scale(const DirectX::XMVECTOR& mul)
+	{
+		m_Scale *= mul;
+		MarkChanged();
+	}
+
+	//--------------------------------------------------------------------------------------
 	void Transform::MarkChanged()
 	{
 		m_IsChanged = true;
@@ -146,7 +193,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void Transform::SetRotation(const DirectX::XMVECTOR& rotation)
 	{
-		XMVECTOR norm = XMQuaternionNormalize(rotation);
+		m_Rotation = XMQuaternionNormalize(rotation);
 		MarkChanged();
 	}
 	//--------------------------------------------------------------------------------------
@@ -186,6 +233,7 @@ namespace AK_Base {
 			}
 
 			m_IsChanged = false;
+			m_ChangedCount++;
 		}
 		return &m_World;
 	}
