@@ -33,7 +33,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -46,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -120,9 +120,11 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>$(ProjectDir)program\pch.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>$(ProjectDir)program\Base\pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>$(ProjectDir)program\Base\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -180,9 +182,11 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>$(ProjectDir)program\pch.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>$(ProjectDir)program\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile>$(ProjectDir)program\Base\pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>$(ProjectDir)program\Base\pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -206,6 +210,7 @@
     <ClCompile Include="program\Base\Actor.cpp" />
     <ClCompile Include="program\Base\BaseWindow.cpp" />
     <ClCompile Include="program\Base\Camera\Camera.cpp" />
+    <ClCompile Include="program\Base\Collision\CollisionManager.cpp" />
     <ClCompile Include="program\Base\Component\MeshRender.cpp" />
     <ClCompile Include="program\Base\Component\Transform.cpp" />
     <ClCompile Include="program\Base\Framework.cpp" />
@@ -218,6 +223,8 @@
     <ClCompile Include="program\Base\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="program\Base\Reader\tiny_gltf.cc" />
     <ClCompile Include="program\Base\Shader\PixelShader\PixelShader.cpp" />
@@ -233,16 +240,16 @@
     <ClInclude Include="program\Base\ActorSet\DebugAxis.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
     <ClInclude Include="program\Base\Camera\Camera.h" />
+    <ClInclude Include="program\Base\Collision\CollisionManager.h" />
     <ClInclude Include="program\Base\Component.h" />
+    <ClInclude Include="program\Base\Component\Collider.h" />
+    <ClInclude Include="program\Base\Component\Collider\SphereCollider.h" />
     <ClInclude Include="program\Base\Component\MeshRender.h" />
     <ClInclude Include="program\Base\Component\Transform.h" />
     <ClInclude Include="program\Base\Framework.h" />
     <ClInclude Include="program\Base\Input\InputManager.h" />
     <ClInclude Include="program\Base\Math\AK_Math.h" />
-    <ClInclude Include="program\Base\Math\Capsule.h" />
-    <ClInclude Include="program\Base\Math\Line.h" />
-    <ClInclude Include="program\Base\Math\Point.h" />
-    <ClInclude Include="program\Base\Math\Segment.h" />
+    <ClInclude Include="program\Base\Math\Primitive.h" />
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h" />
     <ClInclude Include="program\Base\Model\Mesh\VRMMesh.h" />

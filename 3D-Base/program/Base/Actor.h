@@ -113,7 +113,7 @@ namespace AK_Base {
 
 		inline Actor* const GetParent() const { return m_Parent; }
 		inline std::wstring GetName() const { return m_ActorName; }
-		inline const Transform* GetTransform() const { return m_Transform; }
+		inline Transform* GetTransform() const { return m_Transform; }
 		inline void SetTransform(Transform* ptr) { m_Transform = ptr; }
 
 		/// @brief コンポーネントを追加

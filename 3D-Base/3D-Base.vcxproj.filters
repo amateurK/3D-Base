@@ -50,13 +50,16 @@
     <Filter Include="Base\Input">
       <UniqueIdentifier>{ce5efa48-6445-4022-b268-0455c98aecea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Collision">
+      <UniqueIdentifier>{d9ff28d0-884a-40c2-98b4-0ac67de114d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Component\Collider">
+      <UniqueIdentifier>{54298036-ed44-466f-a839-8f5c100b6a9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
       <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Base\Math\AK_Math.cpp">
-      <Filter>Base\Math</Filter>
     </ClCompile>
     <ClCompile Include="program\Base\Actor.cpp">
       <Filter>Base</Filter>
@@ -115,6 +118,12 @@
     <ClCompile Include="program\Base\Input\InputManager.cpp">
       <Filter>Base\Input</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Math\AK_Math.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Collision\CollisionManager.cpp">
+      <Filter>Base\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -122,21 +131,6 @@
     </ClInclude>
     <ClInclude Include="program\Base\BaseWindow.h">
       <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\AK_Math.h">
-      <Filter>Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\Capsule.h">
-      <Filter>Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\Line.h">
-      <Filter>Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\Point.h">
-      <Filter>Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Math\Segment.h">
-      <Filter>Base\Math</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\Actor.h">
       <Filter>Base</Filter>
@@ -227,6 +221,21 @@
     </ClInclude>
     <ClInclude Include="program\Base\Input\InputManager.h">
       <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Math\Primitive.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Math\AK_Math.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\Collider.h">
+      <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Collision\CollisionManager.h">
+      <Filter>Base\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\Collider\SphereCollider.h">
+      <Filter>Base\Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

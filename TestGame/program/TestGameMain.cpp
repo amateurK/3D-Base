@@ -13,6 +13,9 @@
 #include "Base/Actor.h"
 
 
+//#define SPEED_CHECK
+
+
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
 
@@ -21,15 +24,18 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		[&](AK_Base::Actor* root) {
 
 			// ƒV[ƒ“‚Ì¶¬
+#ifdef SPEED_CHECK
+			{
+				auto scene = new Scene::FastCheck(L"SpeedCheck");
+				root->AddChild(scene);
+				scene->SetStatus(AK_Base::ActorStatus::ACTION);
+			}
+#else
 			{
 				auto scene = new Scene::TestScene(L"TestScene");
 				root->AddChild(scene);
 				scene->SetStatus(AK_Base::ActorStatus::ACTION);
 			}
-			{
-				auto scene = new Scene::FastCheck(L"SpeedCheck");
-				root->AddChild(scene);
-				//scene->SetStatus(AK_Base::ActorStatus::ACTION);
-			}
+#endif
 		});
 }

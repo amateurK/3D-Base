@@ -16,10 +16,10 @@ namespace AK_Base {
 	/// @brief コンポーネント
 	class Component
 	{
-	private:
+	protected:
 
 		/// @brief このコンポーネントを所有しているActor
-		Actor* m_Parent;
+		Actor* m_ParentActor;
 
 
 	public:
@@ -27,7 +27,7 @@ namespace AK_Base {
 		/// @brief コンストラクタ
 		/// @param parent このコンポーネントを所有しているActor（AddComponent<T>()で追加される）
 		Component(Actor* const parent)
-			: m_Parent(parent)
+			: m_ParentActor(parent)
 		{}
 		/// @brief デストラクタ
 		virtual ~Component() {}
@@ -49,10 +49,7 @@ namespace AK_Base {
 
 		/// @brief このコンポーネントを所有しているActorを返す
 		/// @return Actorのポインタ
-		Actor* GetActor() const
-		{
-			return m_Parent;
-		}
+		inline Actor* GetActor() const{	return m_ParentActor;}
 	};
 
 }

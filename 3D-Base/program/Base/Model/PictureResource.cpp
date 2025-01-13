@@ -16,6 +16,8 @@
 #include "../BaseWindow.h"
 #include <DirectXTex.h>
 
+using namespace DirectX;
+
 // 対応するlibファイルを読み込み
 #if defined( DEBUG ) || defined( _DEBUG )
 // Debug用
@@ -120,7 +122,7 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	HRESULT PictureResource::LoadPicture(const uint8_t* imageData, Point<int> size, int color)
+	HRESULT PictureResource::LoadPicture(const uint8_t* imageData, const POINT& size, int color)
 	{
 		HRESULT hr = S_OK;
 		m_IsVaild = false;
@@ -132,7 +134,7 @@ namespace AK_Base {
 		BaseWindow& bw(BaseWindow::GetInstance());
 		auto device = bw.GetD3DDevice();
 		auto context = bw.GetImmediateContext();
-
+		
 		// テクスチャの作成
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> D3DTexture;
 		D3D11_TEXTURE2D_DESC td;

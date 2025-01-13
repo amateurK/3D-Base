@@ -75,10 +75,9 @@
 #include <type_traits>
 #include <utility>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
-
-using namespace DirectX;
 
 // 借り物
 #include "Reader/ReadData.h"	// コンパイル済シェーダーの読み込み
@@ -88,7 +87,6 @@ using namespace DirectX;
 #include "Tools/WStringToString.h"
 #include "Tools/FilePath.h"
 #include "Tools/LowercaseAndUppercase.h"
-#include "Math/AK_Math.h"	// Mathフォルダのものは全部ここにある
 
 #include "Framework.h"
 

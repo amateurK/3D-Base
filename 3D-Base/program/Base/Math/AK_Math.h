@@ -1,33 +1,44 @@
 #pragma once
-#include "Point.h"
-#include "Line.h"
-#include "Segment.h"
-#include "Capsule.h"
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// 
+// 衝突判定の計算を行う
+// 
+// 製作者	: amateurK
+// 作成日	: 2024/12/30
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+#include "Primitive.h"
 
-// 数学的な関数をまとめておく場所
-// インスタンスを生成することはない
-class AK_Math
-{
-public:
-	// 点に一番近い線分上の点
-	static Point<float> CalcPointSegmentPos2D(const Point<float>& p, const Segment<float>& seg);
-	static Point<double> CalcPointSegmentPos2D(const Point<double>& p, const Segment<double>& seg);
+namespace AK_Math {
+	// 直線と点
+	bool IsCollide(const Line3& line, const DirectX::XMVECTOR& point);
+	bool IsCollide(const Segment3& seg, const DirectX::XMVECTOR& point);
+	inline bool IsCollide(const DirectX::XMVECTOR& point, const Line3& line) { return IsCollide(line, point); }
+	inline bool IsCollide(const DirectX::XMVECTOR& point, const Segment3& seg) { return IsCollide(seg, point); }
 
-	// 点と線分の最短距離
-	// 第3引数のポインタに点に近い線分の座標を渡す
-	static float CalcPointSegmentDistSq2D(const Point<float>& p, const Segment<float>& seg, Point<float>* const outPos = nullptr);
-	static double CalcPointSegmentDistSq2D(const Point<double>& p, const Segment<double>& seg);
+	DirectX::XMVECTOR GetShortestPath(const Line3& line, const DirectX::XMVECTOR& point);
+	DirectX::XMVECTOR GetShortestPath(const Segment3& seg, const DirectX::XMVECTOR& point);
+	inline DirectX::XMVECTOR GetShortestPath(const DirectX::XMVECTOR& point, const Line3& line) { return GetShortestPath(line, point); }
+	inline DirectX::XMVECTOR GetShortestPath(const DirectX::XMVECTOR& point, const Segment3& seg) { return GetShortestPath(seg, point); }
+	
+	float CalcDistanceSq(const Line3& line, const DirectX::XMVECTOR& point);
+	float CalcDistanceSq(const Segment3& seg, const DirectX::XMVECTOR& point);
+	inline float CalcDistanceSq(const DirectX::XMVECTOR& point, const Line3& line) { return CalcDistanceSq(line, point); }
+	inline float CalcDistanceSq(const DirectX::XMVECTOR& point, const Segment3& seg) { return CalcDistanceSq(seg, point); }
+	float CalcDistance(const Line3& line, const DirectX::XMVECTOR& point);
+	float CalcDistance(const Segment3& seg, const DirectX::XMVECTOR& point);
+	inline float CalcDistance(const DirectX::XMVECTOR& point, const Line3& line) { return CalcDistanceSq(line, point); }
+	inline float CalcDistance(const DirectX::XMVECTOR& point, const Segment3& seg) { return CalcDistanceSq(seg, point); }
 
-	// 線分と線分の衝突判定
-	// 第3引数のポインタに交点の座標を渡す
-	static bool CalcSegmentSegmentCollide2D(const Segment<float>& seg1, const Segment<float>& seg2, Point<float>* const outPos = nullptr);
+	// 直線と直線
+	bool IsCollide(const Line3& line1, const Line3& line2);
 
-	// 線分と線分の最短距離
-	static float CalcSegmentSegmentDistSq2D(const Segment<float>& seg1, const Segment<float>& seg2);
-	static float CalcSegmentSegmentDistSqPos2D(const Segment<float>& seg1, const Segment<float>& seg2, Point<float>* const outPos1, Point<float>* const outPos2);
+	// 直線と平面
+	bool IsCollide(const Line3& line, const Plane3& plane);
+	bool IsCollide(const Segment3& seg, const Plane3& plane);
+	inline bool IsCollide(const Plane3& plane, const Line3& line) { return IsCollide(line, plane); }
+	inline bool IsCollide(const Plane3& plane, const Segment3& seg) { return IsCollide(seg, plane); }
 
-	// カプセルとカプセルの衝突
-	static bool CalcCapsuleCapsuleCollide2D(const Capsule<float>& cap1, const Capsule<float>& cap2);
-	static bool CalcCapsuleCapsulePos2D(const Capsule<float>& cap1, const Capsule<float>& cap2, Point<float>* const outPos, float* AofE);
+	// 球体と球体
+	bool IsCollide(const Sphere3& sphere1, const Sphere3& sphere2);
 
-};
+}

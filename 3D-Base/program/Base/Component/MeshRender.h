@@ -14,15 +14,11 @@ namespace Shader { class ShaderSet; }
 namespace Mesh { class Mesh; }
 
 namespace AK_Base {
-	class Transform;
 
 	__declspec(align(16))
 		class MeshRender : public Component
 	{
 	private:
-
-		/// @brief 同じActorのTransformコンポーネント
-		Transform* m_Transform;
 
 		/// @brief 使用するシェーダーのポインタ
 		Shader::ShaderSet* m_ShaderSet;

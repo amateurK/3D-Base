@@ -9,6 +9,8 @@
 #include "BasicVS.h"
 #include "../ShaderManager.h"
 
+using namespace DirectX;
+
 namespace Shader {
 
 	BasicVS::BasicVS()

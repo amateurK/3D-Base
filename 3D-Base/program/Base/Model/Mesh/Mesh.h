@@ -52,9 +52,9 @@ namespace Mesh {
 	/// @brief 頂点データ
 	struct SimpleVertex
 	{
-		XMFLOAT3 Pos;
-		XMFLOAT3 Normal;
-		XMFLOAT2 Texcoord;
+		DirectX::XMFLOAT3 Pos;
+		DirectX::XMFLOAT3 Normal;
+		DirectX::XMFLOAT2 Texcoord;
 	};
 
 

@@ -49,7 +49,7 @@ namespace AK_Base {
 	protected:
 
 		/// @brief ウィンドウサイズ
-		Point<int> m_WindowSize;
+		POINT m_WindowSize;
 
 		/// @brief ルートアクター
 		Actor* m_RootActor = nullptr;
@@ -96,11 +96,11 @@ namespace AK_Base {
 
 		/// @brief ウィンドウサイズをセット
 		/// @param size ウィンドウサイズ
-		void SetWindowSize(const Point<int>& size);
+		void SetWindowSize(const POINT& size);
 
 		/// @brief ウィンドウサイズを取得
 		/// @return ウィンドウサイズ
-		const Point<int> GetWindowSize();
+		const POINT GetWindowSize();
 
 		inline ID3D11Device* GetD3DDevice() { return m_D3DDevice; }
 		inline ID3D11DeviceContext* GetImmediateContext() { return m_ImmediateContext; }
