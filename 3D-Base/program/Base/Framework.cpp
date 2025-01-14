@@ -39,7 +39,7 @@ int FrameworkMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _I
 	// ÉQÅ[ÉÄÇÃñ{ëÃÇçÏê¨
 	AK_Base::BaseWindow bw;
 	//AK_Base::BaseWindow& bw(AK_Base::BaseWindow::GetInstance());
-	bw.SetWindowSize(Point<int>(1280, 720));
+	bw.SetWindowSize(POINT(1280, 720));
 
 	// Initializeç’
 	if (FAILED(bw.InitWindow(hInstance, nCmdShow))) {

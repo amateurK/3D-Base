@@ -19,27 +19,27 @@ namespace Shader {
 		struct ChangesFrame
 		{
 			/// @brief 3つの行列を全部掛け合わせたもの
-			XMMATRIX MatrixWVP;
+			DirectX::XMMATRIX MatrixWVP;
 			/// @brief 光のベクトル（ローカル座標系）
-			XMVECTOR LightDirection;
+			DirectX::XMVECTOR LightDirection;
 		};
 
 		/// @brief マテリアルに関する数値
 		struct Material
 		{
 			/// @brief 環境光の反射係数（反射率、物体の色、アルベド）
-			XMFLOAT4 MaterialAmbient;
+			DirectX::XMFLOAT4 MaterialAmbient;
 			/// @brief 拡散反射光の反射係数（反射率、物体の色、アルベド）
-			XMFLOAT4 MaterialDiffuse;
+			DirectX::XMFLOAT4 MaterialDiffuse;
 		};
 
 		/// @brief 光の強さに関する数値
 		struct Light
 		{
 			/// @brief 環境光の強さ
-			XMFLOAT4 LightAmbient;
+			DirectX::XMFLOAT4 LightAmbient;
 			/// @brief 入射光の強さ
-			XMFLOAT4 LightDiffuse;
+			DirectX::XMFLOAT4 LightDiffuse;
 		};
 
 	public:
@@ -70,6 +70,6 @@ namespace Shader {
 		/// @param world World行列
 		/// @param light 光の行列（ワールド座標系）
 		/// @details 追加処理があるため、SetConstantBufferを使わないでこちらを使う
-		void SetChangeFrame(const XMMATRIX& world, const XMVECTOR& light);
+		void SetChangeFrame(const DirectX::XMMATRIX& world, const DirectX::XMVECTOR& light);
 	};
 }

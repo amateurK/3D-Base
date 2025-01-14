@@ -9,6 +9,8 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "ShaderManager.h"
 
+using namespace DirectX;
+
 namespace Shader {
 
 	ShaderManager* ShaderManager::Instance = nullptr;

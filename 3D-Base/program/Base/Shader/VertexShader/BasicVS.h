@@ -19,14 +19,14 @@ namespace Shader {
 		struct ChangesFrame
 		{
 			/// @brief 3つの行列を全部掛け合わせたもの
-			XMMATRIX MatrixWVP;
+			DirectX::XMMATRIX MatrixWVP;
 		};
 
 		/// @brief マテリアルに関する数値
 		struct Material
 		{
 			/// @brief 乗算する色
-			XMFLOAT4 Color;
+			DirectX::XMFLOAT4 Color;
 		};
 
 	public:
@@ -52,6 +52,6 @@ namespace Shader {
 		/// @brief ChageFrameコンスタントバッファを更新
 		/// @param world World行列
 		/// @details 追加処理があるため、SetConstantBufferを使わないでこちらを使う
-		void SetChangeFrame(const XMMATRIX& world);
+		void SetChangeFrame(const DirectX::XMMATRIX& world);
 	};
 }

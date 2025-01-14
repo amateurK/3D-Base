@@ -20,9 +20,9 @@ namespace AK_Base {
 	{
 	protected:
 		/// @brief 横幅
-		int m_Width;
+		LONG m_Width;
 		/// @brief 縦幅
-		int m_Height;
+		LONG m_Height;
 		/// @brief シェーダーリソースビュー
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_D3DShaderResourceView;
 
@@ -54,7 +54,7 @@ namespace AK_Base {
 		/// @param color 色数
 		/// @return ロードできたか
 		/// @details bmpファイルのような形式で来るので、自作ローダで処理している
-		virtual HRESULT LoadPicture(const uint8_t* imageData,  Point<int> size, int color = 4);
+		virtual HRESULT LoadPicture(const uint8_t* imageData,  const POINT& size, int color = 4);
 
 		// ゲッター
 		ID3D11ShaderResourceView** GetD3DSRView() { return m_D3DShaderResourceView.GetAddressOf(); }
