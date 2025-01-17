@@ -56,6 +56,9 @@ namespace AK_Base {
 		void Translate(float x, float y, float z);
 
 		/// @brief ³–Ê•ûŒü‚ğŠî€‚ÉˆÚ“®‚·‚é
+		/// @param offset ˆÚ“®—Ê(forward, right, up, 0.0f)
+		void Move(const DirectX::XMVECTOR& offset);
+		/// @brief ³–Ê•ûŒü‚ğŠî€‚ÉˆÚ“®‚·‚é
 		/// @param forward ³–Ê•ûŒü‚ÌˆÚ“®—Ê
 		/// @param right ‰E•ûŒü‚ÌˆÚ“®—Ê
 		/// @param up ã•ûŒü‚ÌˆÚ“®—Ê

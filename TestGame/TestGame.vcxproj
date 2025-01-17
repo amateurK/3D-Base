@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Component\Health.h" />
+    <ClInclude Include="program\Component\PlayerMovement.h" />
     <ClInclude Include="program\pch.h" />
     <ClInclude Include="program\Scene\FastCheck.h" />
     <ClInclude Include="program\Scene\GameMainScene.h" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Component\Health.cpp" />
+    <ClCompile Include="program\Component\PlayerMovement.cpp" />
     <ClCompile Include="program\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

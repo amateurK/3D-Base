@@ -29,6 +29,10 @@ namespace AK_Game {
 		/// @brief デストラクタ
 		virtual ~Health() = default;
 
+		/// @brief コンポーネントの名前を取得
+		/// @return 名前の文字列
+		inline virtual std::string GetName() const override { return "Health"; }
+
 		/// @brief ダメージを受ける
 		/// @param num 被ダメージの数値
 		void TakeDamage(const int32_t& num);

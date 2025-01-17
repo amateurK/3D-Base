@@ -17,9 +17,12 @@ namespace Scene {
 		/// @brief カメラクラス
 		std::unique_ptr<Camera::Camera> m_Camera;
 
+		// プレイヤーのアクター
+		AK_Base::Actor* m_Player;
+
 	public:
 		/// @brief コンストラクタ
-		GameMainScene();
+		GameMainScene(std::wstring name = L"unnamed");
 		/// @brief デストラクタ
 		virtual ~GameMainScene();
 

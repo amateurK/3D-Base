@@ -52,15 +52,20 @@ namespace AK_Base {
 		Translate(XMVectorSet(x, y, z, 1.0f));
 	}
 
+	//---------------------------------------------------------------------------------------------
+	void Transform::Move(const DirectX::XMVECTOR& offset)
+	{
+		// ワールド座標系でのベクトル
+		auto world = XMVector3Rotate(offset, m_Rotation);
+		// 移動
+		Translate(world);
+	}
+
 	//--------------------------------------------------------------------------------------
 	void Transform::Move(float forward, float right, float up)
 	{
 		// ローカル座標系でのベクトル
-		auto local = XMVectorSet(right, up, forward, 0.0f);
-		// ワールド座標系でのベクトル
-		auto world = XMVector3Rotate(local, m_Rotation);
-		// 移動
-		Translate(world);
+		Move(XMVectorSet(right, up, forward, 0.0f));
 
 	}
 

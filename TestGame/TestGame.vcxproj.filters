@@ -18,6 +18,9 @@
     <ClInclude Include="program\Component\Health.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="program\Component\PlayerMovement.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\pch.cpp" />
@@ -35,6 +38,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="program\Component\Health.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Component\PlayerMovement.cpp">
       <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>
