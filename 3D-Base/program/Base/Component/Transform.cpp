@@ -2,6 +2,7 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
 // 中心座標、回転、スケールを保持するコンポーネント
+// 正面を+Z軸、上を+Y軸、右を+X軸としている。
 // 
 // 製作者	: amateurK
 // 作成日	: 2024/11/18
@@ -52,16 +53,17 @@ namespace AK_Base {
 		Translate(XMVectorSet(x, y, z, 1.0f));
 	}
 
+	//---------------------------------------------------------------------------------------------
+	void Transform::Move(const DirectX::XMVECTOR& offset)
+	{
+		// ローカル座標系でのベクトルをワールド座標系でのベクトルに変換し移動
+		Translate(XMVector3Rotate(offset, m_Rotation));
+	}
+
 	//--------------------------------------------------------------------------------------
 	void Transform::Move(float forward, float right, float up)
 	{
-		// ローカル座標系でのベクトル
-		auto local = XMVectorSet(right, up, forward, 0.0f);
-		// ワールド座標系でのベクトル
-		auto world = XMVector3Rotate(local, m_Rotation);
-		// 移動
-		Translate(world);
-
+		Move(XMVectorSet(right, up, forward, 0.0f));
 	}
 
 	//--------------------------------------------------------------------------------------
