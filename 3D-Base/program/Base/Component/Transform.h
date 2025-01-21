@@ -2,6 +2,7 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
 // 中心座標、回転、スケールを保持するコンポーネント
+// 正面を+Z軸、上を+Y軸、右を+X軸としている。
 // 
 // 製作者	: amateurK
 // 作成日	: 2024/11/18
@@ -55,6 +56,9 @@ namespace AK_Base {
 		/// @param z z軸方向の移動量
 		void Translate(float x, float y, float z);
 
+		/// @brief 正面方向を基準に移動する
+		/// @param offset 移動量(right, up, forword, 0.0f)
+		void Move(const DirectX::XMVECTOR& offset);
 		/// @brief 正面方向を基準に移動する
 		/// @param forward 正面方向の移動量
 		/// @param right 右方向の移動量
