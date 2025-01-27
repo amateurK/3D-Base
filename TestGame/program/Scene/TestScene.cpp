@@ -10,6 +10,7 @@
 #include "Base/Component/MeshRender.h"
 #include "Base/Component/Collider.h"
 #include "Base/Component/Collider/SphereCollider.h"
+#include "Base/Collision/CollisionManager.h"
 #include "Base/Shader/ShaderManager.h"
 #include "Base/ActorSet/DebugAxis.h"
 #include "Base/Input/InputManager.h"
@@ -205,11 +206,16 @@ namespace Scene {
 			//shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet(0.0f, 0.0f, -1.0f, 1.0f));
 			shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet((float)cos(totalTime) * 10.0f, (float)sin(totalTime)* 10.0f, -1.0f, 1.0f));
 		}
+		// 球体の移動とコライダーテスト
 		{
 			auto actor2 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"sphere2");
 			actor2->GetComponent<AK_Base::Transform>()->Translate(0.0f, -0.5f * elapsedTime, 0.0f);
 			auto actor3 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"sphere3");
 			actor3->GetComponent<AK_Base::Transform>()->Translate(0.0f, -0.5f * elapsedTime, 0.0f);
+			auto list = AK_Base::CollisionManager::GetInstance()->GetCollideSet(actor3->GetComponent<AK_Base::SphereCollider>());
+			if (list->size() > 0) {
+				actor3->GetComponent<AK_Base::Transform>()->Translate(0.1f, 0.0f, 0.0f);
+			}
 		}
 
 		// シェーダーにVP行列をセット

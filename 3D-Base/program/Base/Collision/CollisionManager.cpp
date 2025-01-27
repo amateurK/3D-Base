@@ -17,37 +17,85 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	CollisionManager::CollisionManager()
 	{
-		m_ColliderSet.clear();
+		m_IsCollideCache.clear();
 	}
 
 	//--------------------------------------------------------------------------------------
 	CollisionManager::~CollisionManager()
 	{
-		m_ColliderSet.clear();
+		for (auto& collider : m_IsCollideCache)
+		{
+			collider.second.first.clear();
+			collider.second.second.clear();
+		}
+		m_IsCollideCache.clear();
+	}
+
+	//--------------------------------------------------------------------------------------
+	void CollisionManager::AddCollider(Collider* collider)
+	{
+
+		m_IsCollideCache[collider] = std::make_pair(std::unordered_set<Collider*>(), std::unordered_set<Collider*>());
+	}
+
+	//--------------------------------------------------------------------------------------
+	void CollisionManager::RemoveCollider(Collider* collider)
+	{
+
+		auto itr = m_IsCollideCache.find(collider);
+		if (itr != m_IsCollideCache.end()) {
+			itr->second.first.clear();
+			itr->second.second.clear();
+			m_IsCollideCache.erase(itr);
+		}
 	}
 
 	//--------------------------------------------------------------------------------------
 	void CollisionManager::CollisionDetection()
 	{
 		// Collider‚ÌXV
-		for (auto& collider : m_ColliderSet)
+		for (auto& collider : m_IsCollideCache)
 		{
-			collider->CheckAbsolutePosUpdate();
+			collider.first->CheckAbsolutePosUpdate();
+			// Õ“Ë‚µ‚Ä‚¢‚éCollider‚ÌƒŠƒXƒg‚ğƒNƒŠƒA
+			collider.second.first.clear();
+			collider.second.second.clear();
 		}
 		// Õ“Ë”»’è
-		for (auto& collider : m_ColliderSet)
+		// TODO : ‚·‚Å‚É’²¸Ï‚İ‚Ì‚à‚Ì‚Í‚â‚ç‚È‚­‚Ä‚à‚¢‚¢‚æ‚¤‚É‚µ‚Ä‚à‚¢‚¢‚©‚à
+		for (auto& collider : m_IsCollideCache)
 		{
-			for (auto& other : m_ColliderSet)
+			for (auto& other : m_IsCollideCache)
 			{
-				if (collider == other)
+				// “¯‚¶‚à‚Ì“¯m‚Ìê‡–³‹
+				if (collider.first == other.first)
 				{
 					continue;
 				}
-				if (collider->CheckCollision(other))
+				// Õ“Ë”»’è
+				if (collider.first->CheckCollision(other.first))
 				{
-					collider->OnCollision(other);
+					collider.first->OnCollision(other.first);
+
+					// Õ“Ë‚µ‚Ä‚¢‚éCollider‚ğ“o˜^
+					collider.second.first.insert(other.first);
+				}
+				else
+				{
+					// Õ“Ë‚µ‚Ä‚¢‚È‚¢Collider‚ğ“o˜^
+					collider.second.second.insert(other.first);
 				}
 			}
 		}
+	}
+
+	//--------------------------------------------------------------------------------------
+	std::unordered_set<Collider*>* CollisionManager::GetCollideSet(Collider* collider)
+	{
+		auto itr = m_IsCollideCache.find(collider);
+		if (itr != m_IsCollideCache.end()) {
+			return &itr->second.first;
+		}
+		return nullptr;
 	}
 }

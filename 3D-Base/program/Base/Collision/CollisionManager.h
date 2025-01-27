@@ -64,21 +64,25 @@ namespace AK_Base {
 			}
 
 		private:
-			/// @brief 衝突判定を行うColliderの集合
-			std::unordered_set<Collider*> m_ColliderSet;
+
+			/// @brief 衝突判定の結果をキャッシュ（Colliderのリストも兼ねている）
+			/// @details 1フレーム中に同じCollider同士の衝突判定を複数回行うことを防ぐ
+			/// @details first : Collider, second : <firstと衝突しているColliderの集合, firstと衝突していないColliderの集合>
+			std::unordered_map<Collider*, std::pair<std::unordered_set<Collider*>, std::unordered_set<Collider*>>> m_IsCollideCache;
 
 		public:
 			/// @brief Colliderを追加
-			inline void AddCollider(Collider* collider) {
-				m_ColliderSet.insert(collider);
-			}
+			void AddCollider(Collider* collider);
 
 			/// @brief Colliderを削除
-			inline void RemoveCollider(Collider* collider) {
-				m_ColliderSet.erase(collider);
-			}
+			void RemoveCollider(Collider* collider);
 
 			/// @brief 衝突判定を行う
 			void CollisionDetection();
+
+			/// @brief 衝突しているColliderの集合を取得
+			/// @param collider 調べるCollider
+			/// @return 集合のポインタ
+			std::unordered_set<Collider*>* GetCollideSet(Collider* collider);
 	};
 }
