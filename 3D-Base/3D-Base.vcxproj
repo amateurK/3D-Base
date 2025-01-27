@@ -216,6 +216,7 @@
     <ClCompile Include="program\Base\Framework.cpp" />
     <ClCompile Include="program\Base\Input\InputManager.cpp" />
     <ClCompile Include="program\Base\Math\AK_Math.cpp" />
+    <ClCompile Include="program\Base\Model\Mesh\LineMesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\VRMMesh.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="program\Base\Input\InputManager.h" />
     <ClInclude Include="program\Base\Math\AK_Math.h" />
     <ClInclude Include="program\Base\Math\Primitive.h" />
+    <ClInclude Include="program\Base\Model\Mesh\LineMesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h" />
     <ClInclude Include="program\Base\Model\Mesh\VRMMesh.h" />
