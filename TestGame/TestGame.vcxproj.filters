@@ -15,11 +15,11 @@
     <ClInclude Include="program\Scene\GameMainScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="program\Component\Health.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="program\Component\Entity\Health.h">
+      <Filter>Component\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="program\Component\PlayerMovement.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="program\Component\Entity\Player\PlayerMovement.h">
+      <Filter>Component\Entity\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -37,11 +37,14 @@
     <ClCompile Include="program\Scene\GameMainScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="program\Component\Health.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="program\Component\Entity\Health.cpp">
+      <Filter>Component\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="program\Component\PlayerMovement.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="program\Component\Entity\Player\PlayerMovement.cpp">
+      <Filter>Component\Entity\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Component\Entity\Player\PlayerMovementFPSCheck.cpp">
+      <Filter>Component\Entity\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +53,12 @@
     </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{50bb64ea-5b27-4dac-8aa9-1018ea5e0ad5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Entity">
+      <UniqueIdentifier>{414b0076-5a20-46c8-9d45-13b7bf7b255b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Entity\Player">
+      <UniqueIdentifier>{9686beda-8a62-49e4-8a0f-fc6d4c169ab5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

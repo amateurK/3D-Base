@@ -12,7 +12,7 @@
 #include "Base/Shader/ShaderManager.h"
 #include "Base/ActorSet/DebugAxis.h"
 #include "Base/Input/InputManager.h"
-#include "../Component/PlayerMovement.h"
+#include "../Component/Entity/Player/PlayerMovement.h"
 
 using namespace DirectX;
 
@@ -33,8 +33,8 @@ namespace Scene {
 			auto meshRender = m_Player->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
 			meshRender->SetShader("LambertShader");
 			auto playerMovement = m_Player->AddComponent<AK_Game::PlayerMovement>();
-			playerMovement->SetNormalAccel(XMVectorSet(10.0f, 5.0f, 10.0f, 0.0f));
-			playerMovement->SetAirResistance(XMVectorSet(0.1f, 0.1f, 0.1f, 0.0f));	// ‚³‚·‚ª‚É‚‚·‚¬
+			playerMovement->SetNormalAccel(10.0f, 5.0f, 10.0f);
+			playerMovement->SetAirResistance(0.1f);	// ‚³‚·‚ª‚É‚‚·‚¬
 
 			ActorSet::CreateDebugAxis(m_Player);
 		}

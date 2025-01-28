@@ -17,7 +17,7 @@ namespace AK_Game {
 	PlayerMovement::PlayerMovement(AK_Base::Actor* const parent)
 		: Component(parent)
 		, m_Speed(XMVectorZero())
-		, m_AirResistance(XMVectorZero()) //{ 0.1f, 0.1f, 0.1f, 0.0f }
+		, m_AirResistance(0.0f) //{ 0.1f, 0.1f, 0.1f, 0.0f }
 		, m_NormalAccel(XMVectorZero()) //{ 10.0f, 5.0f, 10.0f, 0.0f }
 	{
 
@@ -37,24 +37,24 @@ namespace AK_Game {
 		bool z = input->IsKeyPressed(DIK_Z);
 		bool x = input->IsKeyPressed(DIK_X);
 		XMVECTOR moveVec = XMVector3Normalize( XMVectorSet(
-			(float)(w - s),	// front
 			(float)(d - a),	// right
 			(float)(z - x),	// up
+			(float)(w - s),	// front
 			0.0f
-		)); // normalize‚ª‚ ‚Á‚Ä‚¢‚é‚©‚ÌŒŸØ‚©‚ç
+		));
 
 		// ŒvŽZ‘O‚Ì‘¬“x‚ð•Û‘¶
 		auto preSpeed = m_Speed;
 
 		// ˆÚ“®“ü—Í‚É‚æ‚é‰Á‘¬‚ð’Ç‰Á
-		m_Speed = (m_Speed + m_NormalAccel * moveVec * elapsedTime)
-			// ‹ó‹C’ïR‚ðæŽZ
-			* XMVectorPow(m_AirResistance, XMVectorSet(elapsedTime, elapsedTime, elapsedTime, 0.0f));
-
+		m_Speed += m_NormalAccel * moveVec * elapsedTime;
+		// ‹ó‹C’ïR‚ðæŽZ
+		//m_Speed *= XMVectorPow(m_AirResistance, XMVectorSet(elapsedTime, elapsedTime, elapsedTime, 0.0f));
+		//m_Speed *= 1.0 - (1.0f - m_AirResistance) * elapsedTime;
+		m_Speed *= powf(m_AirResistance, elapsedTime);
 
 
 		transform->Move((preSpeed + m_Speed) * (0.5f * elapsedTime));
-		//transform->Translate(0.0f, 1.0f * elapsedTime, 0.0f);
 	}
 
 }

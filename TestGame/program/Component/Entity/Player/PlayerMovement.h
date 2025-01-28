@@ -21,7 +21,7 @@ namespace AK_Game {
 
 		/// @brief 空気抵抗(m/s^2)
 		/// @details 乗算するので、1から抵抗を引いた値を入れる
-		DirectX::XMVECTOR m_AirResistance;
+		float m_AirResistance;
 
 	public:
 		/// @brief コンストラクタ
@@ -41,8 +41,11 @@ namespace AK_Game {
 
 
 		/// @brief 通常移動時の加速度(m/s^2)
+		/// @param vec XMVectorSet(right, up, forword, 0.0f)
 		inline void SetNormalAccel(const DirectX::XMVECTOR& vec) { m_NormalAccel = vec; }
+		/// @brief 通常移動時の加速度(m/s^2)
+		inline void SetNormalAccel(float forword, float right, float up) { m_NormalAccel = DirectX::XMVectorSet(right, up, forword, 0.0f); }
 		/// @brief 空気抵抗(m/s^2)
-		inline void SetAirResistance(const DirectX::XMVECTOR& vec) { m_AirResistance = vec; }
+		inline void SetAirResistance(float r) { m_AirResistance = r; }
 	};
 }
