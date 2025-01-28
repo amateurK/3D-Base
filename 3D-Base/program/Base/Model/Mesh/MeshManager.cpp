@@ -10,6 +10,7 @@
 #include "MeshManager.h"
 #include "../../BaseWindow.h"
 #include "VRMMesh.h"
+#include "LineMesh.h"
 
 namespace Mesh {
 
@@ -52,8 +53,13 @@ namespace Mesh {
 			newMesh = new VRMMesh();
 		}
 		else {
-			throw std::exception("拡張子が不明です。");
-			return S_FALSE;
+			if (fileName == L"Line") {
+				newMesh = new LineMesh();
+			}
+			else {
+				throw std::exception("拡張子が不明です。");
+				return S_FALSE;
+			}
 		}
 
 		hr = newMesh->CreateMesh(d3dDevice, d3dDeviceContext, fileName);
