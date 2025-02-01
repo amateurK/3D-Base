@@ -172,6 +172,7 @@ namespace AK_Base {
 	void Transform::MarkChanged()
 	{
 		m_IsChanged = true;
+		m_ChangedCount++;
 
 		for (auto& child : m_Children) {
 			child->MarkChanged();
@@ -235,7 +236,6 @@ namespace AK_Base {
 			}
 
 			m_IsChanged = false;
-			m_ChangedCount++;
 		}
 		return &m_World;
 	}

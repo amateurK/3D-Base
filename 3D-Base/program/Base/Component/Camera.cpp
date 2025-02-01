@@ -31,8 +31,8 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	const DirectX::XMMATRIX* Camera::GetView()
 	{
-		//if (m_TransformChangedCount != m_ParentActor->GetTransform()->GetChengedCount()) 
-		//{
+		if (m_TransformChangedCount != m_ParentActor->GetTransform()->GetChengedCount()) 
+		{
 			// ƒJƒƒ‰‚Ì‰ñ“]‚ðŽæ“¾
 			DirectX::XMVECTOR rotation = m_ParentActor->GetTransform()->GetRotation();
 
@@ -45,7 +45,7 @@ namespace AK_Base {
 
 			// XV‰ñ”‚ð‹L˜^
 			m_TransformChangedCount = m_ParentActor->GetTransform()->GetChengedCount();
-		//}
+		}
 
 		return &m_View;
 	}
