@@ -85,17 +85,24 @@ namespace Scene {
 
 
 		// カメラの準備
-		m_Camera = std::make_unique<Camera::Camera>();
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"camera");
+			auto transform = testmodel->AddComponent<AK_Base::Transform>();
+			transform->SetPosition(0.0f, 4.0f, -2.0f);
+			m_Camera = testmodel->AddComponent<AK_Base::Camera>();
+			auto windowSize = myGame->GetWindowSize();
+			m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
+		}
 
-		//const XMVECTOR eye = { 0.0f, 1.0f, -5.0f, 0.0f };
-		//const XMVECTOR at = { 0.0f, 1.0f, 0.0f, 0.0f };
-		const XMVECTOR eye = { 0.0f, 4.0f, -2.0f, 0.0f };
-		const XMVECTOR at = { 0.0f, 4.0f, 3.0f, 0.0f };
-		const XMVECTOR up = { 0.0f, 1.0f, 0.0f, 0.0f };
-		m_Camera->SetCamera(&eye, &at, &up);
+		////const XMVECTOR eye = { 0.0f, 1.0f, -5.0f, 0.0f };
+		////const XMVECTOR at = { 0.0f, 1.0f, 0.0f, 0.0f };
+		//const XMVECTOR eye = { 0.0f, 4.0f, -2.0f, 0.0f };
+		//const XMVECTOR at = { 0.0f, 4.0f, 3.0f, 0.0f };
+		//const XMVECTOR up = { 0.0f, 1.0f, 0.0f, 0.0f };
+		//m_Camera->SetCamera(&eye, &at, &up);
 
-		auto windowSize = myGame->GetWindowSize();
-		m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
+		//auto windowSize = myGame->GetWindowSize();
+		//m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
 
 
 		// シェーダーにVP行列をセット
@@ -127,7 +134,7 @@ namespace Scene {
 			float front = (float)(w - s) * elapsedTime * speed;
 			float right = (float)(d - a) * elapsedTime * speed;
 			float up = (float)(z - x) * elapsedTime * speed;
-			m_Camera->MoveWithViewpoint(front, right, up);
+			m_Camera->GetActor()->GetTransform()->Move(front, right, up);
 		}
 		// 移動テスト
 		{

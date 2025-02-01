@@ -209,8 +209,8 @@
   <ItemGroup>
     <ClCompile Include="program\Base\Actor.cpp" />
     <ClCompile Include="program\Base\BaseWindow.cpp" />
-    <ClCompile Include="program\Base\Camera\Camera.cpp" />
     <ClCompile Include="program\Base\Collision\CollisionManager.cpp" />
+    <ClCompile Include="program\Base\Component\Camera.cpp" />
     <ClCompile Include="program\Base\Component\MeshRender.cpp" />
     <ClCompile Include="program\Base\Component\Transform.cpp" />
     <ClCompile Include="program\Base\Framework.cpp" />
@@ -240,9 +240,9 @@
     <ClInclude Include="program\Base\Actor.h" />
     <ClInclude Include="program\Base\ActorSet\DebugAxis.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
-    <ClInclude Include="program\Base\Camera\Camera.h" />
     <ClInclude Include="program\Base\Collision\CollisionManager.h" />
     <ClInclude Include="program\Base\Component.h" />
+    <ClInclude Include="program\Base\Component\Camera.h" />
     <ClInclude Include="program\Base\Component\Collider.h" />
     <ClInclude Include="program\Base\Component\Collider\SphereCollider.h" />
     <ClInclude Include="program\Base\Component\MeshRender.h" />
