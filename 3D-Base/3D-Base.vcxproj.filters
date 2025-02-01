@@ -67,9 +67,6 @@
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp">
       <Filter>Base\Model\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="program\Base\Camera\Camera.cpp">
-      <Filter>Base\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp">
       <Filter>Base\Model\Mesh</Filter>
     </ClCompile>
@@ -127,6 +124,9 @@
     <ClCompile Include="program\Base\Model\Mesh\LineMesh.cpp">
       <Filter>Base\Model\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Component\Camera.cpp">
+      <Filter>Base\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -140,9 +140,6 @@
     </ClInclude>
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h">
       <Filter>Base\Model\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Camera\Camera.h">
-      <Filter>Base\Camera</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h">
       <Filter>Base\Model\Mesh</Filter>
@@ -242,6 +239,9 @@
     </ClInclude>
     <ClInclude Include="program\Base\Model\Mesh\LineMesh.h">
       <Filter>Base\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\Camera.h">
+      <Filter>Base\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
