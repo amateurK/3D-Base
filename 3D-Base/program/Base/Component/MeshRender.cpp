@@ -46,7 +46,9 @@ namespace AK_Base {
 		m_Mesh->Render(d3dDeviceContext, [&](int id, const std::vector<Mesh::MeshData> material)
 			{
 				m_ShaderSet->SetData<const XMMATRIX*>("worldMatrix", m_ParentActor->GetTransform()->GetWorldMatrix());
-
+				//const auto mat = *(m_ParentActor->GetTransform()->GetWorldMatrix()) * DirectX::XMMatrixTranslation(0.0f, 0.0f, id * 1.0f);
+				//m_ShaderSet->SetData<const XMMATRIX*>("worldMatrix", &mat);
+				
 				// •`‰æ‡‚ð•ÏX‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚½‚ç•ª—£
 				m_ShaderSet->SetPerObject();
 				m_ShaderSet->SetShaders();

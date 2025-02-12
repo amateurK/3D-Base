@@ -219,7 +219,9 @@
     <ClCompile Include="program\Base\Model\Mesh\LineMesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp" />
+    <ClCompile Include="program\Base\Model\Mesh\SkinningMesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\VRMMesh.cpp" />
+    <ClCompile Include="program\Base\Model\Mesh\VRMSkinningMesh.cpp" />
     <ClCompile Include="program\Base\Model\PictureResource.cpp" />
     <ClCompile Include="program\Base\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -254,7 +256,9 @@
     <ClInclude Include="program\Base\Model\Mesh\LineMesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h" />
+    <ClInclude Include="program\Base\Model\Mesh\SkinningMesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\VRMMesh.h" />
+    <ClInclude Include="program\Base\Model\Mesh\VRMSkinningMesh.h" />
     <ClInclude Include="program\Base\Model\PictureResource.h" />
     <ClInclude Include="program\Base\pch.h" />
     <ClInclude Include="program\Base\Reader\json.hpp" />
