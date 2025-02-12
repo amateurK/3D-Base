@@ -10,6 +10,7 @@
 #include "MeshManager.h"
 #include "../../BaseWindow.h"
 #include "VRMMesh.h"
+#include "VRMSkinningMesh.h"
 #include "LineMesh.h"
 
 namespace Mesh {
@@ -49,8 +50,13 @@ namespace Mesh {
 		Mesh* newMesh = nullptr;
 		auto extension = Tools::GetFileExtension(fileName);
 		extension = Tools::ToLowercase(extension);
-		if(extension == L"vrm" || extension == L"glb") {
+		if(extension == L"glb" 
+			|| extension == L"vrma")
+		{
 			newMesh = new VRMMesh();
+		}
+		else if(extension == L"vrm"){
+			newMesh = new VRMSkinningMesh();
 		}
 		else {
 			if (fileName == L"Line") {

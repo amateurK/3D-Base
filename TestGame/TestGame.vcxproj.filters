@@ -30,5 +30,16 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{49c00871-5cac-42ce-8918-f2edc6a67d58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestData">
+      <UniqueIdentifier>{839a35ca-29cc-467b-b1d0-1a74cc22bad4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\testData\vrm.json">
+      <Filter>TestData</Filter>
+    </None>
+    <None Include="resource\testData\vrma.json">
+      <Filter>TestData</Filter>
+    </None>
   </ItemGroup>
 </Project>

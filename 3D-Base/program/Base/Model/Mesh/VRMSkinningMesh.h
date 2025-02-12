@@ -1,21 +1,18 @@
 #pragma once
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // 
-// VRMファイルから読み込むメッシュデータ
-// 
-// VRMは主にVR等に使われる3Dデータの拡張子
-// VRoidStudioなどで出力されるのもこの型
+// VRMファイルから読み込んだアニメーション付き3Dモデルを管理するクラス
 // 
 // 製作者	: amateurK
-// 作成日	: 2024/11/07
+// 作成日	: 2025/02/08
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-#include "Mesh.h"
+#include "SkinningMesh.h"
 
 namespace Mesh {
 
-	/// @brief VRMファイルから読み込んだメッシュを管理するクラス
+	/// @brief VRMファイルから読み込んだアニメーション付き3Dモデルを管理するクラス
 	__declspec(align(16))
-		class VRMMesh : public Mesh
+		class VRMSkinningMesh : public SkinningMesh
 	{
 	private:
 
@@ -23,9 +20,9 @@ namespace Mesh {
 
 	public:
 		/// @brief コンストラクタ
-		VRMMesh();
+		VRMSkinningMesh();
 		/// @brief デストラクタ
-		virtual ~VRMMesh();
+		virtual ~VRMSkinningMesh();
 
 		/// @brief メッシュを作成
 		/// @param device デバイスへのポインタ
@@ -47,7 +44,7 @@ namespace Mesh {
 
 
 		void* operator new(size_t size) {
-			return _mm_malloc(size, alignof(VRMMesh));
+			return _mm_malloc(size, alignof(VRMSkinningMesh));
 		}
 		void operator delete(void* p) {
 			return _mm_free(p);

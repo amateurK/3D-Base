@@ -127,6 +127,12 @@
     <ClCompile Include="program\Base\Component\Camera.cpp">
       <Filter>Base\Component</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Model\Mesh\SkinningMesh.cpp">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Model\Mesh\VRMSkinningMesh.cpp">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -242,6 +248,12 @@
     </ClInclude>
     <ClInclude Include="program\Base\Component\Camera.h">
       <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Mesh\SkinningMesh.h">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Mesh\VRMSkinningMesh.h">
+      <Filter>Base\Model\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

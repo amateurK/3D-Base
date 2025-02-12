@@ -33,6 +33,7 @@ namespace Scene {
 			transform->Scale(3.0f);
 			transform->SetPosition(3.0f, 0.0f, 3.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
+			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 			meshRender->SetShader("LambertShader");
 
 			ActorSet::CreateDebugAxis(testmodel);
