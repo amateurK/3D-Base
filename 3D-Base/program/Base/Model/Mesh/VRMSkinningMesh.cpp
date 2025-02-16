@@ -90,7 +90,7 @@ namespace Mesh {
 				// m_Materialにpushbackする用のデータ
 				MeshData matData;
 
-				std::vector<SimpleVertex> vertices;
+				std::vector<SkinningVertex> vertices;
 
 				// 頂点座標の取得
 				const tinygltf::Accessor& posAccessor = model.accessors[primitive.attributes.find("POSITION")->second];
@@ -108,12 +108,25 @@ namespace Mesh {
 				const tinygltf::Buffer& texBuffer = model.buffers[texBufferView.buffer];
 				const float* texcoords = reinterpret_cast<const float*>(&texBuffer.data[texBufferView.byteOffset + texAccessor.byteOffset]);
 
+				// 各頂点の影響を受けるボーンのインデックスを取得
+				const tinygltf::Accessor& jointAccessor = model.accessors[primitive.attributes.find("JOINTS_0")->second];
+				const tinygltf::BufferView& jointBufferView = model.bufferViews[jointAccessor.bufferView];
+				const tinygltf::Buffer& jointBuffer = model.buffers[jointBufferView.buffer];
+				const float* joints = reinterpret_cast<const float*>(&jointBuffer.data[jointBufferView.byteOffset + jointAccessor.byteOffset]);
+				// 各頂点の影響を受けるボーンの重みを取得
+				const tinygltf::Accessor& weightAccessor = model.accessors[primitive.attributes.find("WEIGHTS_0")->second];
+				const tinygltf::BufferView& weightBufferView = model.bufferViews[weightAccessor.bufferView];
+				const tinygltf::Buffer& weightBuffer = model.buffers[weightBufferView.buffer];
+				const float* weights = reinterpret_cast<const float*>(&weightBuffer.data[weightBufferView.byteOffset + weightAccessor.byteOffset]);
+
 				// 取得した情報を元に頂点バッファ用配列に入れる
 				for (size_t i = 0; i < posAccessor.count; ++i) {
-					SimpleVertex vertex;
+					SkinningVertex vertex;
 					vertex.Pos = DirectX::XMFLOAT3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
 					vertex.Normal = DirectX::XMFLOAT3(normals[i * 3], normals[i * 3 + 1], normals[i * 3 + 2]);
 					vertex.Texcoord = DirectX::XMFLOAT2(texcoords[i * 2], texcoords[i * 2 + 1]);
+					vertex.BoneIndices = DirectX::XMINT4(joints[i * 4], joints[i * 4 + 1], joints[i * 4 + 2], joints[i * 4 + 3]);
+					vertex.BoneWeight = DirectX::XMFLOAT4(weights[i * 4], weights[i * 4 + 1], weights[i * 4 + 2], weights[i * 4 + 3]);
 					vertices.push_back(std::move(vertex));
 				}
 				matData.NumVertex = static_cast<uint32_t>(vertices.size());
@@ -121,7 +134,7 @@ namespace Mesh {
 				// 頂点バッファを作成
 				D3D11_BUFFER_DESC bd = {};
 				bd.Usage = D3D11_USAGE_DEFAULT;
-				bd.ByteWidth = sizeof(SimpleVertex) * matData.NumVertex;
+				bd.ByteWidth = sizeof(SkinningVertex) * matData.NumVertex;
 				bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 				bd.CPUAccessFlags = 0;
 				D3D11_SUBRESOURCE_DATA InitData = {};
@@ -182,17 +195,6 @@ namespace Mesh {
 				// pushback用のデータ
 				SkinningData skinningData;
 
-				// 各頂点の影響を受けるボーンのインデックスを取得
-				const tinygltf::Accessor& jointAccessor = model.accessors[primitive.attributes.find("JOINTS_0")->second];
-				const tinygltf::BufferView& jointBufferView = model.bufferViews[jointAccessor.bufferView];
-				const tinygltf::Buffer& jointBuffer = model.buffers[jointBufferView.buffer];
-				const float* joints = reinterpret_cast<const float*>(&jointBuffer.data[jointBufferView.byteOffset + jointAccessor.byteOffset]);
-				// 各頂点の影響を受けるボーンのインデックスを取得
-				const tinygltf::Accessor& weightAccessor = model.accessors[primitive.attributes.find("WEIGHTS_0")->second];
-				const tinygltf::BufferView& weightBufferView = model.bufferViews[weightAccessor.bufferView];
-				const tinygltf::Buffer& weightBuffer = model.buffers[weightBufferView.buffer];
-				const float* weights = reinterpret_cast<const float*>(&weightBuffer.data[weightBufferView.byteOffset + weightAccessor.byteOffset]);
-
 				// サイズの確保
 				if (jointAccessor.count != weightAccessor.count) {
 					return E_FAIL;
@@ -234,7 +236,7 @@ namespace Mesh {
 			const float* skins = reinterpret_cast<const float*>(&skinBuffer.data[skinBufferView.byteOffset + skinAccessor.byteOffset]);
 
 			// ボーンデータの作成・座標の読み取り
-			for (size_t i = 0; i < skinAccessor.count; ++i)
+			for (int i = 0; i < skinAccessor.count; ++i)
 			{
 				BoneData boneData;
 
@@ -245,7 +247,7 @@ namespace Mesh {
 				matrix.r[3] = DirectX::XMVectorSet(skins[i * 16 + 12], skins[i * 16 + 13], skins[i * 16 + 14], skins[i * 16 + 15]);
 				
 				boneData.InverseBindMatrix = DirectX::XMMatrixTranspose(matrix);
-				boneData.FirstChild = &boneData;	// ポインタが自分自身 = 未設定なのでエラー
+				boneData.FirstChild = nullptr;	// ポインタが自分自身 = 未設定なのでエラー
 				boneData.NextSibling = nullptr;		// 親子と違い、ルートノードは設定されない可能性があるのでnullptr
 
 				boneData.ID = i;
@@ -281,7 +283,8 @@ namespace Mesh {
 			//offset += static_cast<int>(skinAccessor.count);
 		}
 
-		m_BoneData.shrink_to_fit();
+		// childrenのメモリが壊れるからダメそう
+		//m_BoneData.shrink_to_fit();
 		return S_OK;
 	}
 

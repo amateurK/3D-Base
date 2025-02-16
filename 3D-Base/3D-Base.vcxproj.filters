@@ -133,6 +133,12 @@
     <ClCompile Include="program\Base\Model\Mesh\VRMSkinningMesh.cpp">
       <Filter>Base\Model\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Component\SkinningMeshRender.cpp">
+      <Filter>Base\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\VertexShader\LambertSkinningVS.cpp">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -255,6 +261,12 @@
     <ClInclude Include="program\Base\Model\Mesh\VRMSkinningMesh.h">
       <Filter>Base\Model\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="program\Base\Component\SkinningMeshRender.h">
+      <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Shader\VertexShader\LambertSkinningVS.h">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -270,6 +282,9 @@
       <Filter>Base\Shader\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="program\Base\Shader\HLSL\BasicPixelShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertSkinningVertexShader.hlsl">
       <Filter>Base\Shader\HLSL</Filter>
     </FxCompile>
   </ItemGroup>

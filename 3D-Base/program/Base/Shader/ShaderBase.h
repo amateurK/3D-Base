@@ -107,6 +107,33 @@ namespace Shader {
 			return hr;
 		}
 
+		/// @brief コンスタントバッファのデータを更新（vector用）
+		/// @tparam T 
+		/// @param index 更新するコンスタントバッファのインデックス
+		/// @param data データを格納している配列のデータの先頭へのポインタ
+		/// @param elementCount 
+		/// @return 
+		template<typename T>
+		HRESULT SetConstantBufferWithArray(const size_t index, const T* data, size_t elementCount)
+		{
+			HRESULT hr = S_OK;
+			auto buffer = m_CBList[index].Buffer.Get();
+
+			// コンスタントバッファの更新
+			D3D11_MAPPED_SUBRESOURCE subResource = {};
+			hr = m_ImmediateContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
+			if (FAILED(hr)) {
+				return hr;
+			}
+
+			// GPU のメモリにコピー
+			memcpy(subResource.pData, data, sizeof(T) * elementCount);
+
+			m_ImmediateContext->Unmap(buffer, 0);
+			UpdateGPUConstantBuffer(index);
+			return hr;
+		}
+
 		/// @brief コンスタントバッファをバインド
 		/// @param index バインドするコンスタントバッファのインデックス
 		virtual void UpdateGPUConstantBuffer(size_t index) = 0;

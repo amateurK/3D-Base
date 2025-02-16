@@ -59,11 +59,11 @@ namespace Mesh {
 		/// @param fileName メッシュファイルへのパス
 		/// @param mesh 作成したメッシュを返す
 		/// @return 正常に取得できたか
-		HRESULT CreateMesh(std::wstring& fileName, Mesh*& mesh);
+		HRESULT CreateMesh(const std::wstring& fileName, Mesh*& mesh);
 
 		/// @brief 指定したメッシュを破棄する
 		/// @param fileName 破棄したいメッシュファイルへのパス
-		void DestroyMesh(std::wstring& fileName);
+		void DestroyMesh(const std::wstring& fileName);
 
 		/// @brief メッシュを全て破棄する
 		void DestroyAllMesh();

@@ -29,7 +29,7 @@ namespace Mesh {
 	}
 
 	//--------------------------------------------------------------------------------------
-	HRESULT MeshManager::CreateMesh(std::wstring& fileName, Mesh*& mesh)
+	HRESULT MeshManager::CreateMesh(const std::wstring& fileName, Mesh*& mesh)
 	{
 		// メッシュが作成済みかをチェック
 		auto itr = m_MeshList.find(fileName);
@@ -82,7 +82,7 @@ namespace Mesh {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void MeshManager::DestroyMesh(std::wstring& fileName)
+	void MeshManager::DestroyMesh(const std::wstring& fileName)
 	{
 		auto itr = m_MeshList.find(fileName);
 		if (itr != m_MeshList.end()) {

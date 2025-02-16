@@ -8,6 +8,7 @@
 #include "TestScene.h"
 #include "Base/Component/Transform.h"
 #include "Base/Component/MeshRender.h"
+#include "Base/Component/SkinningMeshRender.h"
 #include "Base/Component/Collider.h"
 #include "Base/Component/Collider/SphereCollider.h"
 #include "Base/Collision/CollisionManager.h"
@@ -32,9 +33,9 @@ namespace Scene {
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->Scale(3.0f);
 			transform->SetPosition(3.0f, 0.0f, 3.0f);
-			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
+			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_A.vrm");
 			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
-			meshRender->SetShader("LambertShader");
+			meshRender->SetShader("LambertSkinningShader");
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
@@ -82,6 +83,17 @@ namespace Scene {
 			collider->SetOnCollision([=](AK_Base::Collider* const other) {
 				collider->GetActor()->GetTransform()->Translate(0.0f, 1.0f, 0.0f);
 				});
+		}
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester_copy");
+			auto transform = testmodel->AddComponent<AK_Base::Transform>();
+			transform->Scale(3.0f);
+			transform->SetPosition(3.0f, 0.0f, 5.0f);
+			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
+			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
+			meshRender->SetShader("LambertShader");
+
+			ActorSet::CreateDebugAxis(testmodel);
 		}
 
 
