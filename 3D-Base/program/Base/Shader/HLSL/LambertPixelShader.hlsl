@@ -18,7 +18,7 @@ void LambertPS(
 	out float4 outColor : SV_Target
 )
 {
-	outColor = textureDiffuse.Sample(samplerPoint, inTexcoord);// * inColor;
+	outColor = textureDiffuse.Sample(samplerPoint, inTexcoord) * inColor;
 	
 	// テクスチャテスト用
 	//outColor = float4(inTexcoord.xy, 1, 1);
