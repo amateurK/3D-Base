@@ -27,6 +27,8 @@ namespace Mesh {
 		int ID;
 		/// @brief 初期状態での逆バインド行列
 		DirectX::XMMATRIX InverseBindMatrix;
+		/// @brief ローカル変換行列
+		DirectX::XMMATRIX LocalMatrix;
 		/// @brief 1番目の子ボーン
 		BoneData* FirstChild;
 		/// @brief 次の兄弟ボーン
@@ -100,9 +102,11 @@ namespace Mesh {
 		/// @param bone 計算するボーン
 		/// @param parentMatrix 親のボーンのワールド変換行列
 		/// @param BoneMatrices 最終行列の配列を代入するvector
+		/// @param WorldMatrices ボーンのWorld変換行列の配列を代入するvector
 		/// @details 再帰的に呼び出される
 		void CalcBoneMatrices(const BoneData* bone,
 			const DirectX::XMMATRIX& parentMatrix,
-			std::vector<DirectX::XMMATRIX>& BoneMatrices);
+			std::vector<DirectX::XMMATRIX>& BoneMatrices,
+			std::vector<DirectX::XMMATRIX>& worldMatrices);
 	};
 }

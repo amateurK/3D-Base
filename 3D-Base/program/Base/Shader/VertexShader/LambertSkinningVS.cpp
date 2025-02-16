@@ -12,6 +12,7 @@
 using namespace DirectX;
 
 constexpr int BONE_MAX = 100;
+#define CheckBoneMax
 
 namespace Shader {
 
@@ -52,7 +53,7 @@ namespace Shader {
 		__super::SetPerObject(set);
 
 		auto bones = set->GetData<const std::vector<DirectX::XMMATRIX>*>("BoneMatrices");
-#ifdef _DEBUG
+#ifdef CheckBoneMax
 		if (bones->size() > BONE_MAX)
 		{
 			throw std::exception("BoneMatrices size is over BONE_MAX");

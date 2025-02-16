@@ -56,17 +56,14 @@ void LambertSkinningVS(
 		+ mul(matBones[inBoneIndices.w], inBoneWeights.w);
 	
 	// 座標変換
-	float4 world = mul(inPosition, transpose(skinMatrix));
+	float4 world = mul(inPosition, skinMatrix);
 	outPosition = mul(world, matWVP);
-	
-	//outPosition = mul(inPosition, matWVP);
 	
 	float3 transformedNormal = normalize(mul(inNormal, (float3x3) skinMatrix));
 	
 	// 頂点色
 	outColor = LightAmbient * MaterialAmbient
 		+ LightDiffuse * MaterialDiffuse * saturate(dot(transformedNormal, LightDirection.xyz));
-	outColor = float4((float)inBoneIndices.x * 0.01f, 1.0f, 0.0f, 1.0f);
 	
 	// テクスチャ座標
 	outTexcoord = inTexcoord;

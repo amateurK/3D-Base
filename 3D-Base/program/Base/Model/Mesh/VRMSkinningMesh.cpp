@@ -231,7 +231,6 @@ namespace Mesh {
 		for (const auto& skin : model.skins)
 		{
 			// 逆バインド行列の取得
-			// skinsはnodeに書かれているtransformを行列にしただけっぽい？
 			const tinygltf::Accessor& skinAccessor = model.accessors[skin.inverseBindMatrices];
 			const tinygltf::BufferView& skinBufferView = model.bufferViews[skinAccessor.bufferView];
 			const tinygltf::Buffer& skinBuffer = model.buffers[skinBufferView.buffer];
@@ -248,7 +247,7 @@ namespace Mesh {
 				matrix.r[2] = DirectX::XMVectorSet(skins[i * 16 + 8], skins[i * 16 + 9], skins[i * 16 + 10], skins[i * 16 + 11]);
 				matrix.r[3] = DirectX::XMVectorSet(skins[i * 16 + 12], skins[i * 16 + 13], skins[i * 16 + 14], skins[i * 16 + 15]);
 				
-				boneData.InverseBindMatrix = DirectX::XMMatrixTranspose(matrix);
+				boneData.InverseBindMatrix = matrix;
 				boneData.FirstChild = nullptr;	// ポインタが自分自身 = 未設定なのでエラー
 				boneData.NextSibling = nullptr;		// 親子と違い、ルートノードは設定されない可能性があるのでnullptr
 
@@ -256,12 +255,13 @@ namespace Mesh {
 				m_BoneData.push_back(std::move(boneData));
 				m_BoneDataHashmap[model.nodes[skin.joints[i]].name] = &m_BoneData.back();	// moveしているが、念のためvectorにいれてから参照する
 			}
-			// 親子関係の設定
+			// ノードから取得するデータの設定
 			for (size_t i = 0; i < skinAccessor.count; ++i)
 			{
+				const auto& node = model.nodes[skin.joints[i]];
+				// 親子関係の取得
 				// 親子は自分のループで設定される
 				// 兄弟は親のループで設定される
-				const auto& node = model.nodes[skin.joints[i]];
 				if (node.children.size() == 0)
 				{
 					m_BoneData[i].FirstChild = nullptr;
@@ -276,8 +276,19 @@ namespace Mesh {
 					}
 					m_BoneData[node.children[node.children.size() - 1]].NextSibling = nullptr;
 				}
-			}
 
+				// ローカル座標の取得
+				if (node.translation.size() == 0) {
+					// データがない場合は初期状態
+					m_BoneData[i].LocalMatrix = DirectX::XMMatrixIdentity();
+				}
+				else
+				{
+					// データがある場合は座標を設定
+					auto trans = node.translation;
+					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranslation(trans[0], trans[1], trans[2]);
+				}
+			}
 			// 2こめ以降のskinは無視
 			break;
 			// 現在は未使用
