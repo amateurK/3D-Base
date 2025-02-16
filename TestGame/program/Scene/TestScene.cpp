@@ -42,7 +42,7 @@ namespace Scene {
 		{
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester2");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
-			transform->SetPosition(-3.0f, 2.0f, 3.0f);
+			transform->SetPosition(-3.0f, 2.0f, 7.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
 			meshRender->SetShader("BasicRainbow");
 
@@ -52,7 +52,7 @@ namespace Scene {
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->Scale(1.0f);
-			transform->SetPosition(0.0f, 1.0f, 3.0f);
+			transform->SetPosition(0.0f, 1.0f, 7.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
 			meshRender->SetShader("BasicBlue");
 			AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
@@ -62,7 +62,7 @@ namespace Scene {
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere2");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->Scale(0.4f);
-			transform->SetPosition(1.0f, 4.0f, 3.0f);
+			transform->SetPosition(1.0f, 4.0f, 7.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
 			meshRender->SetShader("BasicRed");
 			AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
@@ -75,7 +75,7 @@ namespace Scene {
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere3");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->Scale(0.4f);
-			transform->SetPosition(0.0f, 4.0f, 3.0f);
+			transform->SetPosition(0.0f, 4.0f, 7.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
 			meshRender->SetShader("BasicRed");
 			AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
@@ -88,7 +88,7 @@ namespace Scene {
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester_copy");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->Scale(3.0f);
-			transform->SetPosition(3.0f, 0.0f, 5.0f);
+			transform->SetPosition(0.0f, 0.0f, 3.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
 			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 			meshRender->SetShader("LambertShader");
@@ -222,6 +222,7 @@ namespace Scene {
 			float b = std::max(0.0f, 2.0f - fabs(hue - 5.0f));
 			auto shader = shaderM->GetShaderSet("BasicRainbow");
 			shader->SetData<XMFLOAT4>("color", { r, g, b, 1.0f });
+
 			auto shader2 = shaderM->GetShaderSet("LambertShader");
 			//shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet(0.0f, 0.0f, -1.0f, 1.0f));
 			shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet((float)cos(totalTime) * 10.0f, (float)sin(totalTime)* 10.0f, -1.0f, 1.0f));

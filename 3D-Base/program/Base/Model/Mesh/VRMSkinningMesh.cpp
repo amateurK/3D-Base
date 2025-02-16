@@ -112,7 +112,7 @@ namespace Mesh {
 				const tinygltf::Accessor& jointAccessor = model.accessors[primitive.attributes.find("JOINTS_0")->second];
 				const tinygltf::BufferView& jointBufferView = model.bufferViews[jointAccessor.bufferView];
 				const tinygltf::Buffer& jointBuffer = model.buffers[jointBufferView.buffer];
-				const float* joints = reinterpret_cast<const float*>(&jointBuffer.data[jointBufferView.byteOffset + jointAccessor.byteOffset]);
+				const uint16_t* joints = reinterpret_cast<const uint16_t*>(&jointBuffer.data[jointBufferView.byteOffset + jointAccessor.byteOffset]);
 				// 各頂点の影響を受けるボーンの重みを取得
 				const tinygltf::Accessor& weightAccessor = model.accessors[primitive.attributes.find("WEIGHTS_0")->second];
 				const tinygltf::BufferView& weightBufferView = model.bufferViews[weightAccessor.bufferView];
@@ -125,7 +125,9 @@ namespace Mesh {
 					vertex.Pos = DirectX::XMFLOAT3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
 					vertex.Normal = DirectX::XMFLOAT3(normals[i * 3], normals[i * 3 + 1], normals[i * 3 + 2]);
 					vertex.Texcoord = DirectX::XMFLOAT2(texcoords[i * 2], texcoords[i * 2 + 1]);
-					vertex.BoneIndices = DirectX::XMINT4(joints[i * 4], joints[i * 4 + 1], joints[i * 4 + 2], joints[i * 4 + 3]);
+					for (int j = 0; j < 4; j++) {
+						vertex.BoneIndices[j] = static_cast<uint8_t>(joints[i * 4 + j]);
+					}
 					vertex.BoneWeight = DirectX::XMFLOAT4(weights[i * 4], weights[i * 4 + 1], weights[i * 4 + 2], weights[i * 4 + 3]);
 					vertices.push_back(std::move(vertex));
 				}
@@ -295,7 +297,7 @@ namespace Mesh {
 			return;
 
 		// Set vertex buffer
-		UINT stride = sizeof(SimpleVertex);
+		UINT stride = sizeof(SkinningVertex);
 		UINT offset = 0;
 		context->IASetVertexBuffers(0, 1, m_Mesh[id].VertexBuffer.GetAddressOf(), &stride, &offset);
 		// Set index buffer

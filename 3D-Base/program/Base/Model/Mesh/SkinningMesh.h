@@ -39,7 +39,7 @@ namespace Mesh {
 		DirectX::XMFLOAT3 Pos;
 		DirectX::XMFLOAT3 Normal;
 		DirectX::XMFLOAT2 Texcoord;
-		DirectX::XMINT4 BoneIndices;
+		uint8_t BoneIndices[4];
 		DirectX::XMFLOAT4 BoneWeight;
 	};
 

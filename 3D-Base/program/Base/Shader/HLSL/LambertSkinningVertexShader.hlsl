@@ -41,7 +41,7 @@ void LambertSkinningVS(
 	in float4 inPosition : POSITION,
 	in float3 inNormal : NORMAL,
 	in float2 inTexcoord : TEXCOORD0,
-	in int4   inBoneIndices : BLENDINDICES0,
+	in uint4 inBoneIndices : BLENDINDICES0,
 	in float4 inBoneWeights : BLENDWEIGHT0,
 	out float4 outPosition : SV_POSITION,
 	out float4 outColor : COLOR0,
@@ -49,19 +49,24 @@ void LambertSkinningVS(
 )
 {
 	// ボーン変形の適応
-	matrix skinMatrix =
-		matBones[inBoneIndices.x] * inBoneWeights.x
-		+ matBones[inBoneIndices.y] * inBoneWeights.y
-		+ matBones[inBoneIndices.z] * inBoneWeights.z
-		+ matBones[inBoneIndices.w] * inBoneWeights.w;
+	float4x4 skinMatrix =
+		mul(matBones[inBoneIndices.x], inBoneWeights.x)
+		+ mul(matBones[inBoneIndices.y], inBoneWeights.y)
+		+ mul(matBones[inBoneIndices.z], inBoneWeights.z)
+		+ mul(matBones[inBoneIndices.w], inBoneWeights.w);
 	
 	// 座標変換
-	//float4 world = mul(inPosition, skinMatrix);
-	outPosition = mul(inPosition, matWVP);
+	float4 world = mul(inPosition, transpose(skinMatrix));
+	outPosition = mul(world, matWVP);
+	
+	//outPosition = mul(inPosition, matWVP);
+	
+	float3 transformedNormal = normalize(mul(inNormal, (float3x3) skinMatrix));
 	
 	// 頂点色
 	outColor = LightAmbient * MaterialAmbient
-		+ LightDiffuse * MaterialDiffuse * saturate(dot(inNormal, LightDirection.xyz));
+		+ LightDiffuse * MaterialDiffuse * saturate(dot(transformedNormal, LightDirection.xyz));
+	outColor = float4((float)inBoneIndices.x * 0.01f, 1.0f, 0.0f, 1.0f);
 	
 	// テクスチャ座標
 	outTexcoord = inTexcoord;
