@@ -11,7 +11,7 @@
 
 using namespace DirectX;
 
-constexpr int BONE_MAX = 100;
+constexpr int BONE_MAX = 255;
 #define CheckBoneMax
 
 namespace Shader {

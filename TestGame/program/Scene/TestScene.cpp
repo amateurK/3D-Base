@@ -33,7 +33,7 @@ namespace Scene {
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->Scale(3.0f);
 			transform->SetPosition(3.0f, 0.0f, 3.0f);
-			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_A.vrm");
+			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_H.vrm");
 			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 			meshRender->SetShader("LambertSkinningShader");
 

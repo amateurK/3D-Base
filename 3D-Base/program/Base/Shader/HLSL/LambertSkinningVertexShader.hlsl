@@ -33,7 +33,7 @@ cbuffer Light : register(b2)
 cbuffer Bones : register(b3)
 {
 	// É{Å[ÉìçsóÒ
-	matrix matBones[100];
+	matrix matBones[255];
 }
 
 //--------------------------------------------------------------------------------------
