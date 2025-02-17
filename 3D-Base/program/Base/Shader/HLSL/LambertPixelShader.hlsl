@@ -18,7 +18,13 @@ void LambertPS(
 	out float4 outColor : SV_Target
 )
 {
-	outColor = textureDiffuse.Sample(samplerPoint, inTexcoord) * inColor;
+	outColor = textureDiffuse.Sample(samplerPoint, inTexcoord);// * inColor;
+	
+	// 透明部分の除去
+	if (outColor.a <= 0.25f)
+	{
+		discard;
+	}
 	
 	// テクスチャテスト用
 	//outColor = float4(inTexcoord.xy, 1, 1);

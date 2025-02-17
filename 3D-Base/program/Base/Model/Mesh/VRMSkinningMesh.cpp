@@ -81,7 +81,6 @@ namespace Mesh {
 			}
 		}
 
-
 		// ƒƒbƒVƒ…î•ñ‚ğ“Ç‚İæ‚è
 		for (const auto& mesh : model.meshes)
 		{
