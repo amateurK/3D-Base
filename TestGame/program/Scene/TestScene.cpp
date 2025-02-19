@@ -16,6 +16,7 @@
 #include "Base/ActorSet/DebugAxis.h"
 #include "Base/Input/InputManager.h"
 #include "Base/Math/Primitive.h"
+#include "Base/Model/Animation/AnimationManager.h"
 
 using namespace DirectX;
 
@@ -243,7 +244,8 @@ namespace Scene {
 		auto shaderM = Shader::ShaderManager::GetInstance();
 		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
 
-		
+		auto animM = Anim::AnimationManager::GetInstance();
+		animM->CreateAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 
 		Scene::Update(totalTime, elapsedTime);
 	}

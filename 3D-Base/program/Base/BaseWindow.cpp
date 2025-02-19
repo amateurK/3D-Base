@@ -10,6 +10,7 @@
 #include "BaseWindow.h"
 #include "Actor.h"
 #include "Model/Mesh/MeshManager.h"
+#include "Model/Animation/AnimationManager.h"
 #include "Input/InputManager.h"
 #include "Shader/ShaderManager.h"
 #include "Shader/VertexShader/LambertVS.h"
@@ -284,6 +285,7 @@ namespace AK_Base {
 		Mesh::MeshManager::Create();
 		InputManager::Create();
 		CollisionManager::Create();
+		Anim::AnimationManager::Create();
 
 		// シェーダーの作成
 		Shader::ShaderManager::Create();
@@ -394,6 +396,8 @@ namespace AK_Base {
 	{
 		// マネージャーの破棄
 		Shader::ShaderManager::Destroy();
+
+		Anim::AnimationManager::Destroy();
 		CollisionManager::Destroy();
 		InputManager::Destroy();
 		Mesh::MeshManager::Destroy();
