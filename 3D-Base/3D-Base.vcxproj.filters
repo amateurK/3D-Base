@@ -56,6 +56,9 @@
     <Filter Include="Base\Component\Collider">
       <UniqueIdentifier>{54298036-ed44-466f-a839-8f5c100b6a9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Model\Animation">
+      <UniqueIdentifier>{ea8e5626-a298-4b40-9e7e-46c7c99e72b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
@@ -138,6 +141,12 @@
     </ClCompile>
     <ClCompile Include="program\Base\Shader\VertexShader\LambertSkinningVS.cpp">
       <Filter>Base\Shader\VertexShader</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Model\Animation\AnimationManager.cpp">
+      <Filter>Base\Model\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Model\Animation\AnimationClip.cpp">
+      <Filter>Base\Model\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +275,12 @@
     </ClInclude>
     <ClInclude Include="program\Base\Shader\VertexShader\LambertSkinningVS.h">
       <Filter>Base\Shader\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Animation\AnimationManager.h">
+      <Filter>Base\Model\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Animation\AnimationClip.h">
+      <Filter>Base\Model\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
