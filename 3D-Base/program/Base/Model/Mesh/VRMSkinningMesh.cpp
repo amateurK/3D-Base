@@ -285,7 +285,7 @@ namespace Mesh {
 				matrix.r[2] = DirectX::XMVectorSet(skins[i * 16 + 8], skins[i * 16 + 9], skins[i * 16 + 10], skins[i * 16 + 11]);
 				matrix.r[3] = DirectX::XMVectorSet(skins[i * 16 + 12], skins[i * 16 + 13], skins[i * 16 + 14], skins[i * 16 + 15]);
 				
-				boneData.InverseBindMatrix = matrix;
+				boneData.InverseBindMatrix = DirectX::XMMatrixTranspose(matrix);
 				boneData.FirstChild = nullptr;	// ポインタが自分自身 = 未設定なのでエラー
 				boneData.NextSibling = nullptr;		// 親子と違い、ルートノードは設定されない可能性があるのでnullptr
 
@@ -335,7 +335,7 @@ namespace Mesh {
 				{
 					// データがある場合は座標を設定
 					const auto& trans = node.translation;
-					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranslation(trans[0], trans[1], trans[2]);
+					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(trans[0], trans[1], trans[2]));
 				}
 			}
 			// 2こめ以降のskinは無視

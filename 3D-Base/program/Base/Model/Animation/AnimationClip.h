@@ -58,6 +58,9 @@ namespace Anim {
 		/// @return 値が取得できたか（falseの場合、ボーンは存在しなかったことになる）
 		bool GetBoneMatrix(const std::string& boneName, float time, DirectX::XMMATRIX& output) const;
 
+		/// @brief アニメーションの長さを取得
+		inline float GetDuration() const { return m_Duration; }
+
 	private:
 		/// @brief キーフレームから現在の位置を取得
 		/// @param keyFrames キーフレーム

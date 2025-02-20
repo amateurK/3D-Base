@@ -36,7 +36,14 @@ namespace AK_Base {
 	void SkinningMeshRender::Render(const double& totalTime, const float& elapsedTime)
 	{
 		// 時間の更新
-		m_AnimationData.Time += elapsedTime;
+		m_AnimationData.Time += elapsedTime * m_AnimationData.Speed;
+		if (m_AnimationData.Loop)
+		{
+			if (m_AnimationData.Time > m_AnimationData.Clip->GetDuration())
+			{
+				m_AnimationData.Time = 0.0f;
+			}
+		}
 
 		// ボーンの行列を更新
 		const auto bone = m_Mesh->GetBoneData();
@@ -110,7 +117,10 @@ namespace AK_Base {
 			DirectX::XMMATRIX mat;
 			if (m_AnimationData.Clip->GetBoneMatrix(bone->Name, m_AnimationData.Time, mat))
 			{
-				worldMatrix *= mat;
+				//mat = DirectX::XMMatrixRotationX(-1.0f);
+				auto quat = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), -1.0f);
+				//mat = DirectX::XMMatrixRotationQuaternion(quat);
+				worldMatrix *= bone->LocalMatrix * mat;
 			}
 			else
 			{

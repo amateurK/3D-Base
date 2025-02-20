@@ -134,7 +134,12 @@ namespace Anim {
 					{
 						KeyFrame keyFrame;
 						keyFrame.Time = times[i];
-						keyFrame.Vec = DirectX::XMVectorSet(values[i * 4], values[i * 4 + 1], values[i * 4 + 2], values[i * 4 + 3]);
+						keyFrame.Vec = DirectX::XMVectorSet(values[i * 4 + 0], values[i * 4 + 1], values[i * 4 + 2], values[i * 4 + 3]);
+						if (DirectX::XMVectorGetX(DirectX::XMQuaternionLength(keyFrame.Vec)) < 0.99f)
+						{
+							// クォータニオンが正規化されていない場合は正規化
+							keyFrame.Vec = DirectX::XMQuaternionNormalize(keyFrame.Vec);
+						}
 						boneKeyFrames.Rotation.push_back(keyFrame);
 					}
 				}
@@ -171,12 +176,13 @@ namespace Anim {
 			return false;
 		}
 
-		output = DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time))
-			* DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time));
+		//output = DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time))
+		//	* DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time));
 
-		output =
+		output = DirectX::XMMatrixTranspose(
 			DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time))
-			* DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time));
+			* DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time))
+		);
 		return true;
 	}
 
