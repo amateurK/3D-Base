@@ -37,6 +37,7 @@ namespace Scene {
 			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_H.vrm");
 			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 			meshRender->SetShader("LambertSkinningShader");
+			meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma", 0.0f, 1.0f, true);
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}

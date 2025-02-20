@@ -25,6 +25,8 @@ namespace Mesh {
 	{
 		/// @brief ボーンid
 		int ID;
+		/// @brief ボーン名
+		std::string Name;
 		/// @brief 初期状態での逆バインド行列
 		DirectX::XMMATRIX InverseBindMatrix;
 		/// @brief ローカル変換行列
@@ -86,10 +88,6 @@ namespace Mesh {
 		virtual void DrawSubset(ID3D11DeviceContext* const context,
 			const int id, const UINT textureSlot = 0) override = 0;
 
-		/// @brief ボーンの最終行列を更新する
-		/// @param BoneMatrices 最終行列の配列を代入するvector
-		void UpdateBoneMatrices(std::vector<DirectX::XMMATRIX>& BoneMatrices);
-
 
 
 		/// @brief ボーンの配列を渡す
@@ -97,16 +95,5 @@ namespace Mesh {
 
 		/// @brief ボーンの数を返す
 		inline size_t GetBoneDataSize() const { return m_BoneData.size(); }
-	private:
-		/// @brief 各ボーンのワールド変換を計算する
-		/// @param bone 計算するボーン
-		/// @param parentMatrix 親のボーンのワールド変換行列
-		/// @param BoneMatrices 最終行列の配列を代入するvector
-		/// @param WorldMatrices ボーンのWorld変換行列の配列を代入するvector
-		/// @details 再帰的に呼び出される
-		void CalcBoneMatrices(const BoneData* bone,
-			const DirectX::XMMATRIX& parentMatrix,
-			std::vector<DirectX::XMMATRIX>& BoneMatrices,
-			std::vector<DirectX::XMMATRIX>& worldMatrices);
 	};
 }

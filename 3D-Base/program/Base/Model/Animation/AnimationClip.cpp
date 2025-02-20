@@ -44,7 +44,7 @@ namespace Anim {
 		// VRMは拡張機能部分にボーン情報が格納されている
 		// JSONを解析してボーン情報を取得しなければいけない
 		std::unordered_map<int, std::string> boneIndexMap;
-		auto vrmaItr = model.extensions.find("VRMC_vrm_animation");
+		const auto& vrmaItr = model.extensions.find("VRMC_vrm_animation");
 		if (vrmaItr != model.extensions.end())
 		{
 			const auto& vrmAnim = vrmaItr->second.Get<tinygltf::Value::Object>();
@@ -127,7 +127,7 @@ namespace Anim {
 						boneKeyFrames.Transform.push_back(keyFrame);
 					}
 				}
-				else if(path == "rotation")
+				else if (path == "rotation")
 				{
 					// 回転
 					for (size_t i = 0; i < inputAccessor.count; ++i)
@@ -162,14 +162,22 @@ namespace Anim {
 	}
 
 	//--------------------------------------------------------------------------------------
-	DirectX::XMMATRIX AnimationClip::GetBoneMatrix(const std::string& boneName, float time) const
+	bool AnimationClip::GetBoneMatrix(const std::string& boneName, float time, DirectX::XMMATRIX& output) const
 	{
-		// ボーン名が存在しない場合エラー
-		const BoneKeyFrames& keyFrames = m_BoneKeyFrames.at(boneName);
+		const auto& keyFrameItr = m_BoneKeyFrames.find(boneName);
+		if (keyFrameItr == m_BoneKeyFrames.end())
+		{
+			// ボーン名が存在しない場合
+			return false;
+		}
 
-		return DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrames.Transform, time))
-			* DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrames.Rotation, time));
+		output = DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time))
+			* DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time));
 
+		output =
+			DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time))
+			* DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time));
+		return true;
 	}
 
 	//--------------------------------------------------------------------------------------

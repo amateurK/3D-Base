@@ -13,6 +13,7 @@
 #include "../Shader/ShaderManager.h"
 #include "../Shader/VertexShader/LambertVS.h"
 #include "../Shader/VertexShader/BasicVS.h"
+#include "../Model/Animation/AnimationManager.h"
 
 using namespace DirectX;
 
@@ -23,6 +24,7 @@ namespace AK_Base {
 		: Component(parent)
 		, m_ShaderSet(nullptr)
 		, m_Mesh(nullptr)
+		, m_AnimationData({ nullptr, 0.0f, 1.0f, false})
 	{
 
 		CreateResource(fileName);
@@ -33,7 +35,15 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void SkinningMeshRender::Render(const double& totalTime, const float& elapsedTime)
 	{
-		m_Mesh->UpdateBoneMatrices(m_BoneMatrices);
+		// 時間の更新
+		m_AnimationData.Time += elapsedTime;
+
+		// ボーンの行列を更新
+		const auto bone = m_Mesh->GetBoneData();
+		std::vector<DirectX::XMMATRIX> worldMatrices(bone.size());	// 再帰用のワールド行列
+		CalcBoneMatrices(&bone[0], DirectX::XMMatrixIdentity(), worldMatrices);
+
+		// シェーダーのボーンの行列を更新
 		m_ShaderSet->SetData<const std::vector<DirectX::XMMATRIX>*>("BoneMatrices", &m_BoneMatrices);
 
 		BaseWindow& bw(BaseWindow::GetInstance());
@@ -59,6 +69,17 @@ namespace AK_Base {
 		m_ShaderSet = shaderM->GetShaderSet(name);
 	}
 
+	//--------------------------------------------------------------------------------------
+	void SkinningMeshRender::PlayAnimation(const std::wstring& fileName, float time, float speed, bool isLoop)
+	{
+		auto animM = Anim::AnimationManager::GetInstance();
+		m_AnimationData.Clip = animM->CreateAnimation(fileName);
+		m_AnimationData.Time = time;
+		m_AnimationData.Speed = speed;
+		m_AnimationData.Loop = isLoop;
+	}
+
+
 
 
 	//--------------------------------------------------------------------------------------
@@ -73,5 +94,46 @@ namespace AK_Base {
 		m_BoneMatrices.resize(m_Mesh->GetBoneData().size());
 
 		return hr;
+	}
+
+	//--------------------------------------------------------------------------------------
+	void SkinningMeshRender::CalcBoneMatrices(const Mesh::BoneData* bone,
+		const DirectX::XMMATRIX& parentMatrix,
+		std::vector<DirectX::XMMATRIX>& worldMatrices)
+	{
+		// ボーンのワールド変換行列を計算
+		DirectX::XMMATRIX worldMatrix = parentMatrix;
+
+		// アニメーション処理
+		if (m_AnimationData.Clip != nullptr)
+		{
+			DirectX::XMMATRIX mat;
+			if (m_AnimationData.Clip->GetBoneMatrix(bone->Name, m_AnimationData.Time, mat))
+			{
+				worldMatrix *= mat;
+			}
+			else
+			{
+				worldMatrix *= bone->LocalMatrix;
+			}
+		}
+		else
+		{
+			worldMatrix *= bone->LocalMatrix;
+		}
+
+		// ボーンのワールド変換行列を配列に格納
+		worldMatrices[bone->ID] = worldMatrix;
+		// ボーンの最終行列を配列に格納
+		m_BoneMatrices[bone->ID] = worldMatrix * bone->InverseBindMatrix;
+
+		// 子ボーンの行列を計算
+		if (bone->FirstChild != nullptr) {
+			CalcBoneMatrices(bone->FirstChild, worldMatrix, worldMatrices);
+		}
+		// 兄弟ボーンの行列を計算
+		if (bone->NextSibling != nullptr) {
+			CalcBoneMatrices(bone->NextSibling, parentMatrix, worldMatrices);
+		}
 	}
 }

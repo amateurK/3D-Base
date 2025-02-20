@@ -54,8 +54,9 @@ namespace Anim {
 		/// @brief ボーンの変換行列を取得
 		/// @param boneName ボーンの名前
 		/// @param time アニメーション開始からの時間
-		/// @return 変換行列
-		DirectX::XMMATRIX GetBoneMatrix(const std::string& boneName, float time) const;
+		/// @param output 変換行列
+		/// @return 値が取得できたか（falseの場合、ボーンは存在しなかったことになる）
+		bool GetBoneMatrix(const std::string& boneName, float time, DirectX::XMMATRIX& output) const;
 
 	private:
 		/// @brief キーフレームから現在の位置を取得

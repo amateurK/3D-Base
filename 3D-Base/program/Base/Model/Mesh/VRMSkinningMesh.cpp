@@ -223,10 +223,49 @@ namespace Mesh {
 			}
 		}
 
+		// VRMのボーン情報を読み込み
+		// VRMは拡張機能部分にボーン情報が格納されている
+		// JSONを解析してボーン情報を取得しなければいけない
+		std::unordered_map<int, std::string> boneIndexMap;
+		const auto& vrmItr = model.extensions.find("VRM");
+		if (vrmItr != model.extensions.end())
+		{
+			const auto& vrm = vrmItr->second.Get<tinygltf::Value::Object>();
+			const auto& humanoidItr = vrm.find("humanoid");
+			if (humanoidItr != vrm.end())
+			{
+				const auto& humanoid = humanoidItr->second.Get<tinygltf::Value::Object>();
+				const auto& humanBonesItr = humanoid.find("humanBones");
+				if (humanBonesItr != humanoid.end())
+				{
+					auto& humanBones = humanBonesItr->second.Get<tinygltf::Value::Array>();
+
+					// 各ボーンを取得しboneIndexMapに格納
+					for (const auto& bone : humanBones)
+					{
+						const auto& nodeID = bone.Get<tinygltf::Value::Object>().find("node");
+						if (nodeID == bone.Get<tinygltf::Value::Object>().end())
+						{
+							continue;
+						}
+						const auto& boneName = bone.Get<tinygltf::Value::Object>().find("bone");
+						if (nodeID == bone.Get<tinygltf::Value::Object>().end())
+						{
+							continue;
+						}
+						// useDefaultValues がfalseの時は考慮していない
+
+						// ボーンのインデックスと名前を格納
+						boneIndexMap[nodeID->second.Get<int>()] = boneName->second.Get<std::string>();
+					}
+				}
+			}
+		}
+
 		// ボーンデータの読み込み
 		// skinが複数個ある場合、1つめの後に追加していく方式なので、1つめの物以外はずらして参照する必要がある
 		// TODO : 最後にbreakしているため、2爪以降使用する場合は必要に応じて対応（VRMAの構造次第）
-		int offset = 0;
+		//int offset = 0;
 		for (const auto& skin : model.skins)
 		{
 			// 逆バインド行列の取得
@@ -251,6 +290,17 @@ namespace Mesh {
 				boneData.NextSibling = nullptr;		// 親子と違い、ルートノードは設定されない可能性があるのでnullptr
 
 				boneData.ID = i;
+				const auto& nameItr = boneIndexMap.find(i);
+				if (nameItr != boneIndexMap.end())
+				{
+					// VRMアニメーション用のボーン名
+					boneData.Name = nameItr->second;
+				}
+				else
+				{
+					// ボーン名がない場合はIDを名前とする
+					boneData.Name = "Bone" + std::to_string(i);
+				}
 				m_BoneData.push_back(std::move(boneData));
 				m_BoneDataHashmap[model.nodes[skin.joints[i]].name] = &m_BoneData.back();	// moveしているが、念のためvectorにいれてから参照する
 			}
@@ -284,7 +334,7 @@ namespace Mesh {
 				else
 				{
 					// データがある場合は座標を設定
-					auto trans = node.translation;
+					const auto& trans = node.translation;
 					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranslation(trans[0], trans[1], trans[2]);
 				}
 			}
