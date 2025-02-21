@@ -37,8 +37,8 @@ namespace Scene {
 			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_H.vrm");
 			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 			meshRender->SetShader("LambertSkinningShader");
-			//meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma", 0.0f, 0.0f, true);
-			meshRender->PlayAnimation(L"resource/testData/SimpleTest.vrma", 5.0f, 1.0f, true);
+			meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma", 0.0f, 1.0f, true);
+			//meshRender->PlayAnimation(L"resource/testData/SimpleTest.vrma", 0.0f, 1.0f, true);
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
@@ -95,6 +95,8 @@ namespace Scene {
 			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_A.vrm");
 			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 			meshRender->SetShader("LambertSkinningShader");
+			meshRender->PlayAnimation(L"resource/testData/SimpleTest.vrma", 0.0f, 1.0f, true);
+			meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma", 0.0f, 1.0f, true);
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
@@ -245,9 +247,6 @@ namespace Scene {
 		// シェーダーにVP行列をセット
 		auto shaderM = Shader::ShaderManager::GetInstance();
 		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
-
-		auto animM = Anim::AnimationManager::GetInstance();
-		animM->CreateAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 
 		Scene::Update(totalTime, elapsedTime);
 	}

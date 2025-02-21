@@ -111,14 +111,14 @@ namespace AK_Base {
 		// ボーンのワールド変換行列を計算
 		DirectX::XMMATRIX worldMatrix = parentMatrix;
 
+		DirectX::XMMATRIX mat;
 		// アニメーション処理
 		if (m_AnimationData.Clip != nullptr)
 		{
-			DirectX::XMMATRIX mat;
 			if (m_AnimationData.Clip->GetBoneMatrix(bone->Name, m_AnimationData.Time, mat))
 			{
 				//mat = DirectX::XMMatrixRotationX(-1.0f);
-				auto quat = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), -1.0f);
+				//auto quat = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), -1.0f);
 				//mat = DirectX::XMMatrixRotationQuaternion(quat);
 				worldMatrix *= bone->LocalMatrix * mat;
 			}

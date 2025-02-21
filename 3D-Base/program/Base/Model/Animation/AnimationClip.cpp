@@ -115,27 +115,68 @@ namespace Anim {
 				const tinygltf::Buffer& outputBuffer = model.buffers[outputBufferView.buffer];
 				const float* values = reinterpret_cast<const float*>(&outputBuffer.data[outputBufferView.byteOffset + outputAccessor.byteOffset]);
 
+				if (outputAccessor.componentType != TINYGLTF_COMPONENT_TYPE_FLOAT)
+				{
+					throw std::exception("未対応");
+				}
+
 				// キーフレームの取得
 				if (path == "translation")
 				{
+					// データ型チェック
+					if (outputAccessor.type != TINYGLTF_TYPE_VEC3)
+					{
+						throw std::exception("未対応");
+					}
+
+					// 基本の位置を取得
+					DirectX::XMVECTOR initPos;
+					const auto& Inittrans = model.nodes[targetNode].translation;
+					if (Inittrans.empty())
+					{
+						initPos = DirectX::XMVectorZero();
+					}
+					else
+					{
+						initPos = DirectX::XMVectorSet(Inittrans[0], Inittrans[1], Inittrans[2], 0.0f);
+					}
+
 					// 位置
 					for (size_t i = 0; i < inputAccessor.count; ++i)
 					{
 						KeyFrame keyFrame;
 						keyFrame.Time = times[i];
-						keyFrame.Vec = DirectX::XMVectorSet(values[i * 3], values[i * 3 + 1], values[i * 3 + 2], 0.0f);
+						keyFrame.Vec = DirectX::XMVectorSubtract(DirectX::XMVectorSet(values[i * 3], values[i * 3 + 1], values[i * 3 + 2], 0.0f), initPos);
+						
 						boneKeyFrames.Transform.push_back(keyFrame);
 					}
 				}
 				else if (path == "rotation")
 				{
+					// データ型チェック
+					if (outputAccessor.type != TINYGLTF_TYPE_VEC4)
+					{
+						throw std::exception("未対応");
+					}
+
 					// 回転
 					for (size_t i = 0; i < inputAccessor.count; ++i)
 					{
 						KeyFrame keyFrame;
 						keyFrame.Time = times[i];
-						keyFrame.Vec = DirectX::XMVectorSet(values[i * 4 + 0], values[i * 4 + 1], values[i * 4 + 2], values[i * 4 + 3]);
-						if (DirectX::XMVectorGetX(DirectX::XMQuaternionLength(keyFrame.Vec)) < 0.99f)
+
+						DirectX::XMVECTOR axis = DirectX::XMVectorSet(values[i * 4 + 0], values[i * 4 + 1], values[i * 4 + 2], 0.0f);
+						if (DirectX::XMVector3Equal(axis, DirectX::XMVectorZero()))
+						{
+							// 無効な値のため初期値
+							keyFrame.Vec = DirectX::XMQuaternionIdentity();
+						}
+						else
+						{
+							keyFrame.Vec = DirectX::XMQuaternionRotationAxis(axis, values[i * 4 + 3]);
+						}
+
+						if (std::abs(DirectX::XMVectorGetX(DirectX::XMQuaternionLength(keyFrame.Vec)) - 1.0f) >= 0.01f)
 						{
 							// クォータニオンが正規化されていない場合は正規化
 							keyFrame.Vec = DirectX::XMQuaternionNormalize(keyFrame.Vec);
@@ -178,11 +219,18 @@ namespace Anim {
 
 		//output = DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time))
 		//	* DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time));
-
 		output = DirectX::XMMatrixTranspose(
-			DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time))
-			* DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time))
+			DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time))
+			* DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time))
 		);
+
+		//output = DirectX::XMMatrixTranspose(
+		//	DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time))
+		//	* DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time))
+		//);
+		//output = 
+		//	DirectX::XMMatrixTranslationFromVector(InterpolateTransform(keyFrameItr->second.Transform, time))
+		//	* DirectX::XMMatrixRotationQuaternion(InterpolateRotation(keyFrameItr->second.Rotation, time));
 		return true;
 	}
 
@@ -255,7 +303,9 @@ namespace Anim {
 
 			// 現在の時間が前後のキーフレームのどの位置にあるか
 			float t = (time - prevKeyFrame.Time) / (nextKeyFrame.Time - prevKeyFrame.Time);
-			// 
+
+
+			// 球面線形補間
 			return DirectX::XMQuaternionSlerp(prevKeyFrame.Vec, nextKeyFrame.Vec, t);
 		}
 	}
