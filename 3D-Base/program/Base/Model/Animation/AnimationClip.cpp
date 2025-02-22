@@ -138,7 +138,7 @@ namespace Anim {
 					}
 					else
 					{
-						initPos = DirectX::XMVectorSet(Inittrans[0], Inittrans[1], Inittrans[2], 0.0f);
+						initPos = DirectX::XMVectorSet((float)-Inittrans[0], (float)Inittrans[1], (float)-Inittrans[2], 0.0f);
 					}
 
 					// 位置
@@ -146,8 +146,9 @@ namespace Anim {
 					{
 						KeyFrame keyFrame;
 						keyFrame.Time = times[i];
-						keyFrame.Vec = DirectX::XMVectorSubtract(DirectX::XMVectorSet(values[i * 3], values[i * 3 + 1], values[i * 3 + 2], 0.0f), initPos);
-						
+						keyFrame.Vec = DirectX::XMVectorSet(-values[i * 3], values[i * 3 + 1], -values[i * 3 + 2], 0.0f);
+						keyFrame.Vec = DirectX::XMVectorSubtract(keyFrame.Vec, initPos);
+
 						boneKeyFrames.Transform.push_back(keyFrame);
 					}
 				}
@@ -158,29 +159,38 @@ namespace Anim {
 					{
 						throw std::exception("未対応");
 					}
+					// 基本の回転を取得
+					DirectX::XMVECTOR initRot;
+					const auto& InitRotation = model.nodes[targetNode].rotation;
+					if (InitRotation.empty())
+					{
+						initRot = DirectX::XMQuaternionIdentity();
+					}
+					else
+					{
+						initRot = DirectX::XMVectorSet((float)-InitRotation[0], (float)InitRotation[1], (float)-InitRotation[2], (float)InitRotation[3]);
+					}
+					initRot = DirectX::XMQuaternionInverse(initRot);
+
+
+					// ↑まだ正しくない
+
 
 					// 回転
 					for (size_t i = 0; i < inputAccessor.count; ++i)
 					{
 						KeyFrame keyFrame;
 						keyFrame.Time = times[i];
+						keyFrame.Vec = DirectX::XMVectorSet(-values[i * 4 + 0], values[i * 4 + 1], -values[i * 4 + 2], values[i * 4 + 3]);
+						keyFrame.Vec = DirectX::XMQuaternionMultiply(initRot,keyFrame.Vec);
+						
 
-						DirectX::XMVECTOR axis = DirectX::XMVectorSet(values[i * 4 + 0], values[i * 4 + 1], values[i * 4 + 2], 0.0f);
-						if (DirectX::XMVector3Equal(axis, DirectX::XMVectorZero()))
-						{
-							// 無効な値のため初期値
-							keyFrame.Vec = DirectX::XMQuaternionIdentity();
-						}
-						else
-						{
-							keyFrame.Vec = DirectX::XMQuaternionRotationAxis(axis, values[i * 4 + 3]);
-						}
-
+						// クォータニオンが正規化されていない場合は正規化（普通はない）
 						if (std::abs(DirectX::XMVectorGetX(DirectX::XMQuaternionLength(keyFrame.Vec)) - 1.0f) >= 0.01f)
 						{
-							// クォータニオンが正規化されていない場合は正規化
 							keyFrame.Vec = DirectX::XMQuaternionNormalize(keyFrame.Vec);
 						}
+
 						boneKeyFrames.Rotation.push_back(keyFrame);
 					}
 				}
@@ -271,6 +281,28 @@ namespace Anim {
 		}
 	}
 
+
+	void QuaternionToEuler(DirectX::XMFLOAT4 q, DirectX::XMFLOAT3& eulerAngles) {
+		float ysqr = q.y * q.y;
+
+		float t0 = +2.0f * (q.w * q.x + q.y * q.z);
+		float t1 = +1.0f - 2.0f * (q.x * q.x + ysqr);
+		float roll = atan2f(t0, t1);
+
+		float t2 = +2.0f * (q.w * q.y - q.z * q.x);
+		t2 = t2 > 1.0f ? 1.0f : (t2 < -1.0f ? -1.0f : t2);
+		float pitch = asinf(t2);
+
+		float t3 = +2.0f * (q.w * q.z + q.x * q.y);
+		float t4 = +1.0f - 2.0f * (ysqr + q.z * q.z);
+		float yaw = atan2f(t3, t4);
+
+		// ラジアンを度数に変換
+		const float RAD_TO_DEG = 180.0f / 3.1415926535f;
+		eulerAngles.x = pitch * RAD_TO_DEG;
+		eulerAngles.y = yaw * RAD_TO_DEG;
+		eulerAngles.z = roll * RAD_TO_DEG;
+	}
 	//--------------------------------------------------------------------------------------
 	const DirectX::XMVECTOR& AnimationClip::InterpolateRotation(const std::vector<KeyFrame>& keyFrames, float time) const
 	{
@@ -304,6 +336,17 @@ namespace Anim {
 			// 現在の時間が前後のキーフレームのどの位置にあるか
 			float t = (time - prevKeyFrame.Time) / (nextKeyFrame.Time - prevKeyFrame.Time);
 
+			DirectX::XMFLOAT4 quaternion;
+			//DirectX::XMStoreFloat4(&quaternion, prevKeyFrame.Vec);
+			//DirectX::XMStoreFloat4(&quaternion, DirectX::XMQuaternionRotationRollPitchYaw(3.14f, 0.0f, 0.0f));
+			quaternion = { 0.110049315f, 2.95112090e-09f, -2.66535931e-08f, 0.993926287f };
+			//quaternion = {0.779605448f, -0.00229439349f, -0.00025405854f, 0.626267076f};
+			//quaternion = {0.999801695f, 2.07853805e-08f, 1.88160438e-08f, 0.0199216511f};
+			//quaternion = { 0.0f,0.0f,0.0f,1.0f };
+			// pitch, yaw, roll
+			DirectX::XMFLOAT3 eulerAngles;
+
+			QuaternionToEuler(quaternion, eulerAngles);
 
 			// 球面線形補間
 			return DirectX::XMQuaternionSlerp(prevKeyFrame.Vec, nextKeyFrame.Vec, t);

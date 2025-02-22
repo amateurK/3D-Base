@@ -117,9 +117,6 @@ namespace AK_Base {
 		{
 			if (m_AnimationData.Clip->GetBoneMatrix(bone->Name, m_AnimationData.Time, mat))
 			{
-				//mat = DirectX::XMMatrixRotationX(-1.0f);
-				//auto quat = DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), -1.0f);
-				//mat = DirectX::XMMatrixRotationQuaternion(quat);
 				worldMatrix *= bone->LocalMatrix * mat;
 			}
 			else

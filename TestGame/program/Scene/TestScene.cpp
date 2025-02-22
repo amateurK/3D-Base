@@ -33,12 +33,13 @@ namespace Scene {
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->Scale(3.0f);
-			transform->SetPosition(3.0f, 0.0f, 3.0f);
+			transform->SetPosition(0.0f, 0.0f, 3.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_H.vrm");
 			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
 			meshRender->SetShader("LambertSkinningShader");
 			meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma", 0.0f, 1.0f, true);
 			//meshRender->PlayAnimation(L"resource/testData/SimpleTest.vrma", 0.0f, 1.0f, true);
+			//meshRender->PlayAnimation(L"resource/testData/SimpleTest2.vrma", 0.0f, 1.0f, true);
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
@@ -87,26 +88,26 @@ namespace Scene {
 		//		collider->GetActor()->GetTransform()->Translate(0.0f, 1.0f, 0.0f);
 		//		});
 		//}
-		{
-			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester_copy");
-			auto transform = testmodel->AddComponent<AK_Base::Transform>();
-			transform->Scale(3.0f);
-			transform->SetPosition(0.0f, 0.0f, 3.0f);
-			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_A.vrm");
-			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
-			meshRender->SetShader("LambertSkinningShader");
-			meshRender->PlayAnimation(L"resource/testData/SimpleTest.vrma", 0.0f, 1.0f, true);
-			meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma", 0.0f, 1.0f, true);
+		//{
+		//	auto testmodel = this->AddChild<AK_Base::Actor>(L"tester_copy");
+		//	auto transform = testmodel->AddComponent<AK_Base::Transform>();
+		//	transform->Scale(3.0f);
+		//	transform->SetPosition(0.0f, 0.0f, 3.0f);
+		//	auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_A.vrm");
+		//	//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
+		//	meshRender->SetShader("LambertSkinningShader");
+		//	//meshRender->PlayAnimation(L"resource/testData/SimpleTest2.vrma", 0.0f, 1.0f, true);
+		//	meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma", 0.0f, 1.0f, true);
 
-			ActorSet::CreateDebugAxis(testmodel);
-		}
+		//	ActorSet::CreateDebugAxis(testmodel);
+		//}
 
 
 		// カメラの準備
 		{
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"camera");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
-			transform->SetPosition(0.0f, 4.0f, -2.0f);
+			transform->SetPosition(0.0f, 3.0f, -0.5f);
 			m_Camera = testmodel->AddComponent<AK_Base::Camera>();
 			auto windowSize = myGame->GetWindowSize();
 			m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));

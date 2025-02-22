@@ -286,10 +286,10 @@ namespace Mesh {
 				matrix.r[3] = DirectX::XMVectorSet(skins[i * 16 + 12], skins[i * 16 + 13], skins[i * 16 + 14], skins[i * 16 + 15]);
 				
 				boneData.InverseBindMatrix = DirectX::XMMatrixTranspose(matrix);
-				boneData.FirstChild = nullptr;	// ポインタが自分自身 = 未設定なのでエラー
-				boneData.NextSibling = nullptr;		// 親子と違い、ルートノードは設定されない可能性があるのでnullptr
+				boneData.FirstChild = nullptr;
+				boneData.NextSibling = nullptr;
 
-				boneData.ID = i;
+				boneData.ID = skin.joints[i];
 				const auto& nameItr = boneIndexMap.find(i);
 				if (nameItr != boneIndexMap.end())
 				{
@@ -304,6 +304,12 @@ namespace Mesh {
 				m_BoneData.push_back(std::move(boneData));
 				m_BoneDataHashmap[model.nodes[skin.joints[i]].name] = &m_BoneData.back();	// moveしているが、念のためvectorにいれてから参照する
 			}
+
+			// 一時的に親を保持
+			// 2爪以降を実装する場合、調整する必要あり
+			std::vector<int> parentBone(m_BoneData.size(), -1);
+			std::vector<DirectX::XMVECTOR> translation(m_BoneData.size(), DirectX::XMVectorZero());
+
 			// ノードから取得するデータの設定
 			for (size_t i = 0; i < skinAccessor.count; ++i)
 			{
@@ -324,20 +330,68 @@ namespace Mesh {
 						m_BoneData[node.children[j - 1]].NextSibling = &m_BoneData[node.children[j]];
 					}
 					m_BoneData[node.children[node.children.size() - 1]].NextSibling = nullptr;
+
+					// 子の親を自分に設定する
+					for (size_t j = 0; j < node.children.size(); ++j)
+					{
+						parentBone[node.children[j]] = skin.joints[i];
+					}
 				}
 
 				// ローカル座標の取得
-				if (node.translation.size() == 0) {
-					// データがない場合は初期状態
-					m_BoneData[i].LocalMatrix = DirectX::XMMatrixIdentity();
-				}
-				else
+				if (!node.translation.empty())
 				{
 					// データがある場合は座標を設定
 					const auto& trans = node.translation;
-					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(trans[0], trans[1], trans[2]));
+					translation[skin.joints[i]] = DirectX::XMVectorSet((float)trans[0], (float)trans[1], (float)trans[2], 0.0f);
+					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslationFromVector(translation[skin.joints[i]]));
+				}
+				else
+				{
+					m_BoneData[i].LocalMatrix = DirectX::XMMatrixIdentity();
 				}
 			}
+
+			//// ローカル変換行列を計算
+			//for (size_t i = 0; i < skinAccessor.count; ++i)
+			//{
+			//	const auto& node = model.nodes[skin.joints[i]];
+			//	auto nodeID = skin.joints[i];
+
+			//	// 親がないなら回転無し
+			//	if (parentBone[nodeID] == -1) {
+			//		m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslationFromVector(translation[nodeID]));
+			//		continue;
+			//	}
+
+
+			//	// 現在位置からターゲット位置への方向ベクトル
+			//	DirectX::XMVECTOR normDirection = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(translation[nodeID], translation[parentBone[nodeID]]));
+
+			//	// 正面方向のベクトル（+Zとする）
+			//	DirectX::XMVECTOR pZ = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+
+			//	// 回転軸
+			//	DirectX::XMVECTOR rotAxis = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(pZ, normDirection));
+
+			//	// クォータニオンの計算
+			//	float dot = DirectX::XMVectorGetX(DirectX::XMVector3Dot(pZ, normDirection));
+			//	float w = sqrtf((1.0f + dot) * 0.5f);	// w成分
+			//	float s = sqrtf((1.0f - dot) * 0.5f);	// 回転軸に対するスケール
+
+			//	DirectX::XMVECTOR rotation = DirectX::XMVectorSet(
+			//		DirectX::XMVectorGetX(rotAxis) * s,
+			//		DirectX::XMVectorGetY(rotAxis) * s,
+			//		DirectX::XMVectorGetZ(rotAxis) * s,
+			//		w
+			//	);
+			//	m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(
+			//		DirectX::XMMatrixRotationQuaternion(rotation)
+			//		* DirectX::XMMatrixTranslationFromVector(translation[nodeID])
+			//	);
+			//}
+
+			
 			// 2こめ以降のskinは無視
 			break;
 			// 現在は未使用
