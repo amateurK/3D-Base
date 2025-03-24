@@ -47,21 +47,21 @@ namespace Scene {
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester2");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->SetPosition(-3.0f, 2.0f, -7.0f);
-			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
+			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"../3D-Base/BasicModel/Cube.glb");
 			meshRender->SetShader("BasicRainbow");
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
-		//{
-		//	auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere");
-		//	auto transform = testmodel->AddComponent<AK_Base::Transform>();
-		//	transform->Scale(1.0f);
-		//	transform->SetPosition(0.0f, 1.0f, 7.0f);
-		//	auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
-		//	meshRender->SetShader("BasicBlue");
-		//	AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
-		//	auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(hitbox);
-		//}
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere");
+			auto transform = testmodel->AddComponent<AK_Base::Transform>();
+			transform->Scale(1.0f);
+			transform->SetPosition(0.0f, 1.0f, 7.0f);
+			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"../3D-Base/BasicModel/ICOSphere.glb");
+			meshRender->SetShader("BasicBlue");
+			AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
+			auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(hitbox);
+		}
 		//{
 		//	auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere2");
 		//	auto transform = testmodel->AddComponent<AK_Base::Transform>();

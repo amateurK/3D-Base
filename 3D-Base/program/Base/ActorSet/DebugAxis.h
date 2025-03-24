@@ -66,7 +66,7 @@ namespace ActorSet {
 		auto transform = actor->AddComponent<AK_Base::Transform>();
 		transform->SetPosition(0.5f, 0.0f, 0.0f);
 		transform->SetScele(0.5f, 0.005f, 0.005f);
-		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
+		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"../3D-Base/BasicModel/Cube.glb");
 		meshRender->SetShader("BasicRed");
 	}
 
@@ -78,7 +78,7 @@ namespace ActorSet {
 		auto transform = actor->AddComponent<AK_Base::Transform>();
 		transform->SetPosition(0.0f, 0.5f, 0.0f);
 		transform->SetScele(0.005f, 0.5f, 0.005f);
-		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
+		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"../3D-Base/BasicModel/Cube.glb");
 		meshRender->SetShader("BasicGreen");
 	}
 
@@ -90,7 +90,7 @@ namespace ActorSet {
 		auto transform = actor->AddComponent<AK_Base::Transform>();
 		transform->SetPosition(0.0f, 0.0f, 0.5f);
 		transform->SetScele(0.005f, 0.005f, 0.5f);
-		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
+		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"../3D-Base/BasicModel/Cube.glb");
 		meshRender->SetShader("BasicBlue");
 	}
 
