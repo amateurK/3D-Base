@@ -127,29 +127,29 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Actor::SearchClass(const type_info& type, std::list<const Actor*>*& list) const
+	void Actor::SearchChildByClass(const type_info& type, std::list<Actor*>*& list)
 	{
 		if (typeid(*this) == type) {
 			list->push_back(this);
 		}
 
 		for (auto& child : m_Children) {
-			child.second->SearchClass(type, list);
+			child.second->SearchChildByClass(type, list);
 		}
 
 		return;
 	}
 
 	//--------------------------------------------------------------------------------------
-	const Actor* Actor::SearchName(const std::wstring& name) const
+	Actor* Actor::SearchChildByName(const std::wstring& name)
 	{
 		if (this->m_ActorName == name) {
 			return this;
 		}
 
-		const Actor* target = nullptr;
+		Actor* target = nullptr;
 		for (auto& child : m_Children) {
-			target = child.second->SearchName(name);
+			target = child.second->SearchChildByName(name);
 			if (target != nullptr)return target;
 		}
 

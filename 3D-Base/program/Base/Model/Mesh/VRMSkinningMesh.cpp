@@ -223,10 +223,49 @@ namespace Mesh {
 			}
 		}
 
+		// VRMのボーン情報を読み込み
+		// VRMは拡張機能部分にボーン情報が格納されている
+		// JSONを解析してボーン情報を取得しなければいけない
+		std::unordered_map<int, std::string> boneIndexMap;
+		const auto& vrmItr = model.extensions.find("VRM");
+		if (vrmItr != model.extensions.end())
+		{
+			const auto& vrm = vrmItr->second.Get<tinygltf::Value::Object>();
+			const auto& humanoidItr = vrm.find("humanoid");
+			if (humanoidItr != vrm.end())
+			{
+				const auto& humanoid = humanoidItr->second.Get<tinygltf::Value::Object>();
+				const auto& humanBonesItr = humanoid.find("humanBones");
+				if (humanBonesItr != humanoid.end())
+				{
+					auto& humanBones = humanBonesItr->second.Get<tinygltf::Value::Array>();
+
+					// 各ボーンを取得しboneIndexMapに格納
+					for (const auto& bone : humanBones)
+					{
+						const auto& nodeID = bone.Get<tinygltf::Value::Object>().find("node");
+						if (nodeID == bone.Get<tinygltf::Value::Object>().end())
+						{
+							continue;
+						}
+						const auto& boneName = bone.Get<tinygltf::Value::Object>().find("bone");
+						if (nodeID == bone.Get<tinygltf::Value::Object>().end())
+						{
+							continue;
+						}
+						// useDefaultValues がfalseの時は考慮していない
+
+						// ボーンのインデックスと名前を格納
+						boneIndexMap[nodeID->second.Get<int>()] = boneName->second.Get<std::string>();
+					}
+				}
+			}
+		}
+
 		// ボーンデータの読み込み
 		// skinが複数個ある場合、1つめの後に追加していく方式なので、1つめの物以外はずらして参照する必要がある
 		// TODO : 最後にbreakしているため、2爪以降使用する場合は必要に応じて対応（VRMAの構造次第）
-		int offset = 0;
+		//int offset = 0;
 		for (const auto& skin : model.skins)
 		{
 			// 逆バインド行列の取得
@@ -246,14 +285,31 @@ namespace Mesh {
 				matrix.r[2] = DirectX::XMVectorSet(skins[i * 16 + 8], skins[i * 16 + 9], skins[i * 16 + 10], skins[i * 16 + 11]);
 				matrix.r[3] = DirectX::XMVectorSet(skins[i * 16 + 12], skins[i * 16 + 13], skins[i * 16 + 14], skins[i * 16 + 15]);
 				
-				boneData.InverseBindMatrix = matrix;
-				boneData.FirstChild = nullptr;	// ポインタが自分自身 = 未設定なのでエラー
-				boneData.NextSibling = nullptr;		// 親子と違い、ルートノードは設定されない可能性があるのでnullptr
+				boneData.InverseBindMatrix = DirectX::XMMatrixTranspose(matrix);
+				boneData.FirstChild = nullptr;
+				boneData.NextSibling = nullptr;
 
-				boneData.ID = i;
+				boneData.ID = skin.joints[i];
+				const auto& nameItr = boneIndexMap.find(i);
+				if (nameItr != boneIndexMap.end())
+				{
+					// VRMアニメーション用のボーン名
+					boneData.Name = nameItr->second;
+				}
+				else
+				{
+					// ボーン名がない場合はIDを名前とする
+					boneData.Name = "Bone" + std::to_string(i);
+				}
 				m_BoneData.push_back(std::move(boneData));
 				m_BoneDataHashmap[model.nodes[skin.joints[i]].name] = &m_BoneData.back();	// moveしているが、念のためvectorにいれてから参照する
 			}
+
+			// 一時的に親を保持
+			// 2爪以降を実装する場合、調整する必要あり
+			std::vector<int> parentBone(m_BoneData.size(), -1);
+			std::vector<DirectX::XMVECTOR> translation(m_BoneData.size(), DirectX::XMVectorZero());
+
 			// ノードから取得するデータの設定
 			for (size_t i = 0; i < skinAccessor.count; ++i)
 			{
@@ -274,20 +330,70 @@ namespace Mesh {
 						m_BoneData[node.children[j - 1]].NextSibling = &m_BoneData[node.children[j]];
 					}
 					m_BoneData[node.children[node.children.size() - 1]].NextSibling = nullptr;
+
+					// 子の親を自分に設定する
+					for (size_t j = 0; j < node.children.size(); ++j)
+					{
+						parentBone[node.children[j]] = skin.joints[i];
+					}
 				}
 
 				// ローカル座標の取得
-				if (node.translation.size() == 0) {
-					// データがない場合は初期状態
-					m_BoneData[i].LocalMatrix = DirectX::XMMatrixIdentity();
+				if (!node.translation.empty())
+				{
+					// データがある場合は座標を設定
+					const auto& trans = node.translation;
+					translation[skin.joints[i]] = DirectX::XMVectorSet((float)trans[0], (float)trans[1], (float)trans[2], 0.0f);
+					m_BoneData[i].LocalTranslate = translation[skin.joints[i]];
+					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslationFromVector(translation[skin.joints[i]]));
 				}
 				else
 				{
-					// データがある場合は座標を設定
-					auto trans = node.translation;
-					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranslation(trans[0], trans[1], trans[2]);
+					m_BoneData[i].LocalTranslate = DirectX::XMVectorZero();
+					m_BoneData[i].LocalMatrix = DirectX::XMMatrixIdentity();
 				}
 			}
+
+			//// ローカル変換行列を計算
+			//for (size_t i = 0; i < skinAccessor.count; ++i)
+			//{
+			//	const auto& node = model.nodes[skin.joints[i]];
+			//	auto nodeID = skin.joints[i];
+
+			//	// 親がないなら回転無し
+			//	if (parentBone[nodeID] == -1) {
+			//		m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslationFromVector(translation[nodeID]));
+			//		continue;
+			//	}
+
+
+			//	// 現在位置からターゲット位置への方向ベクトル
+			//	DirectX::XMVECTOR normDirection = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(translation[nodeID], translation[parentBone[nodeID]]));
+
+			//	// 正面方向のベクトル（+Zとする）
+			//	DirectX::XMVECTOR pZ = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+
+			//	// 回転軸
+			//	DirectX::XMVECTOR rotAxis = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(pZ, normDirection));
+
+			//	// クォータニオンの計算
+			//	float dot = DirectX::XMVectorGetX(DirectX::XMVector3Dot(pZ, normDirection));
+			//	float w = sqrtf((1.0f + dot) * 0.5f);	// w成分
+			//	float s = sqrtf((1.0f - dot) * 0.5f);	// 回転軸に対するスケール
+
+			//	DirectX::XMVECTOR rotation = DirectX::XMVectorSet(
+			//		DirectX::XMVectorGetX(rotAxis) * s,
+			//		DirectX::XMVectorGetY(rotAxis) * s,
+			//		DirectX::XMVectorGetZ(rotAxis) * s,
+			//		w
+			//	);
+			//	m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(
+			//		DirectX::XMMatrixRotationQuaternion(rotation)
+			//		* DirectX::XMMatrixTranslationFromVector(translation[nodeID])
+			//	);
+			//}
+
+			
 			// 2こめ以降のskinは無視
 			break;
 			// 現在は未使用

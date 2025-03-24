@@ -177,6 +177,8 @@
   <ItemGroup>
     <None Include="resource\testData\vrm.json" />
     <None Include="resource\testData\vrma.json" />
+    <None Include="resource\testData\vrma2.json" />
+    <None Include="resource\testData\vrma5.json" />
     <None Include="resource\testData\vrmH.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

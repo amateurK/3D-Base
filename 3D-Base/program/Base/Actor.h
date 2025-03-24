@@ -95,12 +95,12 @@ namespace AK_Base {
 		/// @brief 子Actorから特定のクラスを探す
 		/// @param type : 探したいクラス（typeid()を使う）
 		/// @param list : 見つかったクラスを格納するためのリスト
-		void SearchClass(const type_info& type, std::list<const Actor*>*& list) const;
+		void SearchChildByClass(const type_info& type, std::list<Actor*>*& list);
 
 		/// @brief 子Actorから特定の名前のActorを探す
 		/// @param name : 探したいActorの名前
 		/// @return 見つかったActorへのポインタ
-		const Actor* SearchName(const std::wstring& name) const;
+		Actor* SearchChildByName(const std::wstring& name);
 
 		/// @brief 現在の状態を変更
 		/// @param status 変更したい状態（ActorStatus型）

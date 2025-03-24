@@ -15,6 +15,7 @@ namespace Mesh {
 	class SkinningMesh;
 	struct BoneData;
 }
+namespace Anim { class AnimationClip; }
 
 namespace AK_Base {
 
@@ -31,6 +32,22 @@ namespace AK_Base {
 
 		/// @brief ボーンの行列
 		std::vector<DirectX::XMMATRIX> m_BoneMatrices;
+		/// @brief ボーンに対応したActorへのポインタ
+		std::vector<Actor*> m_BoneActor;
+
+		/// @brief 再生中のアニメーションに関するデータ
+		struct AnimationData
+		{
+			/// @brief 再生中のアニメーションデータ
+			Anim::AnimationClip* Clip;
+			/// @brief 現在の再生時間
+			float Time;
+			/// @brief 再生速度
+			float Speed;
+			/// @brief ループ再生するか
+			bool Loop;
+
+		} m_AnimationData;
 
 	public:
 		/// @brief コンストラクタ
@@ -54,6 +71,28 @@ namespace AK_Base {
 		void SetShader(const std::string& name);
 
 
+		/// @brief アニメーションを開始
+		/// @param fileName アニメーションのファイルパス
+		/// @param time 時間
+		void PlayAnimation(const std::wstring& fileName, float time = 0.0f, float speed = 1.0f, bool isLoop = false);
+
+		/// @brief アニメーションの停止・終了
+		/// @details もう一度再生する場合はPlayAnimation()を呼ぶ
+		inline void StopAnimation() { m_AnimationData.Clip = nullptr; }
+
+
+
+		/// @brief アニメーション速度の変更（1.0fで等速）
+		/// @details 0.0fで停止、-1.0fで逆再生が可能
+		inline void SetAnimationSpeed(float speed) { m_AnimationData.Speed = speed; }
+
+		/// @brief アニメーション速度の取得
+		inline float GetAnimationSpeed() const { return m_AnimationData.Speed; }
+
+		/// @brief ループ再生するかの設定
+		inline void SetAnimationLoop(bool isLoop) { m_AnimationData.Loop = isLoop; }
+
+
 	private:
 
 		/// @brief リソースの作成
@@ -61,5 +100,40 @@ namespace AK_Base {
 		/// @return 作成に成功したか
 		HRESULT CreateResource(std::wstring fileName = L"__box");
 
+		/// @brief 各ボーンのワールド変換を計算する
+		/// @param bone 計算するボーン
+		/// @param parentMatrix 親のボーンのワールド変換行列
+		/// @param WorldMatrices ボーンのWorld変換行列の配列を代入するvector
+		/// @details 再帰的に呼び出される
+		void CalcBoneMatrices(const Mesh::BoneData* bone,
+			const DirectX::XMMATRIX& parentMatrix,
+			std::vector<DirectX::XMMATRIX>& worldMatrices);
+
+		/// @brief 各ボーンに対応する子Actorを生成する
+		/// @param bone 計算するボーン
+		/// @param parentActor 親Actor
+		/// @details 再帰的に呼び出される
+		void SetBoneActor(
+			const Mesh::BoneData* bone,
+			Actor* parentActor
+		);
+
+		/// @brief 各ボーンに対応する子Actorから変換行列を計算しm_BoneMatricesにセットする
+		/// @param bone 計算するボーン
+		/// @param parentActor 親Actor
+		/// @details 再帰的に呼び出される
+		void SetBoneMatrix(
+			const Mesh::BoneData* bone,
+			Actor* parentActor
+		);
+
+		/// @brief 各ボーンに対応する子Actorにアニメーションを適用する
+		/// @param bone 計算するボーン
+		/// @param parentActor 親Actor
+		/// @details 再帰的に呼び出される
+		void ApplyAnimationToBoneActor(
+			const Mesh::BoneData* bone,
+			Actor* parentActor
+		);// 関数名もうちょっと良い感じにならないかな...
 	};
 }
