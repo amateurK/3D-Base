@@ -47,5 +47,8 @@
     <None Include="resource\testData\vrma2.json">
       <Filter>TestData</Filter>
     </None>
+    <None Include="resource\testData\vrma5.json">
+      <Filter>TestData</Filter>
+    </None>
   </ItemGroup>
 </Project>

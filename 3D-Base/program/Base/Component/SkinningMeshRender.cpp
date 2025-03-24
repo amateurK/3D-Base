@@ -14,6 +14,8 @@
 #include "../Shader/VertexShader/LambertVS.h"
 #include "../Shader/VertexShader/BasicVS.h"
 #include "../Model/Animation/AnimationManager.h"
+#include "../Actor.h"
+#include "../ActorSet/DebugAxis.h"
 
 using namespace DirectX;
 
@@ -26,6 +28,8 @@ namespace AK_Base {
 		, m_Mesh(nullptr)
 		, m_AnimationData({ nullptr, 0.0f, 1.0f, false})
 	{
+		m_BoneMatrices.clear();
+		m_BoneActor.clear();
 
 		CreateResource(fileName);
 
@@ -98,7 +102,15 @@ namespace AK_Base {
 		if (FAILED(hr))
 			return hr;
 
-		m_BoneMatrices.resize(m_Mesh->GetBoneData().size());
+		// ボーンの数に応じてvectorを確保
+		const auto& bone = m_Mesh->GetBoneData();
+		m_BoneMatrices.resize(bone.size());
+		m_BoneMatrices.shrink_to_fit();
+		m_BoneActor.resize(bone.size());
+		m_BoneActor.shrink_to_fit();
+
+		// 子Actorを生成
+		SetBoneActor(&bone[0], m_ParentActor);
 
 		return hr;
 	}
@@ -141,6 +153,52 @@ namespace AK_Base {
 		// 兄弟ボーンの行列を計算
 		if (bone->NextSibling != nullptr) {
 			CalcBoneMatrices(bone->NextSibling, parentMatrix, worldMatrices);
+		}
+	}
+
+	//--------------------------------------------------------------------------------------
+	void SkinningMeshRender::SetBoneActor(
+		const Mesh::BoneData* bone,
+		Actor* parentActor
+	)
+	{
+		// 子ボーン用Actorを作成
+		auto testmodel = parentActor->AddChild<Actor>(L"Bone_" + Tools::StringToWString(bone->Name));
+		auto transform = testmodel->AddComponent<AK_Base::Transform>();
+		transform->SetPosition(bone->LocalTranslate);
+
+		ActorSet::CreateDebugAxis(testmodel, 0.1f);
+
+		// 登録
+		m_BoneActor[bone->ID] = testmodel;
+
+		// 子ボーン
+		if (bone->FirstChild != nullptr) {
+			SetBoneActor(bone->FirstChild, testmodel);
+		}
+		// 兄弟ボーン
+		if (bone->NextSibling != nullptr) {
+			SetBoneActor(bone->NextSibling, parentActor);
+		}
+	}
+	
+	//--------------------------------------------------------------------------------------
+	void SkinningMeshRender::ApplyAnimationToBoneActor(
+		const Mesh::BoneData* bone,
+		Actor* parentActor
+	)
+	{
+
+
+		// 毎回検索するのはあまりよくないので、BoneがActorへのポインタをもつ形のほうが良いかも
+
+		// 子ボーン
+		if (bone->FirstChild != nullptr) {
+			SetBoneActor(bone->FirstChild, parentActor->SearchChildByName(L"Bone_" + Tools::StringToWString(bone->Name)));
+		}
+		// 兄弟ボーン
+		if (bone->NextSibling != nullptr) {
+			SetBoneActor(bone->NextSibling, parentActor);
 		}
 	}
 }

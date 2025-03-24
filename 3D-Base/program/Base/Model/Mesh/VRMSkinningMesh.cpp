@@ -344,10 +344,12 @@ namespace Mesh {
 					// データがある場合は座標を設定
 					const auto& trans = node.translation;
 					translation[skin.joints[i]] = DirectX::XMVectorSet((float)trans[0], (float)trans[1], (float)trans[2], 0.0f);
+					m_BoneData[i].LocalTranslate = translation[skin.joints[i]];
 					m_BoneData[i].LocalMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslationFromVector(translation[skin.joints[i]]));
 				}
 				else
 				{
+					m_BoneData[i].LocalTranslate = DirectX::XMVectorZero();
 					m_BoneData[i].LocalMatrix = DirectX::XMMatrixIdentity();
 				}
 			}

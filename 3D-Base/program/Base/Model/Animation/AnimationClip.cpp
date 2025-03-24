@@ -170,7 +170,7 @@ namespace Anim {
 					{
 						initRot = DirectX::XMVectorSet((float)-InitRotation[0], (float)InitRotation[1], (float)-InitRotation[2], (float)InitRotation[3]);
 					}
-					initRot = DirectX::XMQuaternionInverse(initRot);
+					//initRot = DirectX::XMQuaternionInverse(initRot);
 
 
 					// ↑まだ正しくない
@@ -182,8 +182,45 @@ namespace Anim {
 						KeyFrame keyFrame;
 						keyFrame.Time = times[i];
 						keyFrame.Vec = DirectX::XMVectorSet(-values[i * 4 + 0], values[i * 4 + 1], -values[i * 4 + 2], values[i * 4 + 3]);
-						keyFrame.Vec = DirectX::XMQuaternionMultiply(initRot,keyFrame.Vec);
-						
+						//keyFrame.Vec = DirectX::XMQuaternionMultiply(initRot,keyFrame.Vec);
+
+						//keyFrame.Vec = { 0.993926167, -2.66535896e-08, -2.95112046e-09, 0.110049300 };
+						//
+						//DirectX::XMVECTOR axis = DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
+						//float rot = DirectX::XM_PIDIV2 * 0.5f;
+						//if (channel.target_node != 100) {
+						//	axis = DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 1.0f);
+						//	//rot = -DirectX::XM_PIDIV2;
+						//	rot = 0.0f;
+						//}
+						////keyFrame.Vec = DirectX::XMQuaternionRotationAxis(axis, rot);
+
+						//DirectX::XMQuaternionToAxisAngle(&axis, &rot, keyFrame.Vec);
+
+						//DirectX::XMVECTOR qu;
+						//if (!DirectX::XMVector3Equal(axis, DirectX::XMVectorZero()))
+						//{
+						//	keyFrame.Vec = DirectX::XMQuaternionRotationAxis(axis, rot);
+						//}
+						//if (!DirectX::XMVector4Equal(qu, keyFrame.Vec))
+						//{
+						//	int a = 0;
+						//}
+
+						// {-0.993926167, -2.66535896e-08, -2.95112046e-09, 0.110049300}
+						// initRot
+						// 30 {-0.843790531, -0.00230843923, -4.64234962e-09, -0.536668181}
+						// 60 {-0.154939786, -0.705950022, -0.00230840221, -0.691103041}
+						// 90 {-0.157192290, -4.21533297e-09, -0.705949962, -0.690598011}
+
+						// none
+						// 30 {-0.626267076, -0.000254058541, 0.00229439349, 0.779605448}
+						// 60 {-0.703956366, -0.0799836963, 0.701408088, 0.0779433027}
+						// 90 {-0.703702331, -0.701662123, -0.0776892975, 0.0802377015}
+
+
+
+
 
 						// クォータニオンが正規化されていない場合は正規化（普通はない）
 						if (std::abs(DirectX::XMVectorGetX(DirectX::XMQuaternionLength(keyFrame.Vec)) - 1.0f) >= 0.01f)
@@ -281,28 +318,6 @@ namespace Anim {
 		}
 	}
 
-
-	void QuaternionToEuler(DirectX::XMFLOAT4 q, DirectX::XMFLOAT3& eulerAngles) {
-		float ysqr = q.y * q.y;
-
-		float t0 = +2.0f * (q.w * q.x + q.y * q.z);
-		float t1 = +1.0f - 2.0f * (q.x * q.x + ysqr);
-		float roll = atan2f(t0, t1);
-
-		float t2 = +2.0f * (q.w * q.y - q.z * q.x);
-		t2 = t2 > 1.0f ? 1.0f : (t2 < -1.0f ? -1.0f : t2);
-		float pitch = asinf(t2);
-
-		float t3 = +2.0f * (q.w * q.z + q.x * q.y);
-		float t4 = +1.0f - 2.0f * (ysqr + q.z * q.z);
-		float yaw = atan2f(t3, t4);
-
-		// ラジアンを度数に変換
-		const float RAD_TO_DEG = 180.0f / 3.1415926535f;
-		eulerAngles.x = pitch * RAD_TO_DEG;
-		eulerAngles.y = yaw * RAD_TO_DEG;
-		eulerAngles.z = roll * RAD_TO_DEG;
-	}
 	//--------------------------------------------------------------------------------------
 	const DirectX::XMVECTOR& AnimationClip::InterpolateRotation(const std::vector<KeyFrame>& keyFrames, float time) const
 	{
@@ -335,18 +350,6 @@ namespace Anim {
 
 			// 現在の時間が前後のキーフレームのどの位置にあるか
 			float t = (time - prevKeyFrame.Time) / (nextKeyFrame.Time - prevKeyFrame.Time);
-
-			DirectX::XMFLOAT4 quaternion;
-			//DirectX::XMStoreFloat4(&quaternion, prevKeyFrame.Vec);
-			//DirectX::XMStoreFloat4(&quaternion, DirectX::XMQuaternionRotationRollPitchYaw(3.14f, 0.0f, 0.0f));
-			quaternion = { 0.110049315f, 2.95112090e-09f, -2.66535931e-08f, 0.993926287f };
-			//quaternion = {0.779605448f, -0.00229439349f, -0.00025405854f, 0.626267076f};
-			//quaternion = {0.999801695f, 2.07853805e-08f, 1.88160438e-08f, 0.0199216511f};
-			//quaternion = { 0.0f,0.0f,0.0f,1.0f };
-			// pitch, yaw, roll
-			DirectX::XMFLOAT3 eulerAngles;
-
-			QuaternionToEuler(quaternion, eulerAngles);
 
 			// 球面線形補間
 			return DirectX::XMQuaternionSlerp(prevKeyFrame.Vec, nextKeyFrame.Vec, t);

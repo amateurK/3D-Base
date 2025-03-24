@@ -31,6 +31,8 @@ namespace Mesh {
 		DirectX::XMMATRIX InverseBindMatrix;
 		/// @brief ローカル変換行列
 		DirectX::XMMATRIX LocalMatrix;
+		/// @brief 親ボーンからの移動量
+		DirectX::XMVECTOR LocalTranslate;
 		/// @brief 1番目の子ボーン
 		BoneData* FirstChild;
 		/// @brief 次の兄弟ボーン

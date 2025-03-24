@@ -32,6 +32,8 @@ namespace AK_Base {
 
 		/// @brief ボーンの行列
 		std::vector<DirectX::XMMATRIX> m_BoneMatrices;
+		/// @brief ボーンに対応したActorへのポインタ
+		std::vector<Actor*> m_BoneActor;
 
 		/// @brief 再生中のアニメーションに関するデータ
 		struct AnimationData
@@ -106,5 +108,32 @@ namespace AK_Base {
 		void CalcBoneMatrices(const Mesh::BoneData* bone,
 			const DirectX::XMMATRIX& parentMatrix,
 			std::vector<DirectX::XMMATRIX>& worldMatrices);
+
+		/// @brief 各ボーンに対応する子Actorを生成する
+		/// @param bone 計算するボーン
+		/// @param parentActor 親Actor
+		/// @details 再帰的に呼び出される
+		void SetBoneActor(
+			const Mesh::BoneData* bone,
+			Actor* parentActor
+		);
+
+		/// @brief 各ボーンに対応する子Actorから変換行列を計算しm_BoneMatricesにセットする
+		/// @param bone 計算するボーン
+		/// @param parentActor 親Actor
+		/// @details 再帰的に呼び出される
+		void SetBoneMatrix(
+			const Mesh::BoneData* bone,
+			Actor* parentActor
+		);
+
+		/// @brief 各ボーンに対応する子Actorにアニメーションを適用する
+		/// @param bone 計算するボーン
+		/// @param parentActor 親Actor
+		/// @details 再帰的に呼び出される
+		void ApplyAnimationToBoneActor(
+			const Mesh::BoneData* bone,
+			Actor* parentActor
+		);// 関数名もうちょっと良い感じにならないかな...
 	};
 }
