@@ -56,6 +56,9 @@
     <Filter Include="Base\Component\Collider">
       <UniqueIdentifier>{54298036-ed44-466f-a839-8f5c100b6a9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Model\Animation">
+      <UniqueIdentifier>{ea8e5626-a298-4b40-9e7e-46c7c99e72b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
@@ -66,9 +69,6 @@
     </ClCompile>
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp">
       <Filter>Base\Model\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="program\Base\Camera\Camera.cpp">
-      <Filter>Base\Camera</Filter>
     </ClCompile>
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp">
       <Filter>Base\Model\Mesh</Filter>
@@ -127,6 +127,27 @@
     <ClCompile Include="program\Base\Model\Mesh\LineMesh.cpp">
       <Filter>Base\Model\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="program\Base\Component\Camera.cpp">
+      <Filter>Base\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Model\Mesh\SkinningMesh.cpp">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Model\Mesh\VRMSkinningMesh.cpp">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Component\SkinningMeshRender.cpp">
+      <Filter>Base\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Shader\VertexShader\LambertSkinningVS.cpp">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Model\Animation\AnimationManager.cpp">
+      <Filter>Base\Model\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Model\Animation\AnimationClip.cpp">
+      <Filter>Base\Model\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\Base\Singleton.h">
@@ -140,9 +161,6 @@
     </ClInclude>
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h">
       <Filter>Base\Model\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="program\Base\Camera\Camera.h">
-      <Filter>Base\Camera</Filter>
     </ClInclude>
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h">
       <Filter>Base\Model\Mesh</Filter>
@@ -243,6 +261,27 @@
     <ClInclude Include="program\Base\Model\Mesh\LineMesh.h">
       <Filter>Base\Model\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="program\Base\Component\Camera.h">
+      <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Mesh\SkinningMesh.h">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Mesh\VRMSkinningMesh.h">
+      <Filter>Base\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Component\SkinningMeshRender.h">
+      <Filter>Base\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Shader\VertexShader\LambertSkinningVS.h">
+      <Filter>Base\Shader\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Animation\AnimationManager.h">
+      <Filter>Base\Model\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Model\Animation\AnimationClip.h">
+      <Filter>Base\Model\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -258,6 +297,9 @@
       <Filter>Base\Shader\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="program\Base\Shader\HLSL\BasicPixelShader.hlsl">
+      <Filter>Base\Shader\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertSkinningVertexShader.hlsl">
       <Filter>Base\Shader\HLSL</Filter>
     </FxCompile>
   </ItemGroup>

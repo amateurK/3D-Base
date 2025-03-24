@@ -35,18 +35,12 @@ namespace AK_Base {
 		BaseWindow& bw(BaseWindow::GetInstance());
 		ID3D11DeviceContext* d3dDeviceContext = bw.GetImmediateContext();
 
-		XMVECTOR lightDirection = { 0.0f, 0.0f, -1.0f, 1.0f };
-		XMFLOAT4 lightAmbient = { 0.1f, 0.1f, 0.1f, 1.0f };
-		XMFLOAT4 lightDiffuse = { 1.0f, 1.0f, 1.0f, 1.0f };
-		XMFLOAT4 materialAmbient = { 1.0f, 1.0f, 1.0f, 1.0f };
-		XMFLOAT4 materialDiffuse = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-		XMFLOAT4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
-
 		m_Mesh->Render(d3dDeviceContext, [&](int id, const std::vector<Mesh::MeshData> material)
 			{
 				m_ShaderSet->SetData<const XMMATRIX*>("worldMatrix", m_ParentActor->GetTransform()->GetWorldMatrix());
-
+				//const auto mat = *(m_ParentActor->GetTransform()->GetWorldMatrix()) * DirectX::XMMatrixTranslation(0.0f, 0.0f, id * 1.0f);
+				//m_ShaderSet->SetData<const XMMATRIX*>("worldMatrix", &mat);
+				
 				// •`‰æ‡‚ð•ÏX‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚½‚ç•ª—£
 				m_ShaderSet->SetPerObject();
 				m_ShaderSet->SetShaders();

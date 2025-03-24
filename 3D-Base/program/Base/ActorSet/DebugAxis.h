@@ -14,20 +14,22 @@
 namespace ActorSet {
 	/// @brief デバッグ用のX軸を表示するActor
 	/// @param parent 軸を取り付けるActor
-	inline void CreateDebugAxisX(AK_Base::Actor* parent) {
+	inline void CreateDebugAxisX(AK_Base::Actor* parent, float length = 1.0f) {
 
 		auto actor = parent->AddChild<AK_Base::Actor>(parent->GetName() + L"_DebugAxisX");
 		auto transform = actor->AddComponent<AK_Base::Transform>();
+		transform->Scale(length);
 		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"Line");
 		meshRender->SetShader("BasicRed");
 	}
 
 	/// @brief デバッグ用のY軸を表示するActor
 	/// @param parent 軸を取り付けるActor
-	inline void CreateDebugAxisY(AK_Base::Actor* parent) {
+	inline void CreateDebugAxisY(AK_Base::Actor* parent, float length = 1.0f) {
 
 		auto actor = parent->AddChild<AK_Base::Actor>(parent->GetName() + L"_DebugAxisY");
 		auto transform = actor->AddComponent<AK_Base::Transform>();
+		transform->Scale(length);
 		transform->RotateLocalZ(DirectX::XM_PIDIV2);
 		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"Line");
 		meshRender->SetShader("BasicGreen");
@@ -35,10 +37,11 @@ namespace ActorSet {
 
 	/// @brief デバッグ用のZ軸を表示するActor
 	/// @param parent 軸を取り付けるActor
-	inline void CreateDebugAxisZ(AK_Base::Actor* parent) {
+	inline void CreateDebugAxisZ(AK_Base::Actor* parent, float length = 1.0f) {
 
 		auto actor = parent->AddChild<AK_Base::Actor>(parent->GetName() + L"_DebugAxisZ");
 		auto transform = actor->AddComponent<AK_Base::Transform>();
+		transform->Scale(length);
 		transform->RotateLocalY(-DirectX::XM_PIDIV2);
 		auto meshRender = actor->AddComponent<AK_Base::MeshRender>(L"Line");
 		meshRender->SetShader("BasicBlue");
@@ -46,11 +49,11 @@ namespace ActorSet {
 
 	/// @brief デバッグ用のXYZ軸を表示するActor
 	/// @param parent 軸を取り付けるActor
-	inline void CreateDebugAxis(AK_Base::Actor* parent) {
+	inline void CreateDebugAxis(AK_Base::Actor* parent, float length = 1.0f) {
 
-		CreateDebugAxisX(parent);
-		CreateDebugAxisY(parent);
-		CreateDebugAxisZ(parent);
+		CreateDebugAxisX(parent, length);
+		CreateDebugAxisY(parent, length);
+		CreateDebugAxisZ(parent, length);
 	}
 
 

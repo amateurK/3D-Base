@@ -13,8 +13,6 @@
 
 namespace Mesh {
 
-	// TODO : メッシュを管理するクラスはMeshクラスだけにする
-
 	/// @brief VRMファイルから読み込んだメッシュを管理するクラス
 	__declspec(align(16))
 		class VRMMesh : public Mesh

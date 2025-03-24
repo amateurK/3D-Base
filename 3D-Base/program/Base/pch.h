@@ -52,6 +52,7 @@
 // ˆê”Êinclude
 #include <algorithm>
 #include <any>
+#include <array>
 #include <atomic>
 #include <climits>
 #include <cmath>

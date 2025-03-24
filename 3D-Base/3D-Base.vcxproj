@@ -102,6 +102,7 @@
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>LambertSkinningVS</EntryPointName>
     </FxCompile>
     <PostBuildEvent>
       <Command>xcopy /Y "$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\lib\x64-Debug\*.dll" "$(OutDir)"</Command>
@@ -135,6 +136,7 @@
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>LambertSkinningVS</EntryPointName>
     </FxCompile>
     <PostBuildEvent>
       <Command>xcopy /Y "$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\lib\x64-Release\*.dll" "$(OutDir)"</Command>
@@ -164,6 +166,7 @@
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>LambertSkinningVS</EntryPointName>
     </FxCompile>
     <PostBuildEvent>
       <Command>xcopy /Y "$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\lib\x64-Debug\*.dll" "$(OutDir)"</Command>
@@ -197,6 +200,7 @@
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>LambertSkinningVS</EntryPointName>
     </FxCompile>
     <PostBuildEvent>
       <Command>xcopy /Y "$(SolutionDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\lib\x64-Release\*.dll" "$(OutDir)"</Command>
@@ -209,17 +213,22 @@
   <ItemGroup>
     <ClCompile Include="program\Base\Actor.cpp" />
     <ClCompile Include="program\Base\BaseWindow.cpp" />
-    <ClCompile Include="program\Base\Camera\Camera.cpp" />
     <ClCompile Include="program\Base\Collision\CollisionManager.cpp" />
+    <ClCompile Include="program\Base\Component\Camera.cpp" />
     <ClCompile Include="program\Base\Component\MeshRender.cpp" />
+    <ClCompile Include="program\Base\Component\SkinningMeshRender.cpp" />
     <ClCompile Include="program\Base\Component\Transform.cpp" />
     <ClCompile Include="program\Base\Framework.cpp" />
     <ClCompile Include="program\Base\Input\InputManager.cpp" />
     <ClCompile Include="program\Base\Math\AK_Math.cpp" />
+    <ClCompile Include="program\Base\Model\Animation\AnimationClip.cpp" />
+    <ClCompile Include="program\Base\Model\Animation\AnimationManager.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\LineMesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\MeshManager.cpp" />
+    <ClCompile Include="program\Base\Model\Mesh\SkinningMesh.cpp" />
     <ClCompile Include="program\Base\Model\Mesh\VRMMesh.cpp" />
+    <ClCompile Include="program\Base\Model\Mesh\VRMSkinningMesh.cpp" />
     <ClCompile Include="program\Base\Model\PictureResource.cpp" />
     <ClCompile Include="program\Base\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -233,6 +242,7 @@
     <ClCompile Include="program\Base\Shader\ShaderManager.cpp" />
     <ClCompile Include="program\Base\Shader\ShaderSet\ShaderSet.cpp" />
     <ClCompile Include="program\Base\Shader\VertexShader\BasicVS.cpp" />
+    <ClCompile Include="program\Base\Shader\VertexShader\LambertSkinningVS.cpp" />
     <ClCompile Include="program\Base\Shader\VertexShader\LambertVS.cpp" />
     <ClCompile Include="program\Base\Shader\VertexShader\VertexShader.cpp" />
   </ItemGroup>
@@ -240,21 +250,26 @@
     <ClInclude Include="program\Base\Actor.h" />
     <ClInclude Include="program\Base\ActorSet\DebugAxis.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
-    <ClInclude Include="program\Base\Camera\Camera.h" />
     <ClInclude Include="program\Base\Collision\CollisionManager.h" />
     <ClInclude Include="program\Base\Component.h" />
+    <ClInclude Include="program\Base\Component\Camera.h" />
     <ClInclude Include="program\Base\Component\Collider.h" />
     <ClInclude Include="program\Base\Component\Collider\SphereCollider.h" />
     <ClInclude Include="program\Base\Component\MeshRender.h" />
+    <ClInclude Include="program\Base\Component\SkinningMeshRender.h" />
     <ClInclude Include="program\Base\Component\Transform.h" />
     <ClInclude Include="program\Base\Framework.h" />
     <ClInclude Include="program\Base\Input\InputManager.h" />
     <ClInclude Include="program\Base\Math\AK_Math.h" />
     <ClInclude Include="program\Base\Math\Primitive.h" />
+    <ClInclude Include="program\Base\Model\Animation\AnimationClip.h" />
+    <ClInclude Include="program\Base\Model\Animation\AnimationManager.h" />
     <ClInclude Include="program\Base\Model\Mesh\LineMesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\Mesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\MeshManager.h" />
+    <ClInclude Include="program\Base\Model\Mesh\SkinningMesh.h" />
     <ClInclude Include="program\Base\Model\Mesh\VRMMesh.h" />
+    <ClInclude Include="program\Base\Model\Mesh\VRMSkinningMesh.h" />
     <ClInclude Include="program\Base\Model\PictureResource.h" />
     <ClInclude Include="program\Base\pch.h" />
     <ClInclude Include="program\Base\Reader\json.hpp" />
@@ -267,6 +282,7 @@
     <ClInclude Include="program\Base\Shader\ShaderManager.h" />
     <ClInclude Include="program\Base\Shader\ShaderSet\ShaderSet.h" />
     <ClInclude Include="program\Base\Shader\VertexShader\BasicVS.h" />
+    <ClInclude Include="program\Base\Shader\VertexShader\LambertSkinningVS.h" />
     <ClInclude Include="program\Base\Shader\VertexShader\LambertVS.h" />
     <ClInclude Include="program\Base\Shader\VertexShader\VertexShader.h" />
     <ClInclude Include="program\Base\Singleton.h" />
@@ -309,6 +325,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">LambertPS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="program\Base\Shader\HLSL\LambertSkinningVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="program\Base\Shader\HLSL\LambertVertexShader.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">LambertVS</EntryPointName>

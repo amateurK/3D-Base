@@ -10,9 +10,11 @@
 #include "BaseWindow.h"
 #include "Actor.h"
 #include "Model/Mesh/MeshManager.h"
+#include "Model/Animation/AnimationManager.h"
 #include "Input/InputManager.h"
 #include "Shader/ShaderManager.h"
 #include "Shader/VertexShader/LambertVS.h"
+#include "Shader/VertexShader/LambertSkinningVS.h"
 #include "Shader/VertexShader/BasicVS.h"
 #include "Shader/PixelShader/PixelShader.h"
 #include "Collision/CollisionManager.h"
@@ -181,7 +183,7 @@ namespace AK_Base {
 		rasterizerState.FillMode = D3D11_FILL_SOLID;
 		rasterizerState.CullMode = D3D11_CULL_BACK;
 		//rasterizerState.FillMode = D3D11_FILL_WIREFRAME;
-		//rasterizerState.CullMode = D3D11_CULL_NONE;
+		rasterizerState.CullMode = D3D11_CULL_NONE;
 		rasterizerState.FrontCounterClockwise = false;
 		rasterizerState.DepthBias = false;
 		rasterizerState.DepthBiasClamp = 0;
@@ -283,6 +285,7 @@ namespace AK_Base {
 		Mesh::MeshManager::Create();
 		InputManager::Create();
 		CollisionManager::Create();
+		Anim::AnimationManager::Create();
 
 		// シェーダーの作成
 		Shader::ShaderManager::Create();
@@ -309,6 +312,34 @@ namespace AK_Base {
 			list[Shader::ShaderType::VertexShader] = "LambertVS";
 			list[Shader::ShaderType::PixelShader] = "LambertPS";
 			auto newSet = shaderM->AddShaderSet("LambertShader", list);
+			newSet->SetData<XMFLOAT4>("materialAmbient", { 1.0f, 1.0f, 1.0f, 1.0f });
+			newSet->SetData<XMFLOAT4>("materialDiffuse", { 1.0f, 1.0f, 1.0f, 1.0f });
+			newSet->SetData<XMFLOAT4>("lightAmbient", { 0.1f, 0.1f, 0.1f, 1.0f });
+			newSet->SetData<XMFLOAT4>("lightDiffuse", { 1.0f, 1.0f, 1.0f, 1.0f });
+			newSet->SetData<XMVECTOR>("lightDirection", XMVectorSet( 0.0f, 0.0f, -1.0f, 1.0f ));
+		}
+
+		{
+			// LambertSkinningVS
+			Shader::VertexShaderInitParam VSparam = {};
+			VSparam.FilePath = L"LambertSkinningVertexShader.cso";
+			D3D11_INPUT_ELEMENT_DESC layout[] = {
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "NORMAL",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "TEXCOORD",    0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "BLENDINDICES",    0, DXGI_FORMAT_R8G8B8A8_UINT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "BLENDWEIGHT",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+			VSparam.Layout = layout;
+			VSparam.LayoutCount = ARRAYSIZE(layout);
+			shaderM->AddShader<Shader::LambertSkinningVS>("LambertSkinningVS", VSparam);
+		}
+		{
+			// LambertSkinningShader
+			std::unordered_map<Shader::ShaderType, std::string> list;
+			list[Shader::ShaderType::VertexShader] = "LambertSkinningVS";
+			list[Shader::ShaderType::PixelShader] = "LambertPS";
+			auto newSet = shaderM->AddShaderSet("LambertSkinningShader", list);
 			newSet->SetData<XMFLOAT4>("materialAmbient", { 1.0f, 1.0f, 1.0f, 1.0f });
 			newSet->SetData<XMFLOAT4>("materialDiffuse", { 1.0f, 1.0f, 1.0f, 1.0f });
 			newSet->SetData<XMFLOAT4>("lightAmbient", { 0.1f, 0.1f, 0.1f, 1.0f });
@@ -365,6 +396,8 @@ namespace AK_Base {
 	{
 		// マネージャーの破棄
 		Shader::ShaderManager::Destroy();
+
+		Anim::AnimationManager::Destroy();
 		CollisionManager::Destroy();
 		InputManager::Destroy();
 		Mesh::MeshManager::Destroy();

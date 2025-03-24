@@ -8,6 +8,7 @@
 #include "TestScene.h"
 #include "Base/Component/Transform.h"
 #include "Base/Component/MeshRender.h"
+#include "Base/Component/SkinningMeshRender.h"
 #include "Base/Component/Collider.h"
 #include "Base/Component/Collider/SphereCollider.h"
 #include "Base/Collision/CollisionManager.h"
@@ -15,6 +16,7 @@
 #include "Base/ActorSet/DebugAxis.h"
 #include "Base/Input/InputManager.h"
 #include "Base/Math/Primitive.h"
+#include "Base/Model/Animation/AnimationManager.h"
 
 using namespace DirectX;
 
@@ -31,71 +33,97 @@ namespace Scene {
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
 			transform->Scale(3.0f);
-			transform->SetPosition(3.0f, 0.0f, 3.0f);
-			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
-			meshRender->SetShader("LambertShader");
+			transform->SetPosition(0.0f, 0.0f, -3.0f);
+			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_H.vrm");
+			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
+			meshRender->SetShader("LambertSkinningShader");
+			meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_04.vrma", 0.0f, 1.0f, true);
+			//meshRender->PlayAnimation(L"resource/testData/SimpleTest.vrma", 0.0f, 1.0f, true);
+			//meshRender->PlayAnimation(L"resource/testData/SimpleTest2.vrma", 0.0f, 1.0f, true);
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
 		{
 			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester2");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
-			transform->SetPosition(-3.0f, 2.0f, 3.0f);
+			transform->SetPosition(-3.0f, 2.0f, -7.0f);
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/testBox.glb");
 			meshRender->SetShader("BasicRainbow");
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
+		//{
+		//	auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere");
+		//	auto transform = testmodel->AddComponent<AK_Base::Transform>();
+		//	transform->Scale(1.0f);
+		//	transform->SetPosition(0.0f, 1.0f, 7.0f);
+		//	auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
+		//	meshRender->SetShader("BasicBlue");
+		//	AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
+		//	auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(hitbox);
+		//}
+		//{
+		//	auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere2");
+		//	auto transform = testmodel->AddComponent<AK_Base::Transform>();
+		//	transform->Scale(0.4f);
+		//	transform->SetPosition(1.0f, 4.0f, 7.0f);
+		//	auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
+		//	meshRender->SetShader("BasicRed");
+		//	AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
+		//	auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(hitbox);
+		//	collider->SetOnCollision([=](AK_Base::Collider* const other) {
+		//		collider->GetActor()->GetTransform()->Translate(0.0f, 1.0f, 0.0f);
+		//		});
+		//}
+		//{
+		//	auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere3");
+		//	auto transform = testmodel->AddComponent<AK_Base::Transform>();
+		//	transform->Scale(0.4f);
+		//	transform->SetPosition(0.0f, 4.0f, 7.0f);
+		//	auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
+		//	meshRender->SetShader("BasicRed");
+		//	AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
+		//	auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(hitbox);
+		//	collider->SetOnCollision([=](AK_Base::Collider* const other) {
+		//		collider->GetActor()->GetTransform()->Translate(0.0f, 1.0f, 0.0f);
+		//		});
+		//}
 		{
-			auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere");
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"tester_copy");
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
-			transform->Scale(1.0f);
-			transform->SetPosition(0.0f, 1.0f, 3.0f);
-			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
-			meshRender->SetShader("BasicBlue");
-			AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
-			auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(hitbox);
-		}
-		{
-			auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere2");
-			auto transform = testmodel->AddComponent<AK_Base::Transform>();
-			transform->Scale(0.4f);
-			transform->SetPosition(1.0f, 4.0f, 3.0f);
-			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
-			meshRender->SetShader("BasicRed");
-			AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
-			auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(hitbox);
-			collider->SetOnCollision([=](AK_Base::Collider* const other) {
-				collider->GetActor()->GetTransform()->Translate(0.0f, 1.0f, 0.0f);
-				});
-		}
-		{
-			auto testmodel = this->AddChild<AK_Base::Actor>(L"sphere3");
-			auto transform = testmodel->AddComponent<AK_Base::Transform>();
-			transform->Scale(0.4f);
-			transform->SetPosition(0.0f, 4.0f, 3.0f);
-			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/ICOSphere.glb");
-			meshRender->SetShader("BasicRed");
-			AK_Math::Sphere3 hitbox(XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 1.0f);
-			auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(hitbox);
-			collider->SetOnCollision([=](AK_Base::Collider* const other) {
-				collider->GetActor()->GetTransform()->Translate(0.0f, 1.0f, 0.0f);
-				});
+			transform->Scale(3.0f);
+			transform->SetPosition(3.0f, .0f, -3.0f);
+			auto meshRender = testmodel->AddComponent<AK_Base::SkinningMeshRender>(L"resource/testData/AvatarSample_A.vrm");
+			//auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma");
+			meshRender->SetShader("LambertSkinningShader");
+			//meshRender->PlayAnimation(L"resource/testData/SimpleTest2.vrma", 0.0f, 1.0f, true);
+			//meshRender->PlayAnimation(L"resource/testData/VRMA_MotionPack/vrma/VRMA_01.vrma", 0.0f, 1.0f, true);
+
+			ActorSet::CreateDebugAxis(testmodel);
 		}
 
 
 		// カメラの準備
-		m_Camera = std::make_unique<Camera::Camera>();
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"camera");
+			auto transform = testmodel->AddComponent<AK_Base::Transform>();
+			//transform->SetPosition(0.0f, 3.0f, 0.5f);
+			//transform->RotateLocalY(XM_PI);
+			transform->SetPosition(0.0f, 3.0f, -6.5f);
+			m_Camera = testmodel->AddComponent<AK_Base::Camera>();
+			auto windowSize = myGame->GetWindowSize();
+			m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
+		}
 
-		//const XMVECTOR eye = { 0.0f, 1.0f, -5.0f, 0.0f };
-		//const XMVECTOR at = { 0.0f, 1.0f, 0.0f, 0.0f };
-		const XMVECTOR eye = { 0.0f, 4.0f, -2.0f, 0.0f };
-		const XMVECTOR at = { 0.0f, 4.0f, 3.0f, 0.0f };
-		const XMVECTOR up = { 0.0f, 1.0f, 0.0f, 0.0f };
-		m_Camera->SetCamera(&eye, &at, &up);
+		////const XMVECTOR eye = { 0.0f, 1.0f, -5.0f, 0.0f };
+		////const XMVECTOR at = { 0.0f, 1.0f, 0.0f, 0.0f };
+		//const XMVECTOR eye = { 0.0f, 4.0f, -2.0f, 0.0f };
+		//const XMVECTOR at = { 0.0f, 4.0f, 3.0f, 0.0f };
+		//const XMVECTOR up = { 0.0f, 1.0f, 0.0f, 0.0f };
+		//m_Camera->SetCamera(&eye, &at, &up);
 
-		auto windowSize = myGame->GetWindowSize();
-		m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
+		//auto windowSize = myGame->GetWindowSize();
+		//m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
 
 
 		// シェーダーにVP行列をセット
@@ -127,7 +155,7 @@ namespace Scene {
 			float front = (float)(w - s) * elapsedTime * speed;
 			float right = (float)(d - a) * elapsedTime * speed;
 			float up = (float)(z - x) * elapsedTime * speed;
-			m_Camera->MoveWithViewpoint(front, right, up);
+			m_Camera->GetActor()->GetTransform()->Move(front, right, up);
 		}
 		// 移動テスト
 		{
@@ -145,7 +173,7 @@ namespace Scene {
 			float front = (float)(w - s) * elapsedTime * speed;
 			float right = (float)(d - a) * elapsedTime * speed;
 			float up = (float)(z - x) * elapsedTime * speed;
-			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester");
+			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchChildByName(L"tester");
 			actor->GetComponent<AK_Base::Transform>()->Move(front, right, up);
 		}
 		// マウステスト
@@ -184,8 +212,8 @@ namespace Scene {
 			float speed = 2.0f;
 			float right = (float)(j - l) * elapsedTime * speed;
 			float up = (float)(i - k) * elapsedTime * speed;
-			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester");
-			auto actor2 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"tester2");
+			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchChildByName(L"tester");
+			auto actor2 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchChildByName(L"tester2");
 
 			actor->GetComponent<AK_Base::Transform>()->RotateLocalY(right);
 			actor->GetComponent<AK_Base::Transform>()->RotateLocalX(up);
@@ -202,27 +230,26 @@ namespace Scene {
 			float b = std::max(0.0f, 2.0f - fabs(hue - 5.0f));
 			auto shader = shaderM->GetShaderSet("BasicRainbow");
 			shader->SetData<XMFLOAT4>("color", { r, g, b, 1.0f });
+
 			auto shader2 = shaderM->GetShaderSet("LambertShader");
 			//shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet(0.0f, 0.0f, -1.0f, 1.0f));
 			shader2->SetData<XMVECTOR>("lightDirection", XMVectorSet((float)cos(totalTime) * 10.0f, (float)sin(totalTime)* 10.0f, -1.0f, 1.0f));
 		}
-		// 球体の移動とコライダーテスト
-		{
-			auto actor2 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"sphere2");
-			actor2->GetComponent<AK_Base::Transform>()->Translate(0.0f, -0.5f * elapsedTime, 0.0f);
-			auto actor3 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"sphere3");
-			actor3->GetComponent<AK_Base::Transform>()->Translate(0.0f, -0.5f * elapsedTime, 0.0f);
-			auto list = AK_Base::CollisionManager::GetInstance()->GetCollideSet(actor3->GetComponent<AK_Base::SphereCollider>());
-			if (list->size() > 0) {
-				actor3->GetComponent<AK_Base::Transform>()->Translate(0.1f, 0.0f, 0.0f);
-			}
-		}
+		//// 球体の移動とコライダーテスト
+		//{
+		//	auto actor2 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"sphere2");
+		//	actor2->GetComponent<AK_Base::Transform>()->Translate(0.0f, -0.5f * elapsedTime, 0.0f);
+		//	auto actor3 = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchName(L"sphere3");
+		//	actor3->GetComponent<AK_Base::Transform>()->Translate(0.0f, -0.5f * elapsedTime, 0.0f);
+		//	auto list = AK_Base::CollisionManager::GetInstance()->GetCollideSet(actor3->GetComponent<AK_Base::SphereCollider>());
+		//	if (list->size() > 0) {
+		//		actor3->GetComponent<AK_Base::Transform>()->Translate(0.1f, 0.0f, 0.0f);
+		//	}
+		//}
 
 		// シェーダーにVP行列をセット
 		auto shaderM = Shader::ShaderManager::GetInstance();
 		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
-
-		
 
 		Scene::Update(totalTime, elapsedTime);
 	}
