@@ -7,7 +7,7 @@
 // 作成日	: 2024/12/13
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "Scene.h"
-#include "Base/Camera/Camera.h"
+#include "Base/Component/Camera.h"
 
 namespace Scene {
 	class GameMainScene : public Scene
@@ -15,7 +15,7 @@ namespace Scene {
 	private:
 
 		/// @brief カメラクラス
-		std::unique_ptr<Camera::Camera> m_Camera;
+		AK_Base::Camera* m_Camera;
 
 		// プレイヤーのアクター
 		AK_Base::Actor* m_Player;
