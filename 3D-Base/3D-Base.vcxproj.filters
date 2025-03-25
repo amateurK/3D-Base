@@ -282,6 +282,9 @@
     <ClInclude Include="program\Base\Model\Animation\AnimationClip.h">
       <Filter>Base\Model\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="program\Base\Tools\Random.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
