@@ -21,6 +21,9 @@
     <ClInclude Include="program\Component\Entity\Player\PlayerMovement.h">
       <Filter>Component\Entity\Player</Filter>
     </ClInclude>
+    <ClInclude Include="program\Component\CameraMovement.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\pch.cpp" />
@@ -45,6 +48,9 @@
     </ClCompile>
     <ClCompile Include="program\Component\Entity\Player\PlayerMovementFPSCheck.cpp">
       <Filter>Component\Entity\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Component\CameraMovement.cpp">
+      <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
