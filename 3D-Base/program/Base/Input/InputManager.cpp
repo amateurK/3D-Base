@@ -79,7 +79,7 @@ namespace AK_Base {
 			hr = m_Keyboard->SetCooperativeLevel(*pHWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 			if (FAILED(hr))return hr;
 			hr = m_Keyboard->Acquire();
-			if (FAILED(hr))return hr;
+			//if (FAILED(hr))return hr;
 		}
 		{
 			// マウスの初期化
@@ -100,7 +100,7 @@ namespace AK_Base {
 			hr = m_Mouse->SetProperty(DIPROP_AXISMODE, &diprop.diph);
 
 			hr = m_Mouse->Acquire();
-			if (FAILED(hr))return hr;
+			//if (FAILED(hr))return hr;
 		}
 		//{
 		//	// ゲームパッドの初期化
@@ -132,8 +132,9 @@ namespace AK_Base {
 		// 失敗したら再接続を試みる
 		if (FAILED(hr)) {
 			hr = m_Keyboard->Acquire();
-			if (hr == DIERR_INPUTLOST) {
-				m_Keyboard->Acquire();
+			if (SUCCEEDED(hr))
+			{
+				m_Keyboard->GetDeviceState(KEY_NUM, m_KeyState[m_NowSlot]);
 			}
 		}
 
@@ -142,8 +143,9 @@ namespace AK_Base {
 		// 失敗したら再接続を試みる
 		if (FAILED(hr)) {
 			hr = m_Mouse->Acquire();
-			if (hr == DIERR_INPUTLOST) {
-				m_Mouse->Acquire();
+			if (SUCCEEDED(hr))
+			{
+				m_Mouse->GetDeviceState(sizeof(DIMOUSESTATE), &m_MouseState[m_NowSlot]);
 			}
 		}
 		else {
