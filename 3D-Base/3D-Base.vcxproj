@@ -289,6 +289,7 @@
     <ClInclude Include="program\Base\Tools\Alignment.h" />
     <ClInclude Include="program\Base\Tools\FilePath.h" />
     <ClInclude Include="program\Base\Tools\LowercaseAndUppercase.h" />
+    <ClInclude Include="program\Base\Tools\Random.h" />
     <ClInclude Include="program\Base\Tools\StepTimer.h" />
     <ClInclude Include="program\Base\Tools\WStringToString.h" />
   </ItemGroup>
