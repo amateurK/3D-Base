@@ -21,8 +21,8 @@
     <ClInclude Include="program\Component\Entity\Player\PlayerMovement.h">
       <Filter>Component\Entity\Player</Filter>
     </ClInclude>
-    <ClInclude Include="program\Component\CameraMovement.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="program\Component\Entity\Bullet\SimpleBullet.h">
+      <Filter>Component\Entity\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -49,8 +49,8 @@
     <ClCompile Include="program\Component\Entity\Player\PlayerMovementFPSCheck.cpp">
       <Filter>Component\Entity\Player</Filter>
     </ClCompile>
-    <ClCompile Include="program\Component\CameraMovement.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="program\Component\Entity\Bullet\SimpleBullet.cpp">
+      <Filter>Component\Entity\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +68,9 @@
     </Filter>
     <Filter Include="TestData">
       <UniqueIdentifier>{839a35ca-29cc-467b-b1d0-1a74cc22bad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Entity\Bullet">
+      <UniqueIdentifier>{cb904d16-8a98-4330-a581-0bda7c8c4861}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -156,7 +156,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="program\Component\CameraMovement.h" />
+    <ClInclude Include="program\Component\Entity\Bullet\SimpleBullet.h" />
     <ClInclude Include="program\Component\Entity\Health.h" />
     <ClInclude Include="program\Component\Entity\Player\PlayerMovement.h" />
     <ClInclude Include="program\pch.h" />
@@ -167,7 +167,7 @@
     <ClInclude Include="program\TestGameMain.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="program\Component\CameraMovement.cpp" />
+    <ClCompile Include="program\Component\Entity\Bullet\SimpleBullet.cpp" />
     <ClCompile Include="program\Component\Entity\Health.cpp" />
     <ClCompile Include="program\Component\Entity\Player\PlayerMovement.cpp" />
     <ClCompile Include="program\Component\Entity\Player\PlayerMovementFPSCheck.cpp" />

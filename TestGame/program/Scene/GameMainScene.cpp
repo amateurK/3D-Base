@@ -14,7 +14,9 @@
 #include "Base/Input/InputManager.h"
 #include "Base/Component/Collider/SphereCollider.h"
 #include "Base/Input/InputManager.h"
+#include "Base/Tools/Random.h"
 #include "../Component/Entity/Player/PlayerMovement.h"
+#include "../Component/Entity/Bullet/SimpleBullet.h"
 
 using namespace DirectX;
 
@@ -50,16 +52,20 @@ namespace Scene {
 
 			ActorSet::CreateDebugAxis(testmodel);
 		}
-		for (int i = 0; i < 10; i++) {
-			auto testmodel = this->AddChild<AK_Base::Actor>(L"Target" + i);
+		for (int i = 0; i < 20; i++)
+		{
+			auto testmodel = this->AddChild<AK_Base::Actor>(L"Target" + std::to_wstring(i));
 			auto transform = testmodel->AddComponent<AK_Base::Transform>();
-			transform->SetPosition(-3.0f, 2.0f, 3.0f);
+			// お互いに当たって移動するため初期位置は不要
 			auto meshRender = testmodel->AddComponent<AK_Base::MeshRender>(L"../3D-Base/BasicModel/ICOSphere.glb");
-			meshRender->SetShader("BasicRed");
+			meshRender->SetShader("BasicGreen");
 
-			auto collider = m_Player->AddComponent<AK_Base::SphereCollider>(AK_Math::Sphere3(XMVectorZero(), 1.0f));
+			auto collider = testmodel->AddComponent<AK_Base::SphereCollider>(AK_Math::Sphere3(XMVectorZero(), 1.0f));
 			collider->SetOnCollision([=](AK_Base::Collider* const other) {
-				transform->SetPosition(, 2.0f, 3.0f)
+				transform->SetPosition(
+					(float)Tools::GetRandom(-50, 50),
+					(float)Tools::GetRandom(-10, 10),
+					(float)Tools::GetRandom(-50, 50));
 				});
 		}
 
@@ -121,6 +127,29 @@ namespace Scene {
 
 				// カーソルを中央に戻す
 				InputM->SetCursorCenter();
+			}
+
+		}
+
+		// 弾を撃つ（テスト）
+		{
+			if (InputM->IsKeyNowPressed(BUTTON_MOUSE0))
+			{
+				auto bullet = this->AddChild<AK_Base::Actor>(L"bullet" + std::to_wstring(totalTime));
+				auto transform = bullet->AddComponent<AK_Base::Transform>();
+				transform->SetPosition(m_Camera->GetActor()->GetTransform()->GetPosition());
+				transform->SetRotation(m_Camera->GetActor()->GetTransform()->GetRotation());
+				transform->Move(DirectX::XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f));
+				auto meshRender = bullet->AddComponent<AK_Base::MeshRender>(L"../3D-Base/BasicModel/ICOSphere.glb");
+				meshRender->SetShader("BasicRed");
+
+				auto collider = bullet->AddComponent<AK_Base::SphereCollider>(AK_Math::Sphere3(XMVectorZero(), 1.0f));
+				collider->SetOnCollision([=](AK_Base::Collider* const other) {
+					bullet->SetStatus(AK_Base::ActorStatus::DEAD);
+					});
+				auto bulletMovement = bullet->AddComponent<AK_Game::SimpleBullet>();
+				bulletMovement->SetSpeed(60.0f, 0.0f, 0.0f);
+				bulletMovement->SetLifeTime(3.0f);
 			}
 		}
 

@@ -53,8 +53,9 @@ namespace AK_Game {
 		//m_Speed *= 1.0 - (1.0f - m_AirResistance) * elapsedTime;
 		m_Speed *= powf(m_AirResistance, elapsedTime);
 
-
+		// ”½‰f
 		transform->Move((preSpeed + m_Speed) * (0.5f * elapsedTime));
+
 	}
 
 }
