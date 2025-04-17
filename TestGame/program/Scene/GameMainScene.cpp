@@ -32,14 +32,14 @@ namespace Scene {
 		{
 			m_Player = this->AddChild<AK_Base::Actor>(L"player");
 			auto transform = m_Player->AddComponent<AK_Base::Transform>();
-			transform->Scale(3.0f);
+			transform->Scale(1.0f);
 			transform->SetPosition(3.0f, 0.0f, 3.0f);
-			auto meshRender = m_Player->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
-			meshRender->SetShader("LambertShader");
-			//auto playerMovement = m_Player->AddComponent<AK_Game::PlayerMovement>();
-			//playerMovement->SetNormalAccel(10.0f, 5.0f, 10.0f);
-			//playerMovement->SetAirResistance(0.1f);	// さすがに高すぎ
-			auto collider = m_Player->AddComponent<AK_Base::SphereCollider>(AK_Math::Sphere3());
+			//auto meshRender = m_Player->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
+			//meshRender->SetShader("LambertShader");
+			auto playerMovement = m_Player->AddComponent<AK_Game::PlayerMovement>();
+			playerMovement->SetNormalAccel(20.0f, 10.0f, 20.0f);
+			playerMovement->SetAirResistance(0.1f);	// さすがに高すぎ
+			auto collider = m_Player->AddComponent<AK_Base::SphereCollider>(AK_Math::Sphere3(XMVectorZero(), 0.5f));
 
 			ActorSet::CreateDebugAxis(m_Player);
 		}
@@ -80,6 +80,7 @@ namespace Scene {
 			auto playerMovement = testmodel->AddComponent<AK_Game::PlayerMovement>();
 			playerMovement->SetNormalAccel(20.0f, 10.0f, 20.0f);
 			playerMovement->SetAirResistance(0.1f);	// さすがに高すぎ
+
 		}
 
 		// マウスのカーソルを中央に移動して非表示
@@ -114,6 +115,8 @@ namespace Scene {
 
 		// カメラの移動
 		{
+			auto cameraTrans = m_Camera->GetActor()->GetTransform();
+			auto playerTrans = m_Player->GetTransform();
 			// 視点移動はマウスが非表示の時のみ
 			if (!InputM->GetIsCursorShown())
 			{
@@ -121,13 +124,24 @@ namespace Scene {
 				const auto& delta = InputM->GetMouseMove();
 
 				// カメラの回転
-				auto trans = m_Camera->GetActor()->GetTransform();
-				trans->RotateY(delta.x * 0.0015f);
-				trans->RotateLocalX(delta.y * 0.0015f);
+				cameraTrans->RotateY(delta.x * 0.0015f);
+				cameraTrans->RotateLocalX(delta.y * 0.0015f);
 
 				// カーソルを中央に戻す
 				InputM->SetCursorCenter();
 			}
+
+			// カメラをプレイヤーに追従
+			cameraTrans->SetPosition(playerTrans->GetPosition() + DirectX::XMVectorSet(0.0f, 1.6f, 0.0f, 0.0f));
+			cameraTrans->Move(-2.0f, 0.0f, 0.0f);
+
+			// プレイヤーをカメラの向きに合わせる
+			auto cameraMat = DirectX::XMMatrixRotationQuaternion(cameraTrans->GetRotation());
+			auto cameraForward = cameraMat.r[2];	// カメラの向きを取得
+			cameraForward *= DirectX::XMVectorSet(-1.0f, 0.0f, 1.0f, 0.0f);	// Yを0、Xを反転
+			cameraForward = XMVector3Normalize(cameraForward);
+			playerTrans->SetRotation(XMQuaternionRotationMatrix(
+				XMMatrixLookToLH(XMVectorZero(), cameraForward, XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f))));
 
 		}
 
