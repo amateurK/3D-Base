@@ -10,6 +10,7 @@
 #include "Base/Framework.h"
 #include "Scene/TestScene.h"
 #include "Scene/FastCheck.h"
+#include "Scene/GameMainScene.h"
 #include "Base/Actor.h"
 
 
@@ -33,6 +34,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 #else
 			{
 				auto scene = new Scene::TestScene(L"TestScene");
+				root->AddChild(scene);
+				//scene->SetStatus(AK_Base::ActorStatus::ACTION);
+			}
+			{
+				auto scene = new Scene::GameMainScene(L"GameMainScene");
 				root->AddChild(scene);
 				scene->SetStatus(AK_Base::ActorStatus::ACTION);
 			}

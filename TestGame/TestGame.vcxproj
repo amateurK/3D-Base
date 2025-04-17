@@ -156,13 +156,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="program\Component\Entity\Bullet\SimpleBullet.h" />
+    <ClInclude Include="program\Component\Entity\Health.h" />
+    <ClInclude Include="program\Component\Entity\Player\PlayerMovement.h" />
     <ClInclude Include="program\pch.h" />
     <ClInclude Include="program\Scene\FastCheck.h" />
+    <ClInclude Include="program\Scene\GameMainScene.h" />
     <ClInclude Include="program\Scene\Scene.h" />
     <ClInclude Include="program\Scene\TestScene.h" />
     <ClInclude Include="program\TestGameMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="program\Component\Entity\Bullet\SimpleBullet.cpp" />
+    <ClCompile Include="program\Component\Entity\Health.cpp" />
+    <ClCompile Include="program\Component\Entity\Player\PlayerMovement.cpp" />
+    <ClCompile Include="program\Component\Entity\Player\PlayerMovementFPSCheck.cpp" />
     <ClCompile Include="program\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -170,6 +178,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="program\Scene\FastCheck.cpp" />
+    <ClCompile Include="program\Scene\GameMainScene.cpp" />
     <ClCompile Include="program\Scene\Scene.cpp" />
     <ClCompile Include="program\Scene\TestScene.cpp" />
     <ClCompile Include="program\TestGameMain.cpp" />
