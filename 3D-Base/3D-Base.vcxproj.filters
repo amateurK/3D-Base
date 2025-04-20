@@ -59,6 +59,9 @@
     <Filter Include="Base\Model\Animation">
       <UniqueIdentifier>{ea8e5626-a298-4b40-9e7e-46c7c99e72b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Audio">
+      <UniqueIdentifier>{2c3189fb-de26-4e4a-9773-eac1469568d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\BaseWindow.cpp">
@@ -147,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="program\Base\Model\Animation\AnimationClip.cpp">
       <Filter>Base\Model\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="program\Base\Audio\AudioManager.cpp">
+      <Filter>Base\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="program\Base\Tools\Random.h">
       <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="program\Base\Audio\AudioManager.h">
+      <Filter>Base\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
