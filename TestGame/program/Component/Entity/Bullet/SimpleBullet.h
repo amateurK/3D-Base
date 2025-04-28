@@ -39,7 +39,7 @@ namespace AK_Game {
 		/// @param vec XMVectorSet(right, up, forword, 0.0f)
 		inline void SetSpeed(const DirectX::XMVECTOR& vec) { m_Speed = vec; }
 		/// @brief 通常移動時の速度(m/s)
-		inline void SetSpeed(float forword, float right, float up) { m_Speed = DirectX::XMVectorSet(right, up, forword, 0.0f); }
+		inline void SetSpeed(float right, float up, float forword) { m_Speed = DirectX::XMVectorSet(right, up, forword, 0.0f); }
 		/// @brief 弾のライフタイム
 		inline void SetLifeTime(float sec) { m_LifeTime = sec; }
 	};

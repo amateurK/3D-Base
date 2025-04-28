@@ -61,7 +61,7 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	void Transform::Move(float forward, float right, float up)
+	void Transform::Move(float right, float up, float forward)
 	{
 		Move(XMVectorSet(right, up, forward, 0.0f));
 	}

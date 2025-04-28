@@ -44,7 +44,7 @@ namespace AK_Game {
 		/// @param vec XMVectorSet(right, up, forword, 0.0f)
 		inline void SetNormalAccel(const DirectX::XMVECTOR& vec) { m_NormalAccel = vec; }
 		/// @brief ’ÊíˆÚ“®‚Ì‰Á‘¬“x(m/s^2)
-		inline void SetNormalAccel(float forword, float right, float up) { m_NormalAccel = DirectX::XMVectorSet(right, up, forword, 0.0f); }
+		inline void SetNormalAccel(float right, float up, float forword) { m_NormalAccel = DirectX::XMVectorSet(right, up, forword, 0.0f); }
 		/// @brief ‹ó‹C’ïR(m/s^2)
 		inline void SetAirResistance(float r) { m_AirResistance = r; }
 	};
