@@ -25,6 +25,7 @@ namespace AK_Base {
 		m_SoundData.clear();
 		m_BGMSourceVoices.clear();
 		m_SESourceVoices.clear();
+		m_SourceVoiceVolume.clear();
 
 		// MediaFoundationの初期化
 		hr = MFStartup(MF_VERSION, MFSTARTUP_NOSOCKET);
@@ -178,18 +179,20 @@ namespace AK_Base {
 	}
 
 	//--------------------------------------------------------------------------------------
-	IXAudio2SourceVoice* AudioManager::PlaySE(uint8_t id)
+	IXAudio2SourceVoice* AudioManager::PlaySE(uint8_t id, float volume)
 	{
 		IXAudio2SourceVoice* sourceVoice;
 
 		// SEを再生
-		sourceVoice = CreateSourceVoiceAndPlay(id, m_SEVolume, false);
+		sourceVoice = CreateSourceVoiceAndPlay(id, m_SEVolume * volume, false);
 		if (sourceVoice == nullptr) {
 			return nullptr; // 再生に失敗
 		}
 
 		// 再生中のSEのリストに追加
 		m_SESourceVoices.insert(sourceVoice);
+		// 音量を保存
+		m_SourceVoiceVolume[sourceVoice] = volume;
 
 		return sourceVoice;
 
@@ -211,17 +214,18 @@ namespace AK_Base {
 			sourceVoice->Stop(0);
 			sourceVoice->DestroyVoice();
 			m_SESourceVoices.erase(sourceVoice);
+			m_SourceVoiceVolume.erase(sourceVoice);
 		}
 
 	}
 
 	//--------------------------------------------------------------------------------------
-	IXAudio2SourceVoice* AudioManager::ChangeBGM(uint8_t id)
+	IXAudio2SourceVoice* AudioManager::ChangeBGM(uint8_t id, float volume)
 	{
 		IXAudio2SourceVoice* sourceVoice;
 
 		// SEを再生
-		sourceVoice = CreateSourceVoiceAndPlay(id, m_BGMVolume, true);
+		sourceVoice = CreateSourceVoiceAndPlay(id, m_BGMVolume * volume, true);
 		if (sourceVoice == nullptr) {
 			return nullptr; // 再生に失敗
 		}
@@ -231,23 +235,27 @@ namespace AK_Base {
 
 		// 再生中のBGMのリストに追加
 		m_BGMSourceVoices.insert(sourceVoice);
+		// 音量を保存
+		m_SourceVoiceVolume[sourceVoice] = volume;
 
 		return sourceVoice;
 	}
 
 	//--------------------------------------------------------------------------------------
-	IXAudio2SourceVoice* AudioManager::AddBGM(uint8_t id)
+	IXAudio2SourceVoice* AudioManager::AddBGM(uint8_t id, float volume)
 	{
 		IXAudio2SourceVoice* sourceVoice;
 
 		// SEを再生
-		sourceVoice = CreateSourceVoiceAndPlay(id, m_BGMVolume, true);
+		sourceVoice = CreateSourceVoiceAndPlay(id, m_BGMVolume * volume, true);
 		if (sourceVoice == nullptr) {
 			return nullptr; // 再生に失敗
 		}
 
 		// 再生中のBGMのリストに追加
 		m_BGMSourceVoices.insert(sourceVoice);
+		// 音量を保存
+		m_SourceVoiceVolume[sourceVoice] = volume;
 
 		return sourceVoice;
 	}
@@ -268,6 +276,7 @@ namespace AK_Base {
 			sourceVoice->Stop(0);
 			sourceVoice->DestroyVoice();
 			m_BGMSourceVoices.erase(sourceVoice);
+			m_SourceVoiceVolume.erase(sourceVoice);
 		}
 	}
 
@@ -286,7 +295,7 @@ namespace AK_Base {
 
 		// 再生中のBGMの音量を変更
 		for (auto& voice : m_BGMSourceVoices) {
-			voice->SetVolume(volume);
+			voice->SetVolume(volume * m_SourceVoiceVolume[voice]);
 		}
 		m_BGMVolume = volume;
 	}
@@ -298,7 +307,7 @@ namespace AK_Base {
 
 		// 再生中のSEの音量を変更
 		for (auto& voice : m_SESourceVoices) {
-			voice->SetVolume(volume);
+			voice->SetVolume(volume * m_SourceVoiceVolume[voice]);
 		}
 		m_SEVolume = volume;
 	}
@@ -312,6 +321,7 @@ namespace AK_Base {
 			(*itr)->GetState(&state);
 			if (state.BuffersQueued <= 0) {
 				(*itr)->DestroyVoice();
+				m_SourceVoiceVolume.erase(*itr);
 				itr = m_SESourceVoices.erase(itr);
 			}
 			else {

@@ -108,7 +108,7 @@ namespace Scene {
 			audioM->RoadSoundFile(101, L"resource/testSound/ショット.mp3");
 			audioM->RoadSoundFile(102, L"resource/testSound/ブースタージャンプ2.mp3");
 
-			audioM->ChangeBGM(0);
+			//audioM->ChangeBGM(0);
 		}
 	}
 	//--------------------------------------------------------------------------------------
@@ -180,9 +180,12 @@ namespace Scene {
 				bulletMovement->SetSpeed(60.0f, 0.0f, 0.0f);
 				bulletMovement->SetLifeTime(3.0f);
 
+				// 音の再生
 				auto audioM = AK_Base::AudioManager::GetInstance();
-				audioM->SetSEVolume(2.0f);
-				audioM->PlaySE(102);
+				//audioM->SetSEVolume(2.0f * (1.0f + sin(totalTime * 3.0f)));
+				audioM->PlaySE(100, 0.5f);
+				audioM->PlaySE(101, 0.7f);
+				audioM->PlaySE(102, 0.7f);
 			}
 		}
 

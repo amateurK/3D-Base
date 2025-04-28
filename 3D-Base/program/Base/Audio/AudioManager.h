@@ -70,6 +70,9 @@ namespace AK_Base {
 		std::unordered_set<IXAudio2SourceVoice*> m_SESourceVoices;
 		//std::list<IXAudio2SubmixVoice*> m_SubmixVoices;
 
+		/// @brief 再生中のソースボイスの音量のリスト
+		std::unordered_map<IXAudio2SourceVoice*, float> m_SourceVoiceVolume;
+
 		/// @brief 音用スレッド
 		std::thread m_Thread;
 		/// @brief 音用スレッドを終了する際にtrueにするフラグ
@@ -91,8 +94,9 @@ namespace AK_Base {
 
 		/// @brief SEを再生
 		/// @param id 音源のID
+		/// @param volume 音量
 		/// @return 再生されたソースボイスへのポインタ
-		IXAudio2SourceVoice* PlaySE(uint8_t id);
+		IXAudio2SourceVoice* PlaySE(uint8_t id, float volume = 1.0f);
 		/// @brief SEの再生を停止
 		/// @param sourceVoice 停止するソースボイスへのポインタ、nullptrの場合は全て停止
 		void StopSE(IXAudio2SourceVoice* sourceVoice = nullptr);
@@ -100,11 +104,11 @@ namespace AK_Base {
 		/// @brief BGMを再生（現在流れているBGMを停止）
 		/// @param id 音源のID
 		/// @return 再生されたソースボイスへのポインタ
-		IXAudio2SourceVoice* ChangeBGM(uint8_t id);
+		IXAudio2SourceVoice* ChangeBGM(uint8_t id, float volume = 1.0f);
 		/// @brief BGMを再生（現在流れているBGMはそのまま）
 		/// @param id 音源のID
 		/// @return 再生されたソースボイスへのポインタ
-		IXAudio2SourceVoice* AddBGM(uint8_t id);
+		IXAudio2SourceVoice* AddBGM(uint8_t id, float volume = 1.0f);
 		/// @brief BGMの再生を停止
 		/// @param sourceVoice 停止するソースボイスへのポインタ、nullptrの場合は全て停止
 		void StopBGM(IXAudio2SourceVoice* sourceVoice = nullptr);
