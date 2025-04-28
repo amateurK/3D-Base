@@ -60,10 +60,10 @@ namespace AK_Base {
 		/// @param offset ˆÚ“®—Ê(right, up, forword, 0.0f)
 		void Move(const DirectX::XMVECTOR& offset);
 		/// @brief ³–Ê•ûŒü‚ğŠî€‚ÉˆÚ“®‚·‚é
-		/// @param forward ³–Ê•ûŒü‚ÌˆÚ“®—Ê
 		/// @param right ‰E•ûŒü‚ÌˆÚ“®—Ê
 		/// @param up ã•ûŒü‚ÌˆÚ“®—Ê
-		void Move(float forward, float right, float up);
+		/// @param forward ³–Ê•ûŒü‚ÌˆÚ“®—Ê
+		void Move(float right, float up, float forward);
 
 
 		/// @brief Œ»İ‚ÌŠp“x‚©‚ç‰ñ“]

@@ -38,7 +38,7 @@ namespace Scene {
 			//auto meshRender = m_Player->AddComponent<AK_Base::MeshRender>(L"resource/testData/AvatarSample_A.vrm");
 			//meshRender->SetShader("LambertShader");
 			auto playerMovement = m_Player->AddComponent<AK_Game::PlayerMovement>();
-			playerMovement->SetNormalAccel(20.0f, 10.0f, 20.0f);
+			playerMovement->SetNormalAccel(10.0f, 20.0f, 20.0f);
 			playerMovement->SetAirResistance(0.1f);	// さすがに高すぎ
 			auto collider = m_Player->AddComponent<AK_Base::SphereCollider>(AK_Math::Sphere3(XMVectorZero(), 0.5f));
 
@@ -78,9 +78,7 @@ namespace Scene {
 			m_Camera = testmodel->AddComponent<AK_Base::Camera>();
 			auto windowSize = myGame->GetWindowSize();
 			m_Camera->SetScreen(XM_PIDIV2, static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y));
-			auto playerMovement = testmodel->AddComponent<AK_Game::PlayerMovement>();
-			playerMovement->SetNormalAccel(20.0f, 10.0f, 20.0f);
-			playerMovement->SetAirResistance(0.1f);	// さすがに高すぎ
+
 
 		}
 
@@ -148,7 +146,7 @@ namespace Scene {
 
 			// カメラをプレイヤーに追従
 			cameraTrans->SetPosition(playerTrans->GetPosition() + DirectX::XMVectorSet(0.0f, 1.6f, 0.0f, 0.0f));
-			cameraTrans->Move(-2.0f, 0.0f, 0.0f);
+			cameraTrans->Move(0.0f, 0.0f, -2.0f);
 
 			// プレイヤーをカメラの向きに合わせる
 			auto cameraMat = DirectX::XMMatrixRotationQuaternion(cameraTrans->GetRotation());
@@ -177,7 +175,7 @@ namespace Scene {
 					bullet->SetStatus(AK_Base::ActorStatus::DEAD);
 					});
 				auto bulletMovement = bullet->AddComponent<AK_Game::SimpleBullet>();
-				bulletMovement->SetSpeed(60.0f, 0.0f, 0.0f);
+				bulletMovement->SetSpeed(0.0f, 0.0f, 60.0f);
 				bulletMovement->SetLifeTime(3.0f);
 
 				// 音の再生

@@ -155,7 +155,7 @@ namespace Scene {
 			float front = (float)(w - s) * elapsedTime * speed;
 			float right = (float)(d - a) * elapsedTime * speed;
 			float up = (float)(z - x) * elapsedTime * speed;
-			m_Camera->GetActor()->GetTransform()->Move(front, right, up);
+			m_Camera->GetActor()->GetTransform()->Move(right, up, front);
 		}
 		// 移動テスト
 		{
@@ -174,7 +174,7 @@ namespace Scene {
 			float right = (float)(d - a) * elapsedTime * speed;
 			float up = (float)(z - x) * elapsedTime * speed;
 			auto actor = AK_Base::BaseWindow::GetInstance().GetRootActor()->SearchChildByName(L"tester");
-			actor->GetComponent<AK_Base::Transform>()->Move(front, right, up);
+			actor->GetComponent<AK_Base::Transform>()->Move(right, up, front);
 		}
 		// マウステスト
 		{
