@@ -15,6 +15,7 @@
 #include "Base/Component/Collider/SphereCollider.h"
 #include "Base/Input/InputManager.h"
 #include "Base/Tools/Random.h"
+#include "Base/Audio/AudioManager.h"
 #include "../Component/Entity/Player/PlayerMovement.h"
 #include "../Component/Entity/Bullet/SimpleBullet.h"
 
@@ -94,7 +95,21 @@ namespace Scene {
 		auto shaderM = Shader::ShaderManager::GetInstance();
 		shaderM->SetVPMatrix(*m_Camera->GetView(), *m_Camera->GetProjection());
 
+		// 音源の読み込み
+		{
+			auto audioM = AK_Base::AudioManager::GetInstance();
+			audioM->SetMasterVolume(0.02f);
 
+			audioM->SetBGMVolume(1.0f);
+			audioM->RoadSoundFile(0, L"resource/testSound/ZONE_-X13-.mp3");
+
+			audioM->SetSEVolume(1.0f);
+			audioM->RoadSoundFile(100, L"resource/testSound/銃声._8ビット風._「バーン」.mp3");
+			audioM->RoadSoundFile(101, L"resource/testSound/ショット.mp3");
+			audioM->RoadSoundFile(102, L"resource/testSound/ブースタージャンプ2.mp3");
+
+			//audioM->ChangeBGM(0);
+		}
 	}
 	//--------------------------------------------------------------------------------------
 	GameMainScene::~GameMainScene()
@@ -164,6 +179,13 @@ namespace Scene {
 				auto bulletMovement = bullet->AddComponent<AK_Game::SimpleBullet>();
 				bulletMovement->SetSpeed(60.0f, 0.0f, 0.0f);
 				bulletMovement->SetLifeTime(3.0f);
+
+				// 音の再生
+				auto audioM = AK_Base::AudioManager::GetInstance();
+				//audioM->SetSEVolume(2.0f * (1.0f + sin(totalTime * 3.0f)));
+				audioM->PlaySE(100, 0.5f);
+				audioM->PlaySE(101, 0.7f);
+				audioM->PlaySE(102, 0.7f);
 			}
 		}
 

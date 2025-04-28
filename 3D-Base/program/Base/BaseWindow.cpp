@@ -18,6 +18,7 @@
 #include "Shader/VertexShader/BasicVS.h"
 #include "Shader/PixelShader/PixelShader.h"
 #include "Collision/CollisionManager.h"
+#include "Audio/AudioManager.h"
 
 using namespace DirectX;
 
@@ -286,6 +287,7 @@ namespace AK_Base {
 		InputManager::Create();
 		CollisionManager::Create();
 		Anim::AnimationManager::Create();
+		AudioManager::Create();
 
 		// シェーダーの作成
 		Shader::ShaderManager::Create();
@@ -401,6 +403,7 @@ namespace AK_Base {
 		CollisionManager::Destroy();
 		InputManager::Destroy();
 		Mesh::MeshManager::Destroy();
+		AudioManager::Destroy();
 
 	}
 

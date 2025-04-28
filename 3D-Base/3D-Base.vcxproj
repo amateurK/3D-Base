@@ -212,6 +212,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="program\Base\Actor.cpp" />
+    <ClCompile Include="program\Base\Audio\AudioManager.cpp" />
     <ClCompile Include="program\Base\BaseWindow.cpp" />
     <ClCompile Include="program\Base\Collision\CollisionManager.cpp" />
     <ClCompile Include="program\Base\Component\Camera.cpp" />
@@ -249,6 +250,7 @@
   <ItemGroup>
     <ClInclude Include="program\Base\Actor.h" />
     <ClInclude Include="program\Base\ActorSet\DebugAxis.h" />
+    <ClInclude Include="program\Base\Audio\AudioManager.h" />
     <ClInclude Include="program\Base\BaseWindow.h" />
     <ClInclude Include="program\Base\Collision\CollisionManager.h" />
     <ClInclude Include="program\Base\Component.h" />
