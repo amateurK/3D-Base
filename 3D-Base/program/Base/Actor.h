@@ -8,7 +8,7 @@
 // 作成日	: 2024/03/21
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include "BaseWindow.h"
-
+#include "Tools/EnumClassBitMask.h"
 
 namespace AK_Base {
 
@@ -16,7 +16,7 @@ namespace AK_Base {
 	class Transform;
 
 	/// @brief Actorの状態を表す
-	enum class ActorStatus {
+	enum class ActorStatus : uint8_t {
 		ACTION,		// 行動中
 		UPDATEONLY,	// Update()のみ
 		RENDERONLY,	// Render()のみ
@@ -28,7 +28,11 @@ namespace AK_Base {
 	class Actor
 	{
 	protected:
-		ActorStatus m_Status;	// 現在の状態
+		ActorStatus m_Status;	// 現在の状態（実際に実行されるかはわからない）
+		ActorStatus m_EffectiveStatus;	// 現在の状態（親の状態も含める）
+		bool m_StatusChanged;	// 現在の状態が変更されたか
+
+
 		std::wstring m_ActorName;	// Actorの識別名
 
 		/// @brief 子Actorのリスト
@@ -46,7 +50,7 @@ namespace AK_Base {
 		/// @details よくアクセスするので保持しておく
 		/// @details Transform側がセットするので、Actorで触る必要はない
 		Transform* m_Transform;
-		
+
 	public:
 		/// @brief コンストラクタ
 		/// @param name : 識別名
@@ -110,6 +114,9 @@ namespace AK_Base {
 		/// @param actor 親Actorへのポインタ
 		void SetParent(Actor* const actor);
 
+		/// @brief 現在の状態を取得する
+		/// @return 現在の状態（親の状態も含める）
+		ActorStatus GetEffectiveStatus();
 
 		inline Actor* const GetParent() const { return m_Parent; }
 		inline std::wstring GetName() const { return m_ActorName; }
@@ -145,5 +152,13 @@ namespace AK_Base {
 		{
 			m_ComponentList.erase(std::type_index(typeid(T)));
 		}
+
+	private:
+		/// @brief 親の状況を考慮して現在の状態を計算して返す
+		/// @return 現在の状態
+		ActorStatus UpdateEffectiveStatus() const;
+
+		// StatusChangedをtrueにする
+		void MarkStatusChanged();
 	};
 }

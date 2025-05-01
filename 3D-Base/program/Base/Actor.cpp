@@ -16,6 +16,8 @@ namespace AK_Base {
 		std::wstring name
 	)
 		: m_Status(ActorStatus::ACTION)
+		, m_EffectiveStatus(ActorStatus::ACTION)
+		, m_StatusChanged(true)
 		, m_ActorName(name)
 		, m_Parent(nullptr)
 		, m_Transform(nullptr)
@@ -160,11 +162,82 @@ namespace AK_Base {
 	void Actor::SetStatus(const ActorStatus& status)
 	{
 		m_Status = status;
+		MarkStatusChanged();
 	}
 
 	//--------------------------------------------------------------------------------------
 	void Actor::SetParent(Actor* const actor)
 	{
 		m_Parent = actor;
+	}
+
+	//---------------------------------------------------------------------------------------------
+	ActorStatus Actor::GetEffectiveStatus()
+	{
+		if (m_StatusChanged)
+		{
+			// Œ»Ý‚Ìó‘Ô‚ðŒvŽZ‚·‚é
+			m_EffectiveStatus = UpdateEffectiveStatus();
+
+			m_StatusChanged = false;
+		}
+
+		return m_EffectiveStatus;
+	}
+
+	//---------------------------------------------------------------------------------------------
+	ActorStatus Actor::UpdateEffectiveStatus() const
+	{
+		if (!m_Parent)return m_Status;
+		if (m_Status == ActorStatus::DEAD)return ActorStatus::DEAD;
+
+		auto parentStatus = m_Parent->GetEffectiveStatus();
+
+		// e‚Ìó‘Ô‚É‡‚í‚¹‚Äˆ—
+		// bit‰‰ŽZ‚·‚ê‚Î‚à‚¤­‚µŠy
+		switch (parentStatus)
+		{
+		case ActorStatus::ACTION:
+			return m_Status;
+
+		case ActorStatus::UPDATEONLY:
+			if (m_Status == ActorStatus::ACTION ||
+				m_Status == ActorStatus::UPDATEONLY)
+			{
+				return ActorStatus::UPDATEONLY;
+			}
+			else
+			{
+				return ActorStatus::REST;
+			}
+			break;
+
+		case ActorStatus::RENDERONLY:
+			if (m_Status == ActorStatus::ACTION ||
+				m_Status == ActorStatus::RENDERONLY)
+			{
+				return ActorStatus::RENDERONLY;
+			}
+			else
+			{
+				return ActorStatus::REST;
+			}
+			break;
+
+		default:
+			// REST‚ÌŽž
+			return ActorStatus::REST;
+			break;
+		} 
+	}
+
+	//---------------------------------------------------------------------------------------------
+	void Actor::MarkStatusChanged()
+	{
+		m_StatusChanged = true;
+		// Žq‚É‚à“`”d
+		for (auto& child : m_Children) {
+			child.second->MarkStatusChanged();
+		}
 	}
 }

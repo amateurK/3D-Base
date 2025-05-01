@@ -65,6 +65,12 @@ namespace AK_Base {
 		// TODO : すでに調査済みのものはやらなくてもいいようにしてもいいかも
 		for (auto& collider : m_IsCollideCache)
 		{
+			// Bitでやる
+			// ステータス上処理しないものは無視
+			if (collider.first->GetActor()->GetEffectiveStatus() != ActorStatus::ACTION)
+			{
+				continue;
+			}
 			for (auto& other : m_IsCollideCache)
 			{
 				// 同じもの同士の場合無視
@@ -72,6 +78,13 @@ namespace AK_Base {
 				{
 					continue;
 				}
+
+				// ステータス上処理しないものは無視
+				if (other.first->GetActor()->GetEffectiveStatus() != ActorStatus::ACTION)
+				{
+					continue;
+				}
+
 				// 衝突判定
 				if (collider.first->CheckCollision(other.first))
 				{
