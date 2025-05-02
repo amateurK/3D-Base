@@ -61,45 +61,43 @@ namespace AK_Base {
 			collider.second.first.clear();
 			collider.second.second.clear();
 		}
-		// 衝突判定
-		// TODO : すでに調査済みのものはやらなくてもいいようにしてもいいかも
-		for (auto& collider : m_IsCollideCache)
+
+		// 衝突判定を行うColliderをvectorに入れる
+		std::vector<Collider*> colliders;
+		for (auto& [collider, dummy] : m_IsCollideCache)
 		{
-			// Bitでやる
-			// ステータス上処理しないものは無視
-			if (collider.first->GetActor()->GetEffectiveStatus() != ActorStatus::ACTION)
+			if (collider->GetActor()->GetEffectiveStatus() == ActorStatus::ACTION)
 			{
-				continue;
+				colliders.push_back(collider);
 			}
-			for (auto& other : m_IsCollideCache)
+		}
+
+		// 衝突判定
+		// 重複を回避
+		for (size_t i = 0; i < colliders.size(); ++i)
+		{
+			for (size_t j = i + 1; j < colliders.size(); ++j)
 			{
-				// 同じもの同士の場合無視
-				if (collider.first == other.first)
-				{
-					continue;
-				}
+				Collider* a = colliders[i];
+				Collider* b = colliders[j];
 
-				// ステータス上処理しないものは無視
-				if (other.first->GetActor()->GetEffectiveStatus() != ActorStatus::ACTION)
+				if (a->CheckCollision(b))
 				{
-					continue;
-				}
+					// 衝突時の処理を実行
+					a->OnCollision(b);
+					b->OnCollision(a);
 
-				// 衝突判定
-				if (collider.first->CheckCollision(other.first))
-				{
-					collider.first->OnCollision(other.first);
-
-					// 衝突しているColliderを登録
-					collider.second.first.insert(other.first);
+					m_IsCollideCache[a].first.insert(b);
+					m_IsCollideCache[b].first.insert(a);
 				}
 				else
 				{
-					// 衝突していないColliderを登録
-					collider.second.second.insert(other.first);
+					m_IsCollideCache[a].second.insert(b);
+					m_IsCollideCache[b].second.insert(a);
 				}
 			}
 		}
+
 	}
 
 	//--------------------------------------------------------------------------------------

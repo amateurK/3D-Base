@@ -17,12 +17,13 @@ namespace AK_Base {
 
 	/// @brief Actorの状態を表す
 	enum class ActorStatus : uint8_t {
-		ACTION,		// 行動中
-		UPDATEONLY,	// Update()のみ
-		RENDERONLY,	// Render()のみ
-		REST,		// 休憩中(なにもしない)
-		DEAD,		// 死亡 = 処理が終わったら削除される
+		ACTION = 0b00000011,		// 行動中
+		UPDATEONLY = 0b00000010,	// Update()のみ
+		RENDERONLY = 0b00000001,	// Render()のみ
+		REST = 0b00000000,		// 休憩中(なにもしない)
+		DEAD = 0b00000100,		// 死亡 = 処理が終わったら削除される
 	};
+	ENABLE_ENUM_CLASS_BITMASK(ActorStatus);
 
 	/// @brief アクタークラス
 	class Actor

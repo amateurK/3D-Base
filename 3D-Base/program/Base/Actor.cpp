@@ -46,8 +46,7 @@ namespace AK_Base {
 			component.second->Update(totalTime, elapsedTime);
 		}
 		for (auto& child : m_Children) {
-			if (child.second->m_Status == ActorStatus::ACTION ||
-				child.second->m_Status == ActorStatus::UPDATEONLY) {
+			if (HasFlag(child.second->m_Status, ActorStatus::UPDATEONLY)) {
 				child.second->Update(totalTime, elapsedTime);
 			}
 		}
@@ -60,8 +59,7 @@ namespace AK_Base {
 			component.second->Render(totalTime, elapsedTime);
 		}
 		for (auto& child : m_Children) {
-			if (child.second->m_Status == ActorStatus::ACTION ||
-				child.second->m_Status == ActorStatus::RENDERONLY) {
+			if (HasFlag(child.second->m_Status, ActorStatus::RENDERONLY)) {
 				child.second->Render(totalTime, elapsedTime);
 			}
 		}
@@ -188,47 +186,11 @@ namespace AK_Base {
 	//---------------------------------------------------------------------------------------------
 	ActorStatus Actor::UpdateEffectiveStatus() const
 	{
-		if (!m_Parent)return m_Status;
 		if (m_Status == ActorStatus::DEAD)return ActorStatus::DEAD;
+		if (!m_Parent)return m_Status;
 
-		auto parentStatus = m_Parent->GetEffectiveStatus();
-
-		// 親の状態に合わせて処理
-		// bit演算すればもう少し楽
-		switch (parentStatus)
-		{
-		case ActorStatus::ACTION:
-			return m_Status;
-
-		case ActorStatus::UPDATEONLY:
-			if (m_Status == ActorStatus::ACTION ||
-				m_Status == ActorStatus::UPDATEONLY)
-			{
-				return ActorStatus::UPDATEONLY;
-			}
-			else
-			{
-				return ActorStatus::REST;
-			}
-			break;
-
-		case ActorStatus::RENDERONLY:
-			if (m_Status == ActorStatus::ACTION ||
-				m_Status == ActorStatus::RENDERONLY)
-			{
-				return ActorStatus::RENDERONLY;
-			}
-			else
-			{
-				return ActorStatus::REST;
-			}
-			break;
-
-		default:
-			// RESTの時
-			return ActorStatus::REST;
-			break;
-		} 
+		// 親と自分が両方ともtrueの時のみtrueにする必要がある
+		return m_Parent->GetEffectiveStatus() & m_Status;
 	}
 
 	//---------------------------------------------------------------------------------------------

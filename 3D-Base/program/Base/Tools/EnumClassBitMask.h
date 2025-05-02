@@ -25,4 +25,8 @@ inline EnumType& operator&=(EnumType& lhs, EnumType rhs) { \
 } \
 inline EnumType operator~(EnumType e) { \
     return static_cast<EnumType>(~static_cast<std::underlying_type_t<EnumType>>(e)); \
+} \
+inline bool HasFlag(EnumType value, EnumType flag) { \
+        using T = std::underlying_type_t<EnumType>; \
+        return (static_cast<T>(value) & static_cast<T>(flag)) != 0; \
 }
