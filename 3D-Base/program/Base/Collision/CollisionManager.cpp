@@ -61,32 +61,43 @@ namespace AK_Base {
 			collider.second.first.clear();
 			collider.second.second.clear();
 		}
-		// Õ“Ë”»’è
-		// TODO : ‚·‚Å‚É’²¸Ï‚İ‚Ì‚à‚Ì‚Í‚â‚ç‚È‚­‚Ä‚à‚¢‚¢‚æ‚¤‚É‚µ‚Ä‚à‚¢‚¢‚©‚à
-		for (auto& collider : m_IsCollideCache)
-		{
-			for (auto& other : m_IsCollideCache)
-			{
-				// “¯‚¶‚à‚Ì“¯m‚Ìê‡–³‹
-				if (collider.first == other.first)
-				{
-					continue;
-				}
-				// Õ“Ë”»’è
-				if (collider.first->CheckCollision(other.first))
-				{
-					collider.first->OnCollision(other.first);
 
-					// Õ“Ë‚µ‚Ä‚¢‚éCollider‚ğ“o˜^
-					collider.second.first.insert(other.first);
+		// Õ“Ë”»’è‚ğs‚¤Collider‚ğvector‚É“ü‚ê‚é
+		std::vector<Collider*> colliders;
+		for (auto& [collider, dummy] : m_IsCollideCache)
+		{
+			if (collider->GetActor()->GetEffectiveStatus() == ActorStatus::ACTION)
+			{
+				colliders.push_back(collider);
+			}
+		}
+
+		// Õ“Ë”»’è
+		// d•¡‚ğ‰ñ”ğ
+		for (size_t i = 0; i < colliders.size(); ++i)
+		{
+			for (size_t j = i + 1; j < colliders.size(); ++j)
+			{
+				Collider* a = colliders[i];
+				Collider* b = colliders[j];
+
+				if (a->CheckCollision(b))
+				{
+					// Õ“Ë‚Ìˆ—‚ğÀs
+					a->OnCollision(b);
+					b->OnCollision(a);
+
+					m_IsCollideCache[a].first.insert(b);
+					m_IsCollideCache[b].first.insert(a);
 				}
 				else
 				{
-					// Õ“Ë‚µ‚Ä‚¢‚È‚¢Collider‚ğ“o˜^
-					collider.second.second.insert(other.first);
+					m_IsCollideCache[a].second.insert(b);
+					m_IsCollideCache[b].second.insert(a);
 				}
 			}
 		}
+
 	}
 
 	//--------------------------------------------------------------------------------------
