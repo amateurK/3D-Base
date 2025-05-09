@@ -132,7 +132,7 @@ namespace Scene {
 			auto cameraTrans = m_Camera->GetActor()->GetTransform();
 			auto playerTrans = m_Player->GetTransform();
 			// 視点移動はマウスが非表示の時のみ
-			if (InputM->GetIsCursorShown()
+			if (!InputM->GetIsCursorShown()
 				&& myGame->GetWindowActive())
 			{
 				// 移動量を取得
