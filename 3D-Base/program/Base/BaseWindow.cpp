@@ -27,6 +27,7 @@ namespace AK_Base {
 	BaseWindow::BaseWindow()
 		: m_WindowSize({ 0, 0 })
 		, m_Vsync(1)
+		, m_WindowActive(true)
 	{
 		m_RootActor = new AK_Base::Actor(L"RootActor");
 	}
@@ -432,7 +433,7 @@ namespace AK_Base {
 	//--------------------------------------------------------------------------------------
 	void BaseWindow::GameLoop()
 	{
-
+		CheckWindowActive();
 
 		m_StepTimer.Tick([&]()
 			{
@@ -487,5 +488,12 @@ namespace AK_Base {
 	const POINT BaseWindow::GetWindowSize()
 	{
 		return m_WindowSize;
+	}
+
+	//---------------------------------------------------------------------------------------------
+	void BaseWindow::CheckWindowActive()
+	{
+		// 現在アクティブなウィンドウがゲームのウィンドウと同じかをチェック
+		m_WindowActive = (GetActiveWindow() == m_HWnd);
 	}
 }

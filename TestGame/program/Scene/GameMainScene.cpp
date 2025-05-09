@@ -119,6 +119,7 @@ namespace Scene {
 	void GameMainScene::Update(const double& totalTime, const float& elapsedTime)
 	{
 		auto InputM = AK_Base::InputManager::GetInstance();
+		auto myGame(&AK_Base::BaseWindow::GetInstance());
 		// マウスカーソルの表示・非表示切り替え
 		{
 			if (InputM->IsKeyNowPressed(DIK_TAB)) {
@@ -131,7 +132,8 @@ namespace Scene {
 			auto cameraTrans = m_Camera->GetActor()->GetTransform();
 			auto playerTrans = m_Player->GetTransform();
 			// 視点移動はマウスが非表示の時のみ
-			if (!InputM->GetIsCursorShown())
+			if (InputM->GetIsCursorShown()
+				&& myGame->GetWindowActive())
 			{
 				// 移動量を取得
 				const auto& delta = InputM->GetMouseMove();
