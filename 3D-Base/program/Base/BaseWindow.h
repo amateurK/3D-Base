@@ -61,6 +61,9 @@ namespace AK_Base {
 		/// @brief 時間経過を管理するステップタイマー
 		DX::StepTimer m_StepTimer;
 
+		/// @brief ウィンドウがアクティブになっているか
+		bool m_WindowActive;
+
 	public:
 		/// @brief コンストラクタ
 		BaseWindow();
@@ -107,6 +110,7 @@ namespace AK_Base {
 		inline Actor* const GetRootActor() { return m_RootActor; }
 		inline HINSTANCE* GetHInstance() { return &m_HInst; }
 		inline HWND* GetHWnd() { return &m_HWnd; }
+		inline bool GetWindowActive() { return m_WindowActive; }
 
 		void* operator new(size_t size) {
 			return _mm_malloc(size, alignof(BaseWindow));
@@ -114,6 +118,10 @@ namespace AK_Base {
 		void operator delete(void* p) {
 			return _mm_free(p);
 		}
+
+	private:
+		/// @brief ウィンドウがアクティブかどうか判定する
+		void CheckWindowActive();
 	};
 
 }
