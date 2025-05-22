@@ -11,6 +11,7 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 #include"Singleton.h"
 #include "Tools/StepTimer.h"
+#include "Tools/Fps.h"
 
 namespace AK_Base {
 
@@ -63,6 +64,9 @@ namespace AK_Base {
 
 		/// @brief ウィンドウがアクティブになっているか
 		bool m_WindowActive;
+		
+		/// @brief FPS測定クラス
+		Tools::Fps m_Fps;
 
 	public:
 		/// @brief コンストラクタ

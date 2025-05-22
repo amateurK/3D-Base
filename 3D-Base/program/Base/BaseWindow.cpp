@@ -273,7 +273,7 @@ namespace AK_Base {
 		m_ImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// フレームレートの設定
-		SetFrameRate(60);
+		SetFrameRate(0);
 
 		return S_OK;
 	}
@@ -443,6 +443,7 @@ namespace AK_Base {
 
 				auto time = static_cast<double>(m_StepTimer.GetTotalSeconds());
 				auto elapsedTime = static_cast<float>(m_StepTimer.GetElapsedSeconds());
+				m_Fps.Update(elapsedTime);
 				m_RootActor->Update(time, elapsedTime);
 				m_RootActor->CheckStatus();
 
