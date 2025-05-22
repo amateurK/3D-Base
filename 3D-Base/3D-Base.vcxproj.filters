@@ -297,6 +297,9 @@
     <ClInclude Include="program\Base\Tools\EnumClassBitMask.h">
       <Filter>Base\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="program\Base\Tools\Fps.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
